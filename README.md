@@ -1,5 +1,5 @@
 # PermafrostDB
-R package for accessing permafrost database
+R package that provides convenience functions for interacting with the Carleton [permafrost database](https://github.com/geocryology/COLDASS). This library provides wrappers to query, import and export data.
 
 # Installation from github
 
@@ -14,5 +14,5 @@ Rscript -e "devtools::install()"
 Generate a personal authentication token at [https://github.com/settings/tokens](https://github.com/settings/tokens)
 ```r
 library(devtools)
-install_github("geocryology/PermafrostDB", ref="master", auth_token="<COPY YOUR AUTH TOKEN HERE>" )
+install_github("geocryology/PermafrostDB", ref="master")
 ```
