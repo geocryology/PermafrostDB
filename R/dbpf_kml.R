@@ -22,16 +22,21 @@
 #' 
 #' @export
 #' @examples
-#' dbpf_kml(kmlfile = "~/Desktop/permafrost.kml")
+#' con <- dbpf_con()
+#' dbpf_kml(con, kmlfile = "~/Desktop/permafrost.kml")
 #' 
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_kml <- function(kmlfile, location_name, bounding_box) {
+dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
 	require(sp)
 	require(rgdal)
 	require(plotKML)
-	
+  
+	if (missing(con)){
+	  con <- dbpf_con()
+	}
+  
 	#get data and filter (if filtering parameters provided)
 	loc <- dbpf_locations()
 	
