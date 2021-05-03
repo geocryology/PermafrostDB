@@ -1,5 +1,5 @@
 # PermafrostDB
-R package that provides convenience functions for interacting with the Carleton [permafrost database](https://github.com/geocryology/COLDASS). This library provides wrappers to query, import and export data.
+R package that provides convenience functions for interacting with a permafrost database that implements the [COLDASS schema](https://github.com/geocryology/COLDASS). This library provides wrappers to query, import and export data.
 
 # Installation from github
 
