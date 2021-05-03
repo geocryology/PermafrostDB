@@ -17,8 +17,11 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_tables <- function() {
-	con <- dbpf_con() # get connection
+dbpf_tables <- function(con) {
+	if (missing(con)){
+	  con <- dbpf_con() # get connection
+	}
+  
 	tables <- dbListTables(con)
 	dbDisconnect(con) # close connection
 	return(tables)
