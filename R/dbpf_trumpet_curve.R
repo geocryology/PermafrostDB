@@ -23,26 +23,29 @@
 #' 
 #' @export
 #' @examples
-#' dbpf_trumpet_curve("NGO-DD-1009") # get all GST automatically
+#' con <- dbpf_con()
+#' dbpf_trumpet_curve(con, "NGO-DD-1009") # get all GST automatically
 #'
 #' # specify interval explicitly
-#' dbpf_trumpet_curve("NGO-DD-1009", time_b = "2015-09-01 00:00:00+00", 
+#' dbpf_trumpet_curve(con, "NGO-DD-1009", time_b = "2015-09-01 00:00:00+00", 
 #'         time_e = "2016-08-31 23:59:59+00") 
 #'
 #' # specify only one GST series for use, excluding the others
-#' dbpf_trumpet_curve("NGO-DD-1009", gst_names="NGO-DD-1009_ST01") 
+#' dbpf_trumpet_curve(con, "NGO-DD-1009", gst_names="NGO-DD-1009_ST01") 
 #'
 #' # use air temperature
-#' dbpf_trumpet_curve("NGO-DD-1009", air_names=c("AIRT1LOW", "AIRT1TOP")) 
+#' dbpf_trumpet_curve(con, "NGO-DD-1009", air_names=c("AIRT1LOW", "AIRT1TOP")) 
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_trumpet_curve <- function(borehole_name, gst_names="", air_names="",
+dbpf_trumpet_curve <- function(con, borehole_name, gst_names="", air_names="",
                           time_b = "2015-09-01 00:00:00+00", 
                           time_e = "2016-08-31 23:59:59+00") {
 	#establish connection
-	con <- dbpf_con()
+	if (missing(con)){
+	  con <- dbpf_con()
+	}
 
 	# borholes ========
 	bh <- dbpf_observations_stats(con, borehole_name,
