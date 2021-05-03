@@ -18,8 +18,12 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_device_report <- function(serial_number) {
-	con <- dbpf_con()
+dbpf_device_report <- function(con, serial_number) {
+  
+  if (missing(con)){
+    con <- dbpf_con()
+  }
+	
 	exists <- dbpf_device_exists(con, serial_number)
 	if (exists == 1) {
     		loc <- dbpf_device_locations(con, serial_number)
