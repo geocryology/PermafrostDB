@@ -14,14 +14,18 @@
 #' 
 #' @export
 #' @examples
-#' loc <- dbpf_locations()
+#' con <- dbpf_con()
+#' loc <- dbpf_locations(con)
 #' 
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_locations <- function(type='point') {
-	con <- dbpf_con() # get connection
-		
+dbpf_locations <- function(con, type='point') {
+	
+  if (missing(con)){
+	  con <- dbpf_con() 
+  }
+  
 	if (toupper(type) == 'POINT') {
 		query <- paste("SELECT id, name, ST_X(coordinates) AS lon,",
 	               	"ST_Y(coordinates) AS lat,",

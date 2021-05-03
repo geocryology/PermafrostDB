@@ -38,7 +38,7 @@ dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
 	}
   
 	#get data and filter (if filtering parameters provided)
-	loc <- dbpf_locations()
+	loc <- dbpf_locations(con)
 	
 	if (!missing(location_name)){ # filter by location name
 	  loc <- loc[loc$name %in% location_name,]

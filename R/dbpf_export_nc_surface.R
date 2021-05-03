@@ -42,7 +42,7 @@ dbpf_export_nc_surface <- function(con, location_name, file_name, freq='daily'){
                                   period = period)
   
   ## Get coordinate data
-  loc <- dbpf_locations()
+  loc <- dbpf_locations(con)
   coords <- loc[match(location_name, loc$name), 
                 c('name','lon', 'lat', 'elevation_in_metres')]
   
