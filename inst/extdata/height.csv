@@ -1,0 +1,5 @@
+variable_id,attribute_name,attribute_value,precision
+height,positive,up,character
+height,axis,Z,character
+height,standard_name,height,character
+height,missing_value,-999,float

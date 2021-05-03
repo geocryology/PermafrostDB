@@ -1,0 +1,6 @@
+variable_id,attribute_name,attribute_value,precision
+depth,positive,up,character
+depth,missing_value,-999,float
+depth,_FillValue,-999,float
+depth,axis,Z,character
+depth,standard_name,depth,character

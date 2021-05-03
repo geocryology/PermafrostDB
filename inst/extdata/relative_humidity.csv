@@ -1,0 +1,6 @@
+variable_id,attribute_name,attribute_value,precision
+relative_humidity,coordinates,time height latitude longitude,character
+relative_humidity,standard_name,relative_humidity,character
+relative_humidity,_FillValue,-999,float
+relative_humidity,missing_value,-999,float
+relative_humidity,grid_mapping,crs,character

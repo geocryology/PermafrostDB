@@ -1,0 +1,6 @@
+variable_id,attribute_name,attribute_value,precision
+air_temperature,coordinates,time height latitude longitude,character
+air_temperature,standard_name,air_temperature,character
+air_temperature,_FillValue,-999,float
+air_temperature,missing_value,-999,float
+air_temperature,grid_mapping,crs,character

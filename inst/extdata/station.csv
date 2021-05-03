@@ -1,0 +1,4 @@
+variable_id,attribute_name,attribute_value,precision
+station,cf_role,timeseries_id,character
+station,standard_name,platform_id,character
+station,units,,character

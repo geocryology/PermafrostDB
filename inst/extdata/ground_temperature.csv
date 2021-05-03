@@ -1,0 +1,6 @@
+variable_id,attribute_name,attribute_value,precision
+ground_temperature,coordinates,time depth latitude longitude,character
+ground_temperature,standard_name,solid_earth_subsurface_temperature,character
+ground_temperature,_FillValue,-999,float
+ground_temperature,missing_value,-999,float
+ground_temperature,grid_mapping,crs,character

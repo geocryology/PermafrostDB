@@ -1,0 +1,3 @@
+variable_id,attribute_name,attribute_value,precision
+longitude,standard_name,longitude,character
+longitude,axis,X,character

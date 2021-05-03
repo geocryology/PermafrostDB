@@ -1,0 +1,4 @@
+variable_id,attribute_name,attribute_value,precision
+elevation,_FillValue,-999,float
+elevation,missing_value,-999,float
+elevation,standard_name,altitude,float

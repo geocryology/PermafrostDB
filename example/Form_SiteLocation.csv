@@ -1,0 +1,3 @@
+name,lon,lat,elevation_in_metres ,accuracy_in_metres,comment,record_observations
+Ex4mpl3-001,-114.1234,62.12345,227,5,write your comment about the location here,t
+Ex4mpl3-001_ST01,-114.54321,62.54321,227,5,you can describe the overall site characteristics,f

@@ -1,0 +1,6 @@
+variable_id,attribute_name,attribute_value,precision
+soil_temperature,coordinates,station_name time height latitude longitude,character
+soil_temperature,standard_name,soil_temperature,character
+soil_temperature,_FillValue,-999,float
+soil_temperature,missing_value,-999,float
+soil_temperature,grid_mapping,crs,character

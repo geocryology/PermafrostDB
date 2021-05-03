@@ -1,0 +1,11 @@
+variable_id,attribute_name,attribute_value,precision
+,Conventions,"CF-1.6, ACDD-1.3",char
+,keywords,"PERMAFROST,PERMAFROST TEMPERATURE,TEMPERATURE LOGGERS,THERMISTORS,SOIL TEMPERATURE",char
+,keywords_vocabulary,"GCMD:GCMD Keywords",char
+,source,Carleton University Permafrost Database,char
+,featureType,timeSeriesProfile,char
+,institution,Carleton University,char
+,creator_name,Stephan Gruber,char
+,creator_email,stephan.gruber@carleton.ca,char
+,creator_url,https://www.carleton.ca/permafrost,char
+

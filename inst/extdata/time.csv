@@ -1,0 +1,5 @@
+variable_id,attribute_name,attribute_value,precision
+time,calendar,standard,character
+time,standard_name,time,character
+time,axis,T,character
+time,cf_role,profile_id,character

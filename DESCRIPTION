@@ -1,0 +1,75 @@
+Package: PermafrostDB
+Title: PermafrostDB
+Description: R interface for Carleton Permafrost database. This interface uses a read-only login to the database and is mostly for data access. Data import is done over a web interface with separate credentials, INSERT, UPDATE, DELETE queries run from this R interface need to establish a database connection with suitable login credentials, first. When you use R to INSERT, UPDATE, DELETE, please: (a) document your work meticulously, (b) think before you execute, and (c) make sure you use transactions with BEGIN / ROLLBACK / COMMIT where you can first test your changes before making them permanent.
+Version: 1.0.0
+Author: Stephan Gruber <stephan.gruber@carleton.ca>
+Maintainer: Stephan Gruber <stephan.gruber@carleton.ca>
+Encoding: UTF-8
+Depends:
+	R (>= 3.0.1),
+	lubridate,
+	RPostgres,
+	xts,
+	stringr,
+	openxlsx,
+	shiny
+Imports:
+	ncdf4,
+	reshape2,
+	data.table
+Suggests:
+  dygraphs,
+	Cairo,
+ 	ggplot2,
+ 	PermafrostTools (>= 1.3.1),
+License: # getOptions('devtools.desc.license')
+LazyData: true
+Collate:
+	'dbpf_con.R'
+        'dbpf_defox_bulk.R'
+        'dbpf_kml.R'
+        'dbpf_locations.R'
+        'dbpf_devices.R'
+        'dbpf_fields.R'
+        'dbpf_tables.R'
+        'dbpf_sensors.R'
+        'dbpf_locations_add.R'
+        'dbpf_locations_add_plot.R'
+        'dbpf_location_report.R'
+        'dbpf_locations_in_plot.R'
+        'dbpf_device_exists.R'
+        'dbpf_device_locations.R'
+        'dbpf_device_report.R'
+        'dbpf_device_sensors.R'
+        'dbpf_devices_locations_add.R'
+        'dbpf_location_exists.R'
+        'dbpf_observations_stats.R'
+        'dbpf_observations_agg.R'
+        'dbpf_observations_raw.R'
+        'dbpf_observations_plot.R'
+        'dbpf_observations_meta.R'
+        'dbpf_trumpet_curve.R'
+        'dbpf_inventory.R'
+        'dbpf_shiny.R'
+        'dbpf_device_add.R'
+        'dbpf_manual_obs_add.R'
+        'dbpf_manual_obs_plot_xlsx.R'
+        'dbpf_manual_obs_subplot_xlsx.R'
+        'dbpf_sensor_add.R'
+        'dbpf_sensor_add_xlsx.R'
+        'dbpf_TSA_GST.R'
+	'dbpf_manual_obs_by_location.R'
+  	'dbpf_table_columns.R'
+  	'dbpf_export_csv_GTNP.R'
+   	'dbpf_export_nc_chain_multi.R'
+  	'dbpf_export_nc_chain_ortho.R'
+  	'dbpf_export_nc_surface.R'
+ 	'dbpf_export_nc_erddap.R'
+  	'nc_attributes_from_template.R'
+  	'dbpf_export_nc_air.R'
+  	'dbpf_export_csv_generic.R'
+  	'dbpf_export_csv_NWT.R'
+  	'dbpf_export_xlsx_NWT.R'
+  	'utils.R'
+  	'dbpf_export_nc_generic.R'
+RoxygenNote: 6.1.1
