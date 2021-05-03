@@ -58,7 +58,7 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
   db_dat <- dbpf_observations_agg(con = con, 
                                   location_name = location_name,
                                   period = period)
-  loc <- dbpf_locations() 
+  loc <- dbpf_locations(con) 
   # reshape and get values
   db_dat$height = abs(db_dat$height) 
   db_dat <- db_dat[, c("loc_name", "height", "agg_avg", "time")]

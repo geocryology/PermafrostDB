@@ -24,7 +24,7 @@
 # =============================================================================
 
 dbpf_sensors <- function(con, manual=TRUE) {
-	con <- dbpf_con() # get connection
+	
     if (manual) {
 		query <- "SELECT * FROM sensors WHERE device_id = '5265f740-8e09-4d41-b5b6-2136f5d35ea3'"
 	} else {

@@ -55,7 +55,7 @@ dbpf_export_nc_air <- function(con, location_name, file_name, freq='daily'){
   db_dat <- merge(db_T, db_RH, all=T, by = c("loc_name", "height", "time"))
   
   ## Get coordinate data
-  loc <- dbpf_locations()
+  loc <- dbpf_locations(con)
   coords <- loc[match(location_name, loc$name), 
                 c('name','lon', 'lat', 'elevation_in_metres')]
   

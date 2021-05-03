@@ -90,7 +90,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
   n_stations <- dim(m)[3]
 
   ## Get coordinate data
-  loc <- dbpf_locations() 
+  loc <- dbpf_locations(con) 
   coords <- loc[match(location_name, loc$name), 
                 c('name','lon', 'lat', 'elevation_in_metres')]
   

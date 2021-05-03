@@ -24,8 +24,12 @@
 #' 
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
-dbpf_table_columns <- function(tablename, detailed=F){
-  con <- dbpf_con()
+dbpf_table_columns <- function(con, tablename, detailed=F){
+  
+  if (missing(con)){
+    con <- dbpf_con()
+  }
+  
   query <- sprintf("SELECT * 
                    FROM information_schema.columns
                    WHERE table_name ='%s'

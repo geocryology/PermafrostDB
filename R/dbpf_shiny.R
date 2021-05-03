@@ -36,7 +36,6 @@ server <- function(input, output) {
 
 
   #
- # location.list <- dbpf_inventory()
   
   # get data, ugly and not interactive for now 
   con <- dbpf_con()
