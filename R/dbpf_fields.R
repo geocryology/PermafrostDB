@@ -28,7 +28,7 @@ dbpf_fields <- function(con, tables = "") {
   }
 	
 	if (tables[1] == "") {
-		tables <- dbpf_tables()$table_name
+		tables <- dbpf_tables(con)$table_name
 	} 
 	fields <- NULL
 	for (t in 1:length(tables)) {
