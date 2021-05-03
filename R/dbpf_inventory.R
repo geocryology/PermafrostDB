@@ -14,15 +14,20 @@
 #' 
 #' @export
 #' @examples
-#' dbpf_inventory() # get all GST automatically
+#' con <- dbpf_con()
+#' dbpf_inventory(con) # get all GST automatically
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_inventory <- function(type="observations_by_locations") {
+dbpf_inventory <- function(con, type="observations_by_locations") {
 	#obs locations
+  
+  if (missing(con)){
+    con <- dbpf_con()
+  }
+  
 	if (type == "observations_by_locations") {
-		con <- dbpf_con()
 		res<- dbGetQuery(con, paste0("SELECT DISTINCT locations.name ",
 		                 "FROM locations INNER JOIN observations ON ",
 		                 "locations.coordinates = observations.location ",
