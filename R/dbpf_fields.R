@@ -15,13 +15,17 @@
 #' 
 #' @export
 #' @examples
-#' fds   <- dbpf_fields(tables = "")
+#' con <- dbpf_con()
+#' fds   <- dbpf_fields(con, tables = "")
 #' fds_o <- dbpf_fields(tables = "observations")
 #' 
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
-dbpf_fields <- function(tables = "") {
-	con <- dbpf_con() # get connection
+dbpf_fields <- function(con, tables = "") {
+  
+  if (missing(con)){
+    con <- dbpf_con()  
+  }
 	
 	if (tables[1] == "") {
 		tables <- dbpf_tables()$table_name
