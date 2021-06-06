@@ -12,7 +12,17 @@ Depends:
 	xts,
 	stringr,
 	openxlsx,
-	shiny
+	shiny,
+	plotrix,
+	plotKML,
+	rgdal,
+	sp,
+	dismo,
+	pixmap,
+	RSAGA,
+	aqp,
+	stars,
+	colorRamps
 Imports:
 	ncdf4,
 	reshape2,
