@@ -81,10 +81,6 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
       
       return
     })
-  if (missing(database)){
-      # Setting default as "observations"
-      database = "observations" 
-    }
   }
   
   # Load PGSQL requirements
