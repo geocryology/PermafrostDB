@@ -54,7 +54,7 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_con <- function(user, passwd, host, port="5432")
+dbpf_con <- function(user, passwd, host, port="5432", database)
 {
   # Check credentials
   if (missing(user) || missing(passwd) || missing(host)){
@@ -88,13 +88,15 @@ dbpf_con <- function(user, passwd, host, port="5432")
   Sys.setenv(TZ="UTC")
   
   # DB parameters
-  pgDBConDetails <- c("observations",host, port, user, passwd)
+  if (missing(database)){
+      pgDBConDetails <- c("observations",host, port, user, passwd)
+  }
   
   # Initiate connection, return connection
   pgDBCon <- dbConnect(RPostgres::Postgres(), dbname = pgDBConDetails[1], host = pgDBConDetails[2], port = pgDBConDetails[3], user = pgDBConDetails[4], password = pgDBConDetails[5], sslmode="require")
   
   # check that observations table exists
-  DBI::dbExistsTable(pgDBCon, "observations")
+  DBI::dbExistsTable(pgDBCon, database)
   
   #TRUE, return connection
   return(pgDBCon)

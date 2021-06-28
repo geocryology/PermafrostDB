@@ -26,10 +26,10 @@ install_github("geocryology/PermafrostDB", ref="main")
 Most functions in `PermafrostDB` require a database connection object. This is created using the `dbpf_con()` function. You need to provide a username and password, as well as the database host and port number:
 
 ```R
-con <- dbpf_con(user="groucho",
-                passwd="superS3cretP@ssw0rd",
-                host="206.145.32.44",
-                port="5432")
+con <- dbpf_con(user="hma000",
+                passwd="WYJDfa3hrTFOrHO9JV7g",
+                host="206.12.92.138",
+                port="5030")
 ```
 
 You can set up default connection settings by creating a file called `permafrostdb.config` and saving it in your home directory. Your home directory is determined using R's `path.expand()` function, and may vary depending on which R environment you use (e.g. on Windows, R Studio sets it to `C:/Users/Username/Documents` whereas base R sets it to `C:/Users/Username`). To determine the right location for the file, run `path.expand("~")` from your R terminal of choice.
