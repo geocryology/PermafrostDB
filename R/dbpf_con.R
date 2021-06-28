@@ -55,7 +55,7 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_con <- function(user, passwd, host, port, database)
+dbpf_con <- function(user, passwd, host, port="5432", database="observations")
 {
   # Check credentials
   if (missing(user) || missing(passwd) || missing(host)){
