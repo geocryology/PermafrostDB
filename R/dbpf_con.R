@@ -8,6 +8,7 @@
 #' @param passwd  character, Password
 #' @param host character, Location of database server, This is usually an IP address or a URL.
 #' @param port character, port on which to make request.  Typically "5432" for postgres databases.
+#' @param database character, "observations" or for testDB:"obs_dev" 
 #' 
 #' @return Returns a DB connection object.   
 #' 
@@ -54,7 +55,7 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_con <- function(user, passwd, host, port="5432", database)
+dbpf_con <- function(user, passwd, host, port, database)
 {
   # Check credentials
   if (missing(user) || missing(passwd) || missing(host)){
@@ -67,6 +68,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database)
                     passwd <- credential$passwd
                     host <- credential$host
                     port <- credential$port
+                    database <- credential$database
     },
     error = function(e) {
       message(e)
@@ -79,6 +81,10 @@ dbpf_con <- function(user, passwd, host, port="5432", database)
       
       return
     })
+  if (missing(database)){
+      # Setting default as "observations"
+      database = "observations" 
+    }
   }
   
   # Load PGSQL requirements
@@ -88,9 +94,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database)
   Sys.setenv(TZ="UTC")
   
   # DB parameters
-  if (missing(database)){
-      pgDBConDetails <- c("observations",host, port, user, passwd)
-  }
+  pgDBConDetails <- c(database, host, port, user, passwd)
   
   # Initiate connection, return connection
   pgDBCon <- dbConnect(RPostgres::Postgres(), dbname = pgDBConDetails[1], host = pgDBConDetails[2], port = pgDBConDetails[3], user = pgDBConDetails[4], password = pgDBConDetails[5], sslmode="require")
