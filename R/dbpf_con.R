@@ -101,3 +101,29 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
   #TRUE, return connection
   return(pgDBCon)
 }
+
+
+tunnel <- function(user, remote_host, keyfile, password, target, target_port, local_port=5555, ssh_port=22){
+  
+  if (missing(password)){
+    password <- ''
+  }
+  
+  if (missing(keyfile)){
+    auth <- str_glue("passwd='{password}'")
+  }else{
+    auth <- str_glue("keyfile='{keyfile}', passwd='{password}'")
+  }
+  
+  cmd <- paste0("ssh::ssh_tunnel(ssh::ssh_connect(", 
+                str_glue("host = '{user}@{remote_host}:{ssh_port}', "),
+                str_glue("{auth}),"),
+                str_glue("port = {local_port}, target = '{target}:{target_port}')"))
+  
+  pid <- sys::r_background(
+    std_out = FALSE,
+    std_err = FALSE,
+    args = c("-e", cmd)
+  )
+  return(pid)
+}
