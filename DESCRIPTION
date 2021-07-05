@@ -10,7 +10,7 @@ Depends:
 	lubridate,
 	RPostgres,
 	xts,
-	stringr,
+	stringr (>=1.2.0),
 	openxlsx,
 	shiny,
 	plotrix,
