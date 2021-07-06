@@ -110,6 +110,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
 #' @param port Port on which database server is (default based on \code{\link{dbpf_con}})
 #' @param local_port Local port to use for tunnel.
 #' @param database Name of database (default based on \code{\link{dbpf_con}})
+#' @export
 #' @details  Acts as a wrapper combining \code{\link{dbpf_con}} and \code{\link{create_tunnel}}.
 #' Refer to those functions for more information. To auto-connect, add the following parameter keywords to the database configuration file 
 #' described in  \code{\link{dbpf_con}}.
