@@ -1,7 +1,7 @@
 Package: PermafrostDB
 Title: PermafrostDB
 Description: R interface for Carleton Permafrost database. This interface uses a read-only login to the database and is mostly for data access. Data import is done over a web interface with separate credentials, INSERT, UPDATE, DELETE queries run from this R interface need to establish a database connection with suitable login credentials, first. When you use R to INSERT, UPDATE, DELETE, please: (a) document your work meticulously, (b) think before you execute, and (c) make sure you use transactions with BEGIN / ROLLBACK / COMMIT where you can first test your changes before making them permanent.
-Version: 1.0.0
+Version: 1.1.0
 Author: Stephan Gruber <stephan.gruber@carleton.ca>
 Maintainer: Stephan Gruber <stephan.gruber@carleton.ca>
 Encoding: UTF-8
