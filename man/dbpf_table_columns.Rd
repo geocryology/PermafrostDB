@@ -4,7 +4,7 @@
 \alias{dbpf_table_columns}
 \title{Return all column names from a table}
 \usage{
-dbpf_table_columns(tablename, detailed = F)
+dbpf_table_columns(con, tablename, detailed = F)
 }
 \arguments{
 \item{tablename}{character, name of a table within the database. For a

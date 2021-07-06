@@ -4,9 +4,15 @@
 \alias{dbpf_observations_plot}
 \title{Plot data for one location}
 \usage{
-dbpf_observations_plot(con, location_name, unit_of_measurement = "C",
-  period = "raw", time_b = "2015-07-01 00:00:00+00",
-  time_e = "2020-08-31 23:59:59+00", verbose = FALSE)
+dbpf_observations_plot(
+  con,
+  location_name,
+  unit_of_measurement = "C",
+  period = "raw",
+  time_b = "2015-07-01 00:00:00+00",
+  time_e = "2020-08-31 23:59:59+00",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

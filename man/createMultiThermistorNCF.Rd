@@ -4,8 +4,14 @@
 \alias{createMultiThermistorNCF}
 \title{Create empty netCDF file for one or more thermistor chains}
 \usage{
-createMultiThermistorNCF(file, n_stations, n_timestep, n_levels,
-  close_file = F, time_units = "days since 1970-01-01 00:00:00")
+createMultiThermistorNCF(
+  file,
+  n_stations,
+  n_timestep,
+  n_levels,
+  close_file = F,
+  time_units = "days since 1970-01-01 00:00:00"
+)
 }
 \arguments{
 \item{file}{character, path to output netCDF file (*.nc)}

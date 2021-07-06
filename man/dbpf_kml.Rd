@@ -4,7 +4,7 @@
 \alias{dbpf_kml}
 \title{Write a kml plotting site locations}
 \usage{
-dbpf_kml(kmlfile, location_name, bounding_box)
+dbpf_kml(con, kmlfile, location_name, bounding_box)
 }
 \arguments{
 \item{kmlfile}{Filename for kml to be produced.}
@@ -29,7 +29,8 @@ Function needs to be extended to allow:
          --> assigning shape and colour of icon based on attributes
 }
 \examples{
-dbpf_kml(kmlfile = "~/Desktop/permafrost.kml")
+con <- dbpf_con()
+dbpf_kml(con, kmlfile = "~/Desktop/permafrost.kml")
 
 }
 \author{

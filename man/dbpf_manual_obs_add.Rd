@@ -4,9 +4,17 @@
 \alias{dbpf_manual_obs_add}
 \title{Add manual observations to DB}
 \usage{
-dbpf_manual_obs_add(con, sensor_label, location_name, time_UTC,
-  numeric_value, text_value, height_min_metres, height_max_metres,
-  mode = "test")
+dbpf_manual_obs_add(
+  con,
+  sensor_label,
+  location_name,
+  time_UTC,
+  numeric_value,
+  text_value,
+  height_min_metres,
+  height_max_metres,
+  mode = "test"
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

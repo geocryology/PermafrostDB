@@ -4,10 +4,17 @@
 \alias{dbpf_device_add}
 \title{Adds a new device to DB}
 \usage{
-dbpf_device_add(con, device_type, notes, serial_number = "",
-  access_code = "", manufacturer = "generic device",
+dbpf_device_add(
+  con,
+  device_type,
+  notes,
+  serial_number = "",
+  access_code = "",
+  manufacturer = "generic device",
   manufacturer_device_name = "",
-  acquired_on = "1950-01-01 00:00:00+00", mode = "test")
+  acquired_on = "1950-01-01 00:00:00+00",
+  mode = "test"
+)
 }
 \arguments{
 \item{device_type}{Charcter string decribing type of device}

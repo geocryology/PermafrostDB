@@ -4,8 +4,14 @@
 \alias{interpolate_sensor_offset}
 \title{Interpolate sensor offsets}
 \usage{
-interpolate_sensor_offset(con, location, t_bnds, interpol = "linear",
-  fill.array = TRUE, dt = "daily")
+interpolate_sensor_offset(
+  con,
+  location,
+  t_bnds,
+  interpol = "linear",
+  fill.array = TRUE,
+  dt = "daily"
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

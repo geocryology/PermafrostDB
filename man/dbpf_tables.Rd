@@ -4,7 +4,7 @@
 \alias{dbpf_tables}
 \title{Returns names of all tables within DB}
 \usage{
-dbpf_tables()
+dbpf_tables(con)
 }
 \value{
 List of tables in the DB

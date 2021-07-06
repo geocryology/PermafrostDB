@@ -4,9 +4,18 @@
 \alias{dbpf_sensor_add}
 \title{Adds a new sensor to DB}
 \usage{
-dbpf_sensor_add(con, device_id, label, type_of_measurement,
-  unit_of_measurement, accuracy, precision, height_in_metres = 0,
-  serial_number = "", mode = "test")
+dbpf_sensor_add(
+  con,
+  device_id,
+  label,
+  type_of_measurement,
+  unit_of_measurement,
+  accuracy,
+  precision,
+  height_in_metres = 0,
+  serial_number = "",
+  mode = "test"
+)
 }
 \arguments{
 \item{device_id}{Charcter string of device that this is linked to.}

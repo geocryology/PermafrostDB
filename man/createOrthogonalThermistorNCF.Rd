@@ -5,8 +5,14 @@
 \title{Create empty netCDF file thermistor stations with identical measurement 
 depths}
 \usage{
-createOrthogonalThermistorNCF(file, n_stations, n_timestep, n_depths,
-  close_file = F, time_units = "days since 1970-01-01 00:00:00")
+createOrthogonalThermistorNCF(
+  file,
+  n_stations,
+  n_timestep,
+  n_depths,
+  close_file = F,
+  time_units = "days since 1970-01-01 00:00:00"
+)
 }
 \arguments{
 \item{file}{Character, path to output netCDF file (*.nc)}

@@ -4,8 +4,7 @@
 \alias{dbpf_manual_obs_plot_xlsx}
 \title{Import plot data and manual observations from XLS file into DB}
 \usage{
-dbpf_manual_obs_plot_xlsx(con, file_xlsx, mode = "test",
-  overlap = "prevent")
+dbpf_manual_obs_plot_xlsx(con, file_xlsx, mode = "test", overlap = "prevent")
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

@@ -4,8 +4,7 @@
 \alias{dbpf_defox_bulk}
 \title{De-fox data in bulk, as identified by location and time.}
 \usage{
-dbpf_defox_bulk(con, location_name, time_b, time_e,
-  unit_of_measurement = "C")
+dbpf_defox_bulk(con, location_name, time_b, time_e, unit_of_measurement = "C")
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

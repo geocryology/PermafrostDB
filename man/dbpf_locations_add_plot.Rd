@@ -4,8 +4,7 @@
 \alias{dbpf_locations_add_plot}
 \title{Adds new polygons to database}
 \usage{
-dbpf_locations_add_plot(con, locations, mode = "test",
-  overlap = "prevent")
+dbpf_locations_add_plot(con, locations, mode = "test", overlap = "prevent")
 }
 \arguments{
 \item{con}{connection to database}

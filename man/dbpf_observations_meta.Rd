@@ -4,9 +4,15 @@
 \alias{dbpf_observations_meta}
 \title{Get raw observations}
 \usage{
-dbpf_observations_meta(con, location_name, height_top = 5,
-  height_bot = -15, time_b = "1950-01-01 00:00:00+00",
-  time_e = "2050-01-01 00:00:00+00", verbose = FALSE)
+dbpf_observations_meta(
+  con,
+  location_name,
+  height_top = 5,
+  height_bot = -15,
+  time_b = "1950-01-01 00:00:00+00",
+  time_e = "2050-01-01 00:00:00+00",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
@@ -39,7 +45,6 @@ Get raw observations per location, height and time slice.
 }
 \details{
 Fast way to access raw observation data without aggregation.
-
 
 The unit_of_measurement variable is used to distinguish between
 different measurement types.  The default (C) will return observations that 

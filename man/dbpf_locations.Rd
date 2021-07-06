@@ -4,7 +4,7 @@
 \alias{dbpf_locations}
 \title{Return table of locations, either points or polygons.}
 \usage{
-dbpf_locations(type = "point")
+dbpf_locations(con, type = "point")
 }
 \arguments{
 \item{type}{Identifies the geometry type for which locations are returned.
@@ -22,7 +22,8 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
-loc <- dbpf_locations()
+con <- dbpf_con()
+loc <- dbpf_locations(con)
 
 }
 \author{

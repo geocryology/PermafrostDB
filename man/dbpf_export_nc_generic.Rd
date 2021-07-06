@@ -4,8 +4,13 @@
 \alias{dbpf_export_nc_generic}
 \title{Export continuous data to netcdf}
 \usage{
-dbpf_export_nc_generic(con, location_name, file_name, freq = "daily",
-  verbose = T)
+dbpf_export_nc_generic(
+  con,
+  location_name,
+  file_name,
+  freq = "daily",
+  verbose = T
+)
 }
 \arguments{
 \item{location_name}{integer, the number of unique timesteps for which there is

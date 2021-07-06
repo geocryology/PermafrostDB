@@ -60,7 +60,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
   # Check credentials
   if (missing(user) || missing(passwd) || missing(host)){
     
-    config.file <- path.expand(file.path("~", "permafrostdb.config"))
+    config.file <- get.config()
     
     tryCatch({
                     credential <- read.csv(config.file, stringsAsFactors = FALSE, nrows=2)
@@ -72,13 +72,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
     },
     error = function(e) {
       message(e)
-      message(paste0("\n\n\nDatabase credentials not provided or configuration file not set up properly. ",
-                 "You must supply a username, password, hostname and port to create a database connection. ",
-                 "\nAlternatively, create a configuration file called '",config.file,"' to save a 'default' connection. ",
-                 "This file must have the following structure:"))
-      message("\n\nuser,passwd,host,port")
-      message('"your_username,"your_pasword","your_db_host","your_db_port"\n\n')
-      
+      config.error()
       return
     })
   }
@@ -101,3 +95,139 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
   #TRUE, return connection
   return(pgDBCon)
 }
+
+
+#' @title SSH database connection
+#' @description Connect to database through an SSH tunnel
+#' @param ssh_user Username with which to connect to remote host using SSH
+#' @param ssh_host Address of remote host from which request will be made (e.g. '206.12.93.23' or 'data.myserver.com')
+#' @param ssh_keyfile (optional) private key to log onto remote host (must be in OpenSSH format - *.pem). You must either provide
+#' a passwordless keyfile, or set up a keyserver to handle the keyfile password. There will be no password prompt.
+#' @param user Username for database. Passed to \code{\link{dbpf_con}}
+#' @param passwd Password for database. Passed to \code{\link{dbpf_con}}
+#' @param host Address for database server. 
+#' @param ssh_port Port on which to connect using ssh
+#' @param port Port on which database server is (default based on \code{\link{dbpf_con}})
+#' @param local_port Local port to use for tunnel.
+#' @param database Name of database (default based on \code{\link{dbpf_con}})
+#' @export
+#' @details  Acts as a wrapper combining \code{\link{dbpf_con}} and \code{\link{create_tunnel}}.
+#' Refer to those functions for more information. To auto-connect, add the following parameter keywords to the database configuration file 
+#' described in  \code{\link{dbpf_con}}.
+#' 
+#'              
+#'              \code{user,passwd,host,port,ssh_user,ssh_host,ssh_port,ssh_keyfile,local_port}
+#'              
+#'              \code{"readonly","fjZfwg?H9jDsd","256.245.11.15","5432","user01","125.25.1.35","5432","/home/user/.ssh/keyfile.pem","5555"}
+dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, 
+                        user, passwd, host, ssh_port='22', 
+                        port="5432", local_port='5555', database="observations"){
+  
+  if (missing(user) || missing(passwd) || missing(host) || missing(ssh_user) || missing(ssh_host)){
+    config.file <- get.config()
+    
+    tryCatch({
+      credential <- read.csv(config.file, stringsAsFactors = FALSE, nrows=2)
+      user <- credential$user
+      passwd <- credential$passwd
+      host <- credential$host
+      port <- ifelse(is.null(credential$port), port, credential$port)
+      database <- ifelse(is.null(credential$database), database, credential$database)
+      ssh_host <- credential$ssh_host
+      ssh_port <- ifelse(is.null(credential$ssh_port), ssh_port, credential$ssh_port)
+      ssh_keyfile <- credential$ssh_keyfile
+      local_port <- ifelse(is.null(credential$local_port), local_port, credential$local_port)
+      
+      
+    },
+    error = function(e) {
+      message(e)
+      config.error()
+      return
+    })
+  }
+  
+  if (ssh_host == host){
+    host <- "127.0.0.1"
+  }
+
+  pid <- create_tunnel(ssh_user=ssh_user,
+                       ssh_host=ssh_host,
+                       ssh_keyfile=ssh_keyfile,
+                       db_host=host, 
+                       db_port=port, 
+                       local_port=local_port, 
+                       ssh_port=ssh_port)
+  
+  # print("Waiting for tunnel")
+  
+  con <- dbpf_con(user=user,
+                  passwd=passwd,
+                  host="127.0.0.1", 
+                  port=as.character(local_port),
+                  database=database)
+  return(con)
+}
+
+
+#' @title Create SSH tunnel
+#' @description Create an SSH tunnel in the background
+#' @param ssh_user username with which to connect to remote host
+#' @param ssh_host address of remote host from which request will be made (e.g. ip address)
+#' @param ssh_keyfile (optional) path to privatekey file to log onto remote host
+#' (must be in OpenSSH *.pem format - see details for more information)
+#' @param db_host character, address to database host 
+#' @param db_port int, final destination port for requests on target machine 
+#' @param local_port int, port on localhost through which to access remote host
+#' @param ssh_port int, ssh connection port of remote host (usually 22)
+#' @details the SSH tunnel makes requests to the target from a remote host. A local port is used
+#' to redirect requests through the tunnel.
+#' Keyfiles must be in OpenSSH format. Google has ample information on how to convert from ppk to pem files, 
+#' @return int process id
+#' @export
+create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, local_port=5555, ssh_port=22){
+  
+  dbpf_close_tunnel()
+  
+  pid <- sys::exec_background(cmd='ssh',
+                      std_out = FALSE,
+                      std_err = FALSE,
+                      args = c("-L", 
+                               stringr::str_glue("127.0.0.1:{local_port}:{db_host}:{db_port}"),
+                               stringr::str_glue("{ssh_user}@{ssh_host}"), 
+                               "-i", 
+                               gsub( "\\\\", "/", ssh_keyfile))
+  )
+  assign("dbpf.tunnel.pid", pid, envir=.GlobalEnv)
+  print(stringr::str_glue("Created tunnel to database on {db_host}:{db_port} on local port {local_port} through {ssh_host}. Running as process {pid}"))
+  
+  return(dbpf.tunnel.pid)
+}
+
+#' @title Close database ssh tunnel if it exists
+#' @description closes database ssh tunnel 
+#' @details Only works in the context of the R session used to create the tunnel.
+#' @export
+dbpf_close_tunnel <- function(){
+  tryCatch({tools::pskill(dbpf.tunnel.pid)   # kill existing tunnel if it exists
+    message("Closing existing tunnel")},  
+    error = function(e) {}) 
+}
+
+
+#' @title Get path to configuration file
+#' @noRd
+get.config <- function(){
+  path.expand(file.path("~", "permafrostdb.config"))
+}
+
+config.error <- function(){
+  message(paste0("\n\n\nDatabase credentials not provided or configuration file not set up properly. ",
+                 "You must supply a username, password, hostname and port to create a database connection. ",
+                 "\nAlternatively, create a configuration file called '", get.config(), "' to save a 'default' connection. ",
+                 "This file must have the following structure:"))
+  message("\n\nuser,passwd,host,port")
+  message('"your_username,"your_pasword","your_db_host","your_db_port"\n\n')
+}
+
+

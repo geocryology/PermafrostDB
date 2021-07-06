@@ -4,7 +4,7 @@
 \alias{dbpf_device_report}
 \title{Print a report on a specific device}
 \usage{
-dbpf_device_report(serial_number)
+dbpf_device_report(con, serial_number)
 }
 \arguments{
 \item{serial_number}{Serial number of device to query}

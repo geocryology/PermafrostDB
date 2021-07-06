@@ -4,8 +4,14 @@
 \alias{dbpf_export_csv_NWT}
 \title{Download database time series in CSV ASCII format}
 \usage{
-dbpf_export_csv_NWT(con, location_name, project_name, file_name,
-  freq = "daily", split = T)
+dbpf_export_csv_NWT(
+  con,
+  location_name,
+  project_name,
+  file_name,
+  freq = "daily",
+  split = T
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con}

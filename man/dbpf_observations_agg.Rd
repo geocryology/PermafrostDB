@@ -4,10 +4,17 @@
 \alias{dbpf_observations_agg}
 \title{Return statistics about observations in DB}
 \usage{
-dbpf_observations_agg(con, location_name, unit_of_measurement = "C",
-  period = 1, time_b = "1950-01-01 00:00:00+00",
-  time_e = "2050-01-01 00:00:00+00", verbose = FALSE, fetch = FALSE,
-  n = 1e+05)
+dbpf_observations_agg(
+  con,
+  location_name,
+  unit_of_measurement = "C",
+  period = 1,
+  time_b = "1950-01-01 00:00:00+00",
+  time_e = "2050-01-01 00:00:00+00",
+  verbose = FALSE,
+  fetch = FALSE,
+  n = 1e+05
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
@@ -56,7 +63,6 @@ These simple functions return all data as data frames. When
          example, a daily average (period = 24) will include all values 
          between 2016-11-01 00:00:00 and 2016-11-02 23:59:59 under the 
          timestamp 2016-11-01 00:00:00.
-
 
 The unit_of_measurement variable is used to distinguish between
 different measurement types.  The default (C) will return observations that 
