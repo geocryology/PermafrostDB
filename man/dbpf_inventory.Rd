@@ -4,7 +4,7 @@
 \alias{dbpf_inventory}
 \title{Inventory observations}
 \usage{
-dbpf_inventory(type = "observations_by_locations")
+dbpf_inventory(con, type = "observations_by_locations")
 }
 \arguments{
 \item{type}{Character string indicating the type of inventory to be returned.
@@ -18,7 +18,8 @@ Return data frame with a summary of observations in DB
 Return data frame with a summary of observations in DB
 }
 \examples{
-dbpf_inventory() # get all GST automatically
+con <- dbpf_con()
+dbpf_inventory(con) # get all GST automatically
 
 }
 \author{

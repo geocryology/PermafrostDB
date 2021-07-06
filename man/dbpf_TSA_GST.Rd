@@ -4,11 +4,26 @@
 \alias{dbpf_TSA_GST}
 \title{Time Series Analysis for GST}
 \usage{
-dbpf_TSA_GST(con, out.path, inventory, time_b = "1950-01-01 00:00:00+00",
-  time_e = "2050-01-01 00:00:00+00", v1 = 0.1, v2 = 0.3,
-  lengthsnow = 5, MDr.sd = 0.3, v = 0.25, tperc = 40,
-  sdoutlier = 3, sdsteep = 0.75, temp = 0.2, slopesd = 0.1,
-  tempsd = 0.01, lengthzc = 2, wateryear = 10)
+dbpf_TSA_GST(
+  con,
+  out.path,
+  inventory,
+  time_b = "1950-01-01 00:00:00+00",
+  time_e = "2050-01-01 00:00:00+00",
+  v1 = 0.1,
+  v2 = 0.3,
+  lengthsnow = 5,
+  MDr.sd = 0.3,
+  v = 0.25,
+  tperc = 40,
+  sdoutlier = 3,
+  sdsteep = 0.75,
+  temp = 0.2,
+  slopesd = 0.1,
+  tempsd = 0.01,
+  lengthzc = 2,
+  wateryear = 10
+)
 }
 \arguments{
 \item{con}{connection to PermafrostDB}

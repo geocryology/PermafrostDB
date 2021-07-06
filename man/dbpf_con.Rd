@@ -4,7 +4,7 @@
 \alias{dbpf_con}
 \title{dbpf_con}
 \usage{
-dbpf_con(user, passwd, host, port = "5432")
+dbpf_con(user, passwd, host, port = "5432", database = "observations")
 }
 \arguments{
 \item{user}{character, User name}
@@ -14,6 +14,8 @@ dbpf_con(user, passwd, host, port = "5432")
 \item{host}{character, Location of database server, This is usually an IP address or a URL.}
 
 \item{port}{character, port on which to make request.  Typically "5432" for postgres databases.}
+
+\item{database}{character, "observations" or for testDB:"obs_dev"}
 }
 \value{
 Returns a DB connection object.

@@ -4,10 +4,16 @@
 \alias{dbpf_observations_raw}
 \title{Get raw observations}
 \usage{
-dbpf_observations_raw(con, location_name, unit_of_measurement = "C",
-  height_top = -0.1, height_bot = -0.1,
-  time_b = "1950-01-01 00:00:00+00", time_e = "2050-01-01 00:00:00+00",
-  verbose = FALSE)
+dbpf_observations_raw(
+  con,
+  location_name,
+  unit_of_measurement = "C",
+  height_top = -0.1,
+  height_bot = -0.1,
+  time_b = "1950-01-01 00:00:00+00",
+  time_e = "2050-01-01 00:00:00+00",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

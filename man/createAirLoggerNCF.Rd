@@ -4,8 +4,13 @@
 \alias{createAirLoggerNCF}
 \title{Create empty netCDF file for surface temperatures}
 \usage{
-createAirLoggerNCF(file, n_timestep, n_stations, close_file = F,
-  time_units = "days since 1970-01-01 00:00:00")
+createAirLoggerNCF(
+  file,
+  n_timestep,
+  n_stations,
+  close_file = F,
+  time_units = "days since 1970-01-01 00:00:00"
+)
 }
 \arguments{
 \item{file}{character, path to output netCDF file (*.nc)}

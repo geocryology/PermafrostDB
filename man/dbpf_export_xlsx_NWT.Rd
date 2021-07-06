@@ -4,8 +4,14 @@
 \alias{dbpf_export_xlsx_NWT}
 \title{Write permafrost data as NWT xlsx standard}
 \usage{
-dbpf_export_xlsx_NWT(con, location_name, project_name, file_name,
-  freq = "hourly", split = T)
+dbpf_export_xlsx_NWT(
+  con,
+  location_name,
+  project_name,
+  file_name,
+  freq = "hourly",
+  split = T
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
@@ -23,7 +29,6 @@ with the NTGS xlsx file standard for ground temperature data.
 }
 \details{
 Details in NWT open report (unpublished)
-
 
 This function relies on the Rtools library to create the xlsx file.
 This can be downloaded from https://cran.r-project.org/bin/windows/Rtools/

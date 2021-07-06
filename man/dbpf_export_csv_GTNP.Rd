@@ -4,8 +4,13 @@
 \alias{dbpf_export_csv_GTNP}
 \title{Download database time series in GTNP-style ASCII format}
 \usage{
-dbpf_export_csv_GTNP(con, location_name, output_directory,
-  freq = "daily", type = "Ground_Temperature")
+dbpf_export_csv_GTNP(
+  con,
+  location_name,
+  output_directory,
+  freq = "daily",
+  type = "Ground_Temperature"
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}

@@ -4,7 +4,7 @@
 \alias{dbpf_fields}
 \title{Return table of fields for all tables}
 \usage{
-dbpf_fields(tables = "")
+dbpf_fields(con, tables = "")
 }
 \arguments{
 \item{table}{Character string or vector of table name(s). If empty, fields 
@@ -22,7 +22,8 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
-fds   <- dbpf_fields(tables = "")
+con <- dbpf_con()
+fds   <- dbpf_fields(con, tables = "")
 fds_o <- dbpf_fields(tables = "observations")
 
 }

@@ -4,13 +4,22 @@
 \alias{dbpf_export_csv_generic}
 \title{Download database time series in CSV ASCII format}
 \usage{
-dbpf_export_csv_generic(con, location_name, output_directory,
-  freq = "daily", unit_of_measurement = "C",
-  measurement_name = "Ground_Temperature", date_header = "Date",
-  date_format = "\%Y/\%m/\%d \%H:\%M", depth_header_units = "m",
-  depth_header_prefix = NULL, depth_header_suffix = NULL,
-  depth_header_precision = 2, depth_positive_down = T,
-  measurement_precision = 2)
+dbpf_export_csv_generic(
+  con,
+  location_name,
+  output_directory,
+  freq = "daily",
+  unit_of_measurement = "C",
+  measurement_name = "Ground_Temperature",
+  date_header = "Date",
+  date_format = "\%Y/\%m/\%d \%H:\%M",
+  depth_header_units = "m",
+  depth_header_prefix = NULL,
+  depth_header_suffix = NULL,
+  depth_header_precision = 2,
+  depth_positive_down = T,
+  measurement_precision = 2
+)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con}

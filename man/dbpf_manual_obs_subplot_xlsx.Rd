@@ -4,8 +4,7 @@
 \alias{dbpf_manual_obs_subplot_xlsx}
 \title{Import subplot data and manual observations from XLS file into DB}
 \usage{
-dbpf_manual_obs_subplot_xlsx(con, file_xlsx, mode = "test",
-  dbformat = FALSE)
+dbpf_manual_obs_subplot_xlsx(con, file_xlsx, mode = "test", dbformat = FALSE)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
