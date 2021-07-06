@@ -147,8 +147,8 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
     })
   }
   
-  if (ssh_host == db_host){
-    db_host <- "127.0.0.1"
+  if (ssh_host == host){
+    host <- "127.0.0.1"
   }
 
   pid <- create_tunnel(ssh_user=ssh_user,
