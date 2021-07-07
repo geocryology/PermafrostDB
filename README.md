@@ -38,7 +38,7 @@ Your file should contain the following three lines, with the information on the 
 
 ```
 user,passwd,host,port
-"groucho","superS3cretP@ssw0rd","206.145.32.44","5432"
+"groucho","swordfish","206.145.32.44","5432"
 
 ```
 #### Secure access
