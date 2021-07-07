@@ -187,19 +187,44 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
 #' @export
 create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, local_port=5555, ssh_port=22){
   
-  dbpf_close_tunnel()
+  if (!require(ssh)){
+    install.packages('ssh')
+  }
   
-  pid <- sys::exec_background(cmd='ssh',
-                      std_out = FALSE,
-                      std_err = FALSE,
-                      args = c("-L", 
-                               stringr::str_glue("127.0.0.1:{local_port}:{db_host}:{db_port}"),
-                               stringr::str_glue("{ssh_user}@{ssh_host}"), 
-                               "-i", 
-                               gsub( "\\\\", "/", ssh_keyfile))
+  dbpf_close_tunnel()
+ 
+  errlog <- tempfile("dbpf_err", fileext = ".txt")
+  outlog <- tempfile("dbpf_out", fileext = ".txt")
+  
+
+  cmd <- paste0("ssh::ssh_tunnel(ssh::ssh_connect(", 
+                str_glue("host = '{ssh_user}@{ssh_host}:{ssh_port}', "),
+                str_glue("keyfile='{gsub( '\\\\\\\\', '/', ssh_keyfile)}'),"),
+                str_glue("port = {local_port}, target = '{db_host}:{db_port}')"))
+
+  pid <- sys::r_background(
+    std_out = FALSE,
+    std_err = errlog,
+    args = c("-e", cmd)
   )
+  # 
+  # pid <- sys::exec_background(cmd='ssh',
+  #                     std_out = FALSE,
+  #                     std_err = errlog,
+  #                     args = c("-L", 
+  #                              stringr::str_glue("127.0.0.1:{local_port}:{db_host}:{db_port}"),
+  #                              stringr::str_glue("{ssh_user}@{ssh_host}"), 
+  #                              "-i", 
+  #                              gsub( "\\\\", "/", ssh_keyfile))
+  # )
+  
+  # Sys.sleep(2)
+  # if (any(grepl("Connection closed", readLines(errlog)))){
+  #   stop("could not connect")
+  # }
+  
   assign("dbpf.tunnel.pid", pid, envir=.GlobalEnv)
-  print(stringr::str_glue("Created tunnel to database on {db_host}:{db_port} on local port {local_port} through {ssh_host}. Running as process {pid}"))
+  print(stringr::str_glue("Attempting tunnel to database on {db_host}:{db_port} on local port {local_port} through {ssh_host}. Running as process {pid}"))
   
   return(dbpf.tunnel.pid)
 }

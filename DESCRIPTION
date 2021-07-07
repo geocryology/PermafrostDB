@@ -1,7 +1,7 @@
 Package: PermafrostDB
 Title: PermafrostDB
 Description: R interface for Carleton Permafrost database. This interface uses a read-only login to the database and is mostly for data access. Data import is done over a web interface with separate credentials, INSERT, UPDATE, DELETE queries run from this R interface need to establish a database connection with suitable login credentials, first. When you use R to INSERT, UPDATE, DELETE, please: (a) document your work meticulously, (b) think before you execute, and (c) make sure you use transactions with BEGIN / ROLLBACK / COMMIT where you can first test your changes before making them permanent.
-Version: 1.1.1
+Version: 1.1.2
 Author: Stephan Gruber <stephan.gruber@carleton.ca>
 Maintainer: Stephan Gruber <stephan.gruber@carleton.ca>
 Encoding: UTF-8
@@ -9,29 +9,30 @@ Depends:
 	R (>= 3.0.1),
 	lubridate,
 	RPostgres,
-	xts,
-	stringr (>= 1.2.0),
 	openxlsx,
-	shiny
+	shiny,
+	stringr (>= 1.2.0),
+	xts
 Imports:
+  data.table,
 	ncdf4,
-	reshape2,
-	data.table
+	reshape2
 Suggests:
+	aqp,
+  Cairo,
+  colorRamps,
+  dismo,
   dygraphs,
-	Cairo,
  	ggplot2,
  	PermafrostTools (>= 1.3.1),
+ 	pixmap,
  	plotrix,
 	plotKML,
 	rgdal,
-	sp,
-	dismo,
-	pixmap,
 	RSAGA,
-	aqp,
-	stars,
-	colorRamps
+	sp,
+	ssh,
+	stars
 License: # getOptions('devtools.desc.license')
 LazyData: true
 Collate:
