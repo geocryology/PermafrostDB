@@ -27,7 +27,7 @@ Most functions in `PermafrostDB` require a database connection object. This is c
 
 ```R
 con <- dbpf_con(user="groucho",
-                passwd="superS3cretP@ssw0rd",
+                passwd="swordfish",
                 host="206.145.32.44",
                 port="5432")
 ```
@@ -40,6 +40,13 @@ Your file should contain the following three lines, with the information on the 
 user,passwd,host,port
 "groucho","superS3cretP@ssw0rd","206.145.32.44","5432"
 
+```
+#### Secure access
+Because Postgres is not designed to be exposed to the wider internet, you may be restricted in the locations or IP addresses from which you are able to access the database. PermafrostDB provides the function `dbpf_tunnel` as a way to connect to the database securely using [SSH tunneling](https://i.stack.imgur.com/a28N8.png). Note that the database credentials remain the same as for `dbpf_con` but you additionally provide SSH credentials to a location that is able to access the database directly.
+
+```R
+con <- dbpf_tunnel(ssh_user = 'user01', ssh_host='206.12.93.23', ssh_port = '22', ssh_keyfile = "C:/Users/me/sshkey.pem",
+                   user = 'groucho', passwd = 'swordfish', host = '206.145.32.44', port = '5432')
 ```
 
 ### Accessing the database
