@@ -29,10 +29,16 @@
 # =============================================================================
 
 dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
-	require(sp)
-	require(rgdal)
-	require(plotKML)
-  
+	
+  for (package in c("sp", "rgdal", "plotrix", "plotKML", "rgdal", "sp", "dismo",
+	                  "pixmap", "RSAGA", "aqp", "stars", "colorRamps")){
+	  if (!require(package, character.only = TRUE)){
+	    message(paste0("Missing package: ", package, ". Installing now."))
+	    install.packages(package)
+	    library(package, character.only = TRUE)
+	  }
+	}
+
 	if (missing(con)){
 	  con <- dbpf_con()
 	}
@@ -55,21 +61,21 @@ dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
 	df <- loc[,-which(names(loc) %in% c('id', 'record_observations'))]
 	
 	#make spatial points
-	sp <- SpatialPointsDataFrame(subset(loc, select=c(lon,lat)), 
+	spdf <- sp::SpatialPointsDataFrame(subset(loc, select=c(lon,lat)), 
 	                             subset(loc, select=c(-lon,-lat)))
-	proj4string(sp) <- CRS("+init=epsg:4326")
+	sp::proj4string(spdf) <- sp::CRS("+init=epsg:4326")
 	
 	#write kml
 	#TODO: give table: https://github.com/cran/plotKML/blob/master/R/layer.SpatialPoints.R
 	# also see http://gsif.isric.org/doku.php?id=wiki:tutorial_plotkml 
-	kml_open(kmlfile)   
-	kml_layer.SpatialPoints(sp, 
+	plotKML::kml_open(kmlfile)   
+	plotKML::kml_layer.SpatialPoints(spdf, 
 	                        points_names = loc$name,
 	                        balloon=T,  # show metadata in balloon
 	                        #size=0.65,
 	                        #shape="http://maps.google.com/mapfiles/kml/pal2/icon18.png",
 	                        colour='black')
-	kml_close(kmlfile)                        
+	plotKML::kml_close(kmlfile)                        
 	
 	# feedback
 	print('===> KML does not contain plots (ploygon locations), feature needs to be added to code.')  
