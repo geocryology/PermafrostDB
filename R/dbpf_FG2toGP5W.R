@@ -13,7 +13,6 @@
 #'   
 #' @details Function takes a file path, scans for FG2 files to be converted.
 #'          
-#' @export
 #' @examples
 #' # Example: passing directory of R files
 #' dbpf_FG2toGP5W('/usr/desktop/FG2CSVs/', '/usr/desktop/FG2CSVs/converted')
@@ -80,8 +79,8 @@ convertFG2 <- function(filePath){
   # Checking to see if /convertedFG2 exists in cur dir
   if (dir.exists(direc) == 0) dir.create(direc)
   
-  # Creating new file name
-  newFile <- gsub("fg2", 'GP5Wcon', ignore.case=T, basename(filePath))
+  # Creating new file 
+  newFile <- paste0(basename(filePath), "_GP5WFormatted")
   sink(paste(direc, newFile, sep='/'))
   
   for(line in lines){

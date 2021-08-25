@@ -36,8 +36,8 @@
 
 dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C",
                                   period = "raw",
-                                  time_b = "2015-07-01 00:00:00+00", 
-                                  time_e = "2020-08-31 23:59:59+00",
+                                  time_b = "2018-07-01 00:00:00+00", 
+                                  time_e = "2021-08-05 23:59:59+00",
                                   verbose = FALSE) {
                                   	    
 	require(xts)
@@ -45,7 +45,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
 	Sys.setenv(TZ='UTC')
 
 	# get data
-    con <- dbpf_con()
+    #con <- dbpf_con()
     if (period == "raw") {
     	# only take one location, not a vector
     	location_name <- location_name[1]
@@ -89,7 +89,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     		}  
     	}           	
     }                            	
- 	dbDisconnect(con)
+ 	#dbDisconnect(con)
 	
     #make time series
  	qxts <- xts(series, order.by = time$time)
