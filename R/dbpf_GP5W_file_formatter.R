@@ -70,6 +70,11 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     outFile <- paste0(newDir, fileName,sep='')
     inFile <- paste0(inPath, fileName,sep='')
     
+    if (file.exists(outFile) == TRUE) {
+      print("Skipping this file ^^")
+      next
+    }
+    
     # Reading in first line of csv
     conFile <- file(inFile,"r")
     firstLine <- readLines(conFile,n=1)
@@ -83,6 +88,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     data <- data[!grepl("Firmware Reset", data$No),]
     print(fileName)
     data <- time_cleaner(con, firstLine, data)
+    if (data == FALSE) next
     
     write(firstLine, file=outFile)
     write.table(data, file=outFile, 
@@ -118,21 +124,18 @@ time_cleaner <- function(con, firstLine, data){
   locQuery <- paste0("SELECT name FROM locations WHERE coordinates = '", most_recent_obs$location, "' ")  
   site_name <- dbGetQuery(con, locQuery)
   most_recent_obs <- most_recent_obs$corrected_utc_time
-  print(most_recent_obs)
   # Delete all times in csv before most recent observation.
   # Have to create temp column 'tempTime' to do this.
   data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
   data <- data[data[["tempTime"]] > most_recent_obs, ]
   data <- data[, -grep("tempTime", colnames(data))]
-  
   # Fixing 'No' column 
-  data$No <- seq(1, length(data$No))
-  
+  if (length(data$No) < 1) {
+    return(FALSE)
+  }
+  else data$No <- seq(1, length(data$No))
+
   return(data)
 }
-
-dbpf_GP5W_file_formatter(con, '/Users/hannahmacdonell/Desktop/Yk2021/Readouts/20210810')
-
-
 
 

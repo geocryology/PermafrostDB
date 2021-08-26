@@ -29,7 +29,7 @@
 #' 
 #' @export
 #' @examples
-#' dbpf_observations_plot(con, "NGO-RC-163_ST01")
+#' dbpf_observations_plot(con, "YK16-SO06_01")
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
@@ -113,4 +113,14 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
   
   	# display graph
   	graph 
- }
+}
+
+most_recent_time <- function(con, location_name){
+  locIdQuery <- paste0("SELECT coordinates FROM locations WHERE name = '", location_name, "'")        
+  locID <- dbGetQuery(con, locIdQuery)
+  obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
+                     "WHERE observations.location = '", locID, "' ORDER BY corrected_utc_time ",
+                     "DESC LIMIT 1")
+  most_recent_obs <- dbGetQuery(con, obsQuery)
+  return(most_recent_obs)
+}

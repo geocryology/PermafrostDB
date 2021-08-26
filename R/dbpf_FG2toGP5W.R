@@ -80,7 +80,10 @@ convertFG2 <- function(filePath){
   if (dir.exists(direc) == 0) dir.create(direc)
   
   # Creating new file 
-  newFile <- paste0(basename(filePath), "_GP5WFormatted")
+  newFile <- (basename(filePath))
+  newDir <- paste0(dirname(filePath), "_GP5WFormatted")
+  print(newFile)
+  print(newDir)
   sink(paste(direc, newFile, sep='/'))
   
   for(line in lines){
@@ -97,15 +100,20 @@ convertFG2 <- function(filePath){
     
     # non comment lines
     else{
+      
+      # NO,TIME,#1((unk.)),#2((unk.)),HK-TEMP(oC),HK-BAT(V)
+      # No,Time,#1:oC,#HK-Bat:V,#HK-Temp:oC
+      
+      
       if (grepl("TIME", line) == 1){
         line <- gsub("NO", "No", line)
         line <- gsub("TIME", "Time", line)
-        line <- gsub("HK-BAT", "#HK-Bat", line)
-        line <- gsub("\\(", ":", line)
-        line <- gsub("\\)", "", line)
+        line <- gsub("HK-BAT", "#HK-Bat:V", line)
+        line <- gsub("HK-TEMP(oC)", "#HK-Temp:oC", line)
+        line <- gsub("\\(\\(unk\\.\\)\\)", ":oC", line) # Replace ((unk.))
         cat(line)
       }
-      # Resular time stamp info, nothing to change.
+      # Regular time stamp info, nothing to change.
       else cat(line)
     }
   } # End of for loop
@@ -138,6 +146,10 @@ rewritedir <- function(inPath){
   return(inPath)
 }
 
+dbpf_FG2toGP5W('/Users/hannahmacdonell/Desktop/E53159_20210819161555.csv')
+# filePath <- '/Users/hannahmacdonell/Desktop/E53159_20210819161555.csv'
+# fileName <- (basename(filePath)) # fileName
+# newDir <- (paste0(dirname(filePath), "_GP5WFormatted/")) # newDir
+# print(paste0(newDir, fileName))
 
-#dbpf_FG2toGP5W('/Users/hannahmacdonell/Desktop/testing/')
 

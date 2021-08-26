@@ -30,8 +30,7 @@ dbpf_device_report <- function(con, serial_number) {
     	sen <- dbpf_device_sensors(con, serial_number)
     	query <- paste0("SELECT * FROM devices WHERE serial_number = '", serial_number, "'")        
 	    dev <- dbGetQuery(con, query)
-		dbDisconnect(con)
-		
+
 		writeLines("\n\n")
 		print(paste("=== DETAILS for device", serial_number, "============="))	
 		print(dev)
