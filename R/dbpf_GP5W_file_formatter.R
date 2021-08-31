@@ -40,6 +40,7 @@
 # =============================================================================
 library("tools")
 library("stringr")
+library('data.table')
 
 
 dbpf_GP5W_file_formatter <- function(con, inPath) {
@@ -75,17 +76,26 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
       next
     }
     
+    if 
+    
     # Reading in first line of csv
     conFile <- file(inFile,"r")
     firstLine <- readLines(conFile,n=1)
     close(conFile)
     
     # Open as DF, del HK col and del Parameter rows
-    data <- read.csv(inFile, skip=2, header=TRUE, check.names=FALSE)
+    data <- fread(inFile, 
+                  skip = "No,",
+                  sep = ',',
+                  stringsAsFactors = TRUE,
+                  fill=TRUE,
+                  nrows = 5)
+    data <- as.data.frame(data)
     data <- data[, -grep("HK", colnames(data))]
-    data <- data[!grepl("Parameter", data$No),]
-    data <- data[!grepl("Delta Time", data$No),]
-    data <- data[!grepl("Firmware Reset", data$No),]
+
+    data <- data[!grepl("Parameter",data$No),]
+    data <- data[!grepl("Delta Time",data$No),]
+    data <- data[!grepl("Firmware Reset",data$No),]
     print(fileName)
     data <- time_cleaner(con, firstLine, data)
     if (data == FALSE) next
@@ -97,9 +107,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
                 row.names=FALSE,
                 sep=',',
                 quote=FALSE)
-    
-    #print(paste0("File ", fileName," has been reformatted"))
-  }
+    }
 }
 
 
@@ -121,16 +129,17 @@ time_cleaner <- function(con, firstLine, data){
                   "WHERE device_id = '", devID, "' ORDER BY corrected_utc_time ",
                   "DESC LIMIT 1")
   most_recent_obs <- dbGetQuery(con, obsQuery)
-  locQuery <- paste0("SELECT name FROM locations WHERE coordinates = '", most_recent_obs$location, "' ")  
-  site_name <- dbGetQuery(con, locQuery)
   most_recent_obs <- most_recent_obs$corrected_utc_time
   # Delete all times in csv before most recent observation.
   # Have to create temp column 'tempTime' to do this.
   data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
   data <- data[data[["tempTime"]] > most_recent_obs, ]
+  print(most_recent_obs)
   data <- data[, -grep("tempTime", colnames(data))]
+  print(head(data, n=1))
   # Fixing 'No' column 
   if (length(data$No) < 1) {
+    print("File already uploaded ^^ ")
     return(FALSE)
   }
   else data$No <- seq(1, length(data$No))

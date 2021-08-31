@@ -15,10 +15,7 @@
 #'          
 #' @examples
 #' # Example: passing directory of R files
-#' dbpf_FG2toGP5W('/usr/desktop/FG2CSVs/', '/usr/desktop/FG2CSVs/converted')
-#' 
-#' # Example: Passing a single file. 
-#' dbpf_FG2toGP5W('/usr/desktop/FG2CSVs/11232020_fg2.csv', '/usr/desktop/FG2CSVs/converted')
+#' dbpf_FG2toGP5W('/usr/desktop/FG2CSVs/')
 #' 
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
@@ -44,15 +41,12 @@ dbpf_FG2toGP5W <- function(inPath){
   if (direc == TRUE){
     inPath <- rewritedir(inPath)
     inFiles <- list.files(inPath)
-    log <- structure(vector(mode = "list", length = length(inFiles)),names=inFiles)
-    print(paste("Files successfully converted and moved to '", newDir, "' include:",sep=''))
+    print(paste0("Files successfully converted and moved to '", newDir, "' include:",sep=''))
     for (file in inFiles){
       file <- paste(inPath,file,sep='')
       if (fileType(file) == "FG2"){
         convertFG2(file)
-        # Log
-        print(paste(basename(file),"converted."))
-      }
+       }
     }
   }
   
@@ -86,39 +80,42 @@ convertFG2 <- function(filePath){
   print(newDir)
   sink(paste(direc, newFile, sep='/'))
   
+  headerCount <- TRUE # To avoid multiple headers
+  
   for(line in lines){
+    # If info line: translate
+    if (grepl("<LOGGER", line) == 1) {
+      logger <- substr(str_extract(line, "\\$......\\>"), 2, 7) # Pulls out 6-Digit logger ID
+      newLine <- sprintf("Logger: #%s 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)\n", logger)
+      cat(newLine)
+      next
+    }
     
-    # check if it is an info line
-    if (grepl("<", line) == 1){
-      if (grepl("LOGGER", line) == 1){
-        logger <- substr(str_extract(line, "\\$......\\>"), 2, 7) # Pulls out 6-Digit logger ID
-        newLine <- sprintf("Logger: #%s 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)\n", logger)
-        cat(newLine)
+    # If any other header line: skip
+    if (grepl("<",line) == 1) next
+    
+    # If first col names: translate
+    if (grepl("NO,TIME,", line)){
+      if (headerCount) {
+        headerCount <- FALSE
+        line <- gsub("NO", "No", line)
+        line <- gsub("TIME", "Time", line)
+        line <- gsub("HK-BAT", "#HK-Bat:V", line)
+        line <- gsub("HK-TEMP....", "#HK-Temp:oC", line)
+        line <- gsub("\\(\\(unk\\.\\)\\)", ":oC", line) # Replace ((unk.))
+        cat(line,  sep="\n")
+        next
       }
       else next
     }
     
-    # non comment lines
-    else{
-      
-      # NO,TIME,#1((unk.)),#2((unk.)),HK-TEMP(oC),HK-BAT(V)
-      # No,Time,#1:oC,#HK-Bat:V,#HK-Temp:oC
-      
-      
-      if (grepl("TIME", line) == 1){
-        line <- gsub("NO", "No", line)
-        line <- gsub("TIME", "Time", line)
-        line <- gsub("HK-BAT", "#HK-Bat:V", line)
-        line <- gsub("HK-TEMP(oC)", "#HK-Temp:oC", line)
-        line <- gsub("\\(\\(unk\\.\\)\\)", ":oC", line) # Replace ((unk.))
-        cat(line)
-      }
-      # Regular time stamp info, nothing to change.
-      else cat(line)
-    }
+    # Regular time stamp info, nothing to change.
+    else cat(line, sep="\n")
+    
   } # End of for loop
   sink()
   close(con)
+  closeAllConnections()
   
 }
 
@@ -145,11 +142,5 @@ rewritedir <- function(inPath){
   if (char != '/') inPath <- paste(inPath, '/', sep='')
   return(inPath)
 }
-
-dbpf_FG2toGP5W('/Users/hannahmacdonell/Desktop/E53159_20210819161555.csv')
-# filePath <- '/Users/hannahmacdonell/Desktop/E53159_20210819161555.csv'
-# fileName <- (basename(filePath)) # fileName
-# newDir <- (paste0(dirname(filePath), "_GP5WFormatted/")) # newDir
-# print(paste0(newDir, fileName))
 
 
