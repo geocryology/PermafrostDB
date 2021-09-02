@@ -34,7 +34,7 @@
 #'          
 #' @examples
 #' # Example: passing directory of R files
-#' dbpf_HKClean('/usr/desktop/Yk2021/')
+#' dbpf_GP5W_file_formatter('/usr/desktop/Yk2021/')
 #' 
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
@@ -57,7 +57,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   }
   
   # Creating location of new directory
-  newDir <- paste(dirname(inPath), '/',basename(inPath),"_formatted/",sep='')
+  newDir <- paste(dirname(inPath), '/',basename(inPath),"formatted/",sep='')
   
   if (dir.exists(newDir) == FALSE) {
     dir.create(newDir)

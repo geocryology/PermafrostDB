@@ -253,5 +253,4 @@ is_file_uploaded <- function(con, filePath, log){
   return (test.result)
 }
 
-dbpf_observations_upload_check(con, '/Users/hannahmacdonell/Desktop/TestFolder')
 
