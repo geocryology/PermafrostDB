@@ -253,4 +253,20 @@ is_file_uploaded <- function(con, filePath, log){
   return (test.result)
 }
 
+fileName <- "/Users/hannahmacdonell/Desktop/loggers.txt"
+conn <- file(fileName,open="r")
+linn <-readLines(conn)
+for (i in 1:length(linn)){
+  serial_number <- linn[i]
+  devIdQuery <- paste0("SELECT id FROM devices WHERE serial_number = '",
+                       serial_number, "'")        
+  obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
+                     "WHERE device_id = '", dbGetQuery(con, devIdQuery), 
+                     "' ORDER BY corrected_utc_time DESC LIMIT 1 ")
+  most_recent_db_obs <- dbGetQuery(con, obsQuery)
+  print(paste0(serial_number, most_recent_db_obs, sep=' - '))  
+}
+close(conn)
+
+
 

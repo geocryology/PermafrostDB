@@ -47,7 +47,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   # test for existence
   
   if (dir.exists(inPath) == FALSE) {
-    print(paste0("Location '", inPath, "' does not exist."))
+    cat(paste0("Location '", inPath, "' does not exist.\n"))
     return(0)
   }
   
@@ -61,7 +61,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   
   if (dir.exists(newDir) == FALSE) {
     dir.create(newDir)
-    print(paste0("Created directory to store formatted data files at: ", newDir, sep=''))
+    cat(paste0("Created directory to store formatted data files at: ", newDir, sep=''))
   }
   
   files <- list.files(inPath)
@@ -72,11 +72,9 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     inFile <- paste0(inPath, fileName,sep='')
     
     if (file.exists(outFile) == TRUE) {
-      print("Skipping this file ^^")
+      cat("Skipping this file ^^/n")
       next
     }
-    
-    if 
     
     # Reading in first line of csv
     conFile <- file(inFile,"r")
@@ -96,7 +94,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     data <- data[!grepl("Parameter",data$No),]
     data <- data[!grepl("Delta Time",data$No),]
     data <- data[!grepl("Firmware Reset",data$No),]
-    print(fileName)
+    cat(paste0('\n', fileName, ' ---------------'))
     data <- time_cleaner(con, firstLine, data)
     if (data == FALSE) next
     
@@ -120,6 +118,7 @@ time_cleaner <- function(con, firstLine, data){
   # Get serial_number from firstLine
   if (grepl("Logger", firstLine) == 1){
     serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7) 
+    cat(serial_number, '/n')
   }
   
   # Use device.id to find most recent observation in DB
@@ -134,12 +133,12 @@ time_cleaner <- function(con, firstLine, data){
   # Have to create temp column 'tempTime' to do this.
   data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
   data <- data[data[["tempTime"]] > most_recent_obs, ]
-  print(most_recent_obs)
+  cat(substr(most_recent_obs, 1, 10))
   data <- data[, -grep("tempTime", colnames(data))]
-  print(head(data, n=1))
   # Fixing 'No' column 
   if (length(data$No) < 1) {
-    print("File already uploaded ^^ ")
+    cat("File %s already uploaded", serial_number, '/n')
+    
     return(FALSE)
   }
   else data$No <- seq(1, length(data$No))

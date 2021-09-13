@@ -84,4 +84,7 @@ Collate:
   	'utils.R'
   	'dbpf_export_nc_generic.R'
   	'dbpf_FG2toGP5W.R'
+  	  'dbpf_GP5W_file_formatter.R'
+  'dbpf_observations_upload_check.R'
+  
 RoxygenNote: 7.1.1
