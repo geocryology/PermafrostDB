@@ -41,13 +41,17 @@
 library("tools")
 library("stringr")
 library('data.table')
+library('lubridate')
+options(warn=-1)
+
+
 
 
 dbpf_GP5W_file_formatter <- function(con, inPath) {
   # test for existence
   
   if (dir.exists(inPath) == FALSE) {
-    cat(paste0("Location '", inPath, "' does not exist.\n"))
+    cat("Location ", inPath, " does not exist.\n")
     return(0)
   }
   
@@ -61,7 +65,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   
   if (dir.exists(newDir) == FALSE) {
     dir.create(newDir)
-    cat(paste0("Created directory to store formatted data files at: ", newDir, sep=''))
+    cat("Created directory to store formatted data files at: \n", newDir, "\n")
   }
   
   files <- list.files(inPath)
@@ -72,7 +76,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     inFile <- paste0(inPath, fileName,sep='')
     
     if (file.exists(outFile) == TRUE) {
-      cat("Skipping this file ^^/n")
+      cat("Skipping ", fileName, " \n")
       next
     }
     
@@ -86,15 +90,14 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
                   skip = "No,",
                   sep = ',',
                   stringsAsFactors = TRUE,
-                  fill=TRUE,
-                  nrows = 5)
+                  fill=TRUE)
     data <- as.data.frame(data)
     data <- data[, -grep("HK", colnames(data))]
 
     data <- data[!grepl("Parameter",data$No),]
     data <- data[!grepl("Delta Time",data$No),]
     data <- data[!grepl("Firmware Reset",data$No),]
-    cat(paste0('\n', fileName, ' ---------------'))
+
     data <- time_cleaner(con, firstLine, data)
     if (data == FALSE) next
     
@@ -118,7 +121,6 @@ time_cleaner <- function(con, firstLine, data){
   # Get serial_number from firstLine
   if (grepl("Logger", firstLine) == 1){
     serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7) 
-    cat(serial_number, '/n')
   }
   
   # Use device.id to find most recent observation in DB
@@ -127,22 +129,30 @@ time_cleaner <- function(con, firstLine, data){
   obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
                   "WHERE device_id = '", devID, "' ORDER BY corrected_utc_time ",
                   "DESC LIMIT 1")
-  most_recent_obs <- dbGetQuery(con, obsQuery)
-  most_recent_obs <- most_recent_obs$corrected_utc_time
+  most_recent_obs_df <- dbGetQuery(con, obsQuery)
   # Delete all times in csv before most recent observation.
   # Have to create temp column 'tempTime' to do this.
   data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
-  data <- data[data[["tempTime"]] > most_recent_obs, ]
-  cat(substr(most_recent_obs, 1, 10))
+  print(head(data, n = 1))
+  data <- data[data[["tempTime"]] > most_recent_obs_df[1, 1], ]
+  print(head(data, n=1))
+  date <- (substr(most_recent_obs, 1, 10))
+  print(most_recent_obs_df[1, 1])
+  
+  
+  
   data <- data[, -grep("tempTime", colnames(data))]
   # Fixing 'No' column 
   if (length(data$No) < 1) {
-    cat("File %s already uploaded", serial_number, '/n')
+    cat(" (File ", serial_number," already uploaded) \n")
     
     return(FALSE)
   }
-  else data$No <- seq(1, length(data$No))
+  
+  else {
+    data$No <- seq(1, length(data$No))
+    cat(" (File ", serial_number," clipped to this time stamp) \n")
+  }
 
   return(data)
 }
-
