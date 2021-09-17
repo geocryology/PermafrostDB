@@ -136,7 +136,6 @@ time_cleaner <- function(con, firstLine, data){
   print(head(data, n = 1))
   data <- data[data[["tempTime"]] > most_recent_obs_df[1, 1], ]
   print(head(data, n=1))
-  date <- (substr(most_recent_obs, 1, 10))
   print(most_recent_obs_df[1, 1])
   
   
