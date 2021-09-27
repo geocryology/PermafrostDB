@@ -40,8 +40,8 @@
 # =============================================================================
 library("tools")
 library("stringr")
-library('data.table')
-library('lubridate')
+library("data.table")
+library("lubridate")
 options(warn=-1)
 
 
@@ -133,13 +133,8 @@ time_cleaner <- function(con, firstLine, data){
   # Delete all times in csv before most recent observation.
   # Have to create temp column 'tempTime' to do this.
   data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
-  print(head(data, n = 1))
   data <- data[data[["tempTime"]] > most_recent_obs_df[1, 1], ]
-  print(head(data, n=1))
   print(most_recent_obs_df[1, 1])
-  
-  
-  
   data <- data[, -grep("tempTime", colnames(data))]
   # Fixing 'No' column 
   if (length(data$No) < 1) {
