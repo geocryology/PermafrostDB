@@ -115,7 +115,8 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
 time_cleaner <- function(con, firstLine, data){
   
   if (missing(con)){
-    con <- dbpf_con()
+    cat('Please initiate con connection.')
+    return(FALSE)
   }
   
   # Get serial_number from firstLine
@@ -123,6 +124,10 @@ time_cleaner <- function(con, firstLine, data){
     serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7) 
   }
   
+  else{
+    cat('Cant find logger serial_number in file')
+    return(FALSE)
+  }
   # Use device.id to find most recent observation in DB
   devIdQuery <- paste0("SELECT id FROM devices WHERE serial_number = '", serial_number, "'")        
   devID <- dbGetQuery(con, devIdQuery)
@@ -139,7 +144,6 @@ time_cleaner <- function(con, firstLine, data){
   # Fixing 'No' column 
   if (length(data$No) < 1) {
     cat(" (File ", serial_number," already uploaded) \n")
-    
     return(FALSE)
   }
   
