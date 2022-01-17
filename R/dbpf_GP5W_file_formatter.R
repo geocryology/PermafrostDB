@@ -19,6 +19,9 @@
 #'              1,20.06.2016 16:57:55,26.2559,26.6283,26.8267,3.616,32.69
 #'              ...
 #'              
+#'              It will also (unfortunately) be slow as heck when working with new loggers with no
+#'              observations yet in the DB. Sorry <3
+#'              
 #' @param inPath character, path to csv directory
 #' @param con    connection to SensorDB
 #' 
@@ -51,7 +54,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   # test for existence
   
   if (dir.exists(inPath) == FALSE) {
-    cat("Location ", inPath, " does not exist.\n")
+    cat(paste0("Location ", inPath, " does not exist.\n"))
     return(0)
   }
   
@@ -65,7 +68,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   
   if (dir.exists(newDir) == FALSE) {
     dir.create(newDir)
-    cat("Created directory to store formatted data files at: \n", newDir, "\n")
+    cat(paste0("Created directory to store formatted data files at: \n", newDir, "\n"))
   }
   
   files <- list.files(inPath)
@@ -83,6 +86,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     # Reading in first line of csv
     conFile <- file(inFile,"r")
     firstLine <- readLines(conFile,n=1)
+    firstLine <- str_replace(firstLine, "#2:rH", "#2:%rH")
     close(conFile)
     
     # Open as DF, del HK col and del Parameter rows
@@ -92,12 +96,13 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
                   stringsAsFactors = TRUE,
                   fill=TRUE)
     data <- as.data.frame(data)
+    data[data == "(NO VALUE)"] <- "NaN"
+    data[data == "NA"] <- "NaN"
     data <- data[, -grep("HK", colnames(data))]
 
     data <- data[!grepl("Parameter",data$No),]
     data <- data[!grepl("Delta Time",data$No),]
     data <- data[!grepl("Firmware Reset",data$No),]
-
     data <- time_cleaner(con, firstLine, data)
     if (data == FALSE) next
     
@@ -131,26 +136,37 @@ time_cleaner <- function(con, firstLine, data){
   # Use device.id to find most recent observation in DB
   devIdQuery <- paste0("SELECT id FROM devices WHERE serial_number = '", serial_number, "'")        
   devID <- dbGetQuery(con, devIdQuery)
-  obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
-                  "WHERE device_id = '", devID, "' ORDER BY corrected_utc_time ",
-                  "DESC LIMIT 1")
-  most_recent_obs_df <- dbGetQuery(con, obsQuery)
-  # Delete all times in csv before most recent observation.
-  # Have to create temp column 'tempTime' to do this.
-  data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
-  data <- data[data[["tempTime"]] > most_recent_obs_df[1, 1], ]
-  print(most_recent_obs_df[1, 1])
-  data <- data[, -grep("tempTime", colnames(data))]
-  # Fixing 'No' column 
-  if (length(data$No) < 1) {
-    cat(" (File ", serial_number," already uploaded) \n")
-    return(FALSE)
+  if (obsExist(con, devID)){
+    obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
+                       "WHERE device_id = '", devID, "' ORDER BY corrected_utc_time ",
+                       "DESC LIMIT 1")
+    most_recent_obs_df <- dbGetQuery(con, obsQuery)
+    # Delete all times in csv before most recent observation.
+    # Have to create temp column 'tempTime' to do this.
+    data$tempTime <- as.POSIXct(gsub('\\.', '-', data$Time), format='%d-%m-%Y %H:%M:%OS')
+    data <- data[data[["tempTime"]] > most_recent_obs_df[1, 1], ]
+    print(most_recent_obs_df[1, 1])
+    data <- data[, -grep("tempTime", colnames(data))]
+    # Fixing 'No' column 
+    if (length(data$No) < 1) {
+      cat(paste0(' (File ', serial_number,' already uploaded) \n'))
+      return(FALSE)
+    }
+    
+    else {
+      data$No <- seq(1, length(data$No))
+      cat(paste0(" (File ", serial_number," clipped to this time stamp) \n"))
+    }
   }
-  
-  else {
-    data$No <- seq(1, length(data$No))
-    cat(" (File ", serial_number," clipped to this time stamp) \n")
-  }
-
   return(data)
+}
+
+obsExist <- function(con, devID){
+  obsQuery <- paste0("SELECT COUNT(*) FROM observations ",
+                     "WHERE device_id = '", devID, "'") 
+  obs_df <- dbGetQuery(con, obsQuery)
+  if (obs_df[1, 1] > 0) {
+    return(TRUE)
+  }
+  return(FALSE)
 }

@@ -1,6 +1,6 @@
 # =============================================================================
 #'
-#' @title Used to swap logger associated with a pre-existing string of loggers.
+#' @title Used to see if .csv is primed for upload.
 #'
 #' @description Inserts a data frame of new devices_locations into database.    
 #'
@@ -252,3 +252,4 @@ is_file_uploaded <- function(con, filePath, log){
   names(test.result) <- c("TEST", "STATUS", "NOTES")  
   return (test.result)
 }
+
