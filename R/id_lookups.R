@@ -4,7 +4,7 @@ service_required_id <- function(con){
   dbGetQuery(con, "
              SELECT id 
                FROM sensors 
-              WHERE label='service_required'")
+              WHERE label='maintenance_required'")
 }
 
 
@@ -13,7 +13,7 @@ service_completed_id <- function(con){
   dbGetQuery(con, "
              SELECT id
                FROM sensors
-              WHERE label='service_completed'")
+              WHERE label='maintenance_completed'")
 }
 
 
