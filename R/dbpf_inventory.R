@@ -32,7 +32,6 @@ dbpf_inventory <- function(con, type="observations_by_locations") {
 		                 "FROM locations INNER JOIN observations ON ",
 		                 "locations.coordinates = observations.location ",
 		                 "ORDER BY locations.name ASC;"))
-		dbDisconnect(con)
 		return(res)
 	}
 	

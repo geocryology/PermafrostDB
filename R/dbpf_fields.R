@@ -34,6 +34,5 @@ dbpf_fields <- function(con, tables = "") {
 	for (t in 1:length(tables)) {
 		fields <- rbind(fields, dbGetFields(con,tables[t]))
 	}
-	dbDisconnect(con) # close connection
 	return(fields)
 }

@@ -20,10 +20,11 @@
 # =============================================================================
 
 dbpf_devices <- function(con) {
-	con <- dbpf_con() # get connection
+  if (missing(con)){
+	  con <- dbpf_con() # get connection
+  }
 	query <- paste("SELECT * FROM devices")
 	devices <- dbGetQuery(con, query)
 	devices <- subset(devices, select=-id)
-	dbDisconnect(con) # close connection
 	return(devices)
 }

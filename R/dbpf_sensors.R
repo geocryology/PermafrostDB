@@ -32,6 +32,5 @@ dbpf_sensors <- function(con, manual=TRUE) {
 	}
 	
 	sensors <- dbGetQuery(con, query)
-	dbDisconnect(con)
 	return(sensors)
 }

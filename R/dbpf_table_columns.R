@@ -35,7 +35,7 @@ dbpf_table_columns <- function(con, tablename, detailed=F){
                    WHERE table_name ='%s'
                    AND table_schema = 'public'", tablename)
   result <- dbGetQuery(con, query)
-  dbDisconnect(con)
+
   if (!detailed){
     result <- result$column_name
   }

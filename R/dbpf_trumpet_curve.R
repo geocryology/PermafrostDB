@@ -97,8 +97,6 @@ dbpf_trumpet_curve <- function(con, borehole_name, gst_names="", air_names="",
 	            "Range:", round(rnge,2),
 	            "SurfO:", round(mean-MAAT,2)))
 		
-	# clean up
-	dbDisconnect(con)	
 }
 
 

@@ -23,6 +23,6 @@ dbpf_tables <- function(con) {
 	}
   
 	tables <- dbListTables(con)
-	dbDisconnect(con) # close connection
+
 	return(tables)
 }	
