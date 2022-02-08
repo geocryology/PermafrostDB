@@ -89,8 +89,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     		}  
     	}           	
     }                            	
- 	#dbDisconnect(con)
-	
+
     #make time series
  	qxts <- xts(series, order.by = time$time)
 

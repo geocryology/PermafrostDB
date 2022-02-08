@@ -40,6 +40,5 @@ dbpf_locations <- function(con, type='point') {
 	} 	
 	
 	locations <- dbGetQuery(con, query)
-	dbDisconnect(con) # close connection
 	return(locations)
 }

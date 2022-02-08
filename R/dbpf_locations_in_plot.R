@@ -28,11 +28,9 @@ dbpf_locations_in_plot <- function(con, locname) {
   query <- paste0("SELECT ST_AsText(coordinates) as coordinates ",
                  "FROM locations WHERE name ='",locname,"'")
   locations <- dbGetQuery(con, query)
-  #dbDisconnect(con) # close connection
-  
   
   query <- paste0("SELECT * FROM locations WHERE ST_Within(locations.coordinates, ST_SetSRID(ST_GeomFromText('",locations,"'),4326))")
   loggers <- dbGetQuery(con, query)
-  dbDisconnect(con) # close connection
+  
   return(loggers)
 }
