@@ -1,5 +1,33 @@
-
+# =============================================================================
+#'
+#' @title Resolve maintenance issue
+#'
+#' @description Mark a maintenance item as 'complete'
+#' 
+#' @details Adds an observation to using the 'maintenance_completed' sensor 
+#' for a particular location. The observation references the maintenance 
+#' issue using the database ID of that issue.
+#'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
+#' @param id Database ID of the maintenance item to resolve. Can be found using \code{\link{dbpf_maintenance_needs}} [character]
+#' 
+#' @param time_UTC (optional) When the issue was discovered. If not provided
+#' the current time is used. [POSIXct]
+#' 
+#' @param mode Should data be inserted into DB? Defaults to 'test' so that 
+#'             only testing information is returned. To insert: 'insert'
+#' 
+#' @export
+#'                  
+#' @author Nick Brown <nick.brown@@carleton.ca>
+# =============================================================================
 dbpf_maintenance_resolve <- function(con, id, time_UTC, mode='test'){
+  
+  if (missing(time_UTC)){
+    time_UTC <- now()
+  }
+  
   # check if id exists
   needs <- 
     paste0("SELECT obs.id as maintenance_need,
