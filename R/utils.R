@@ -108,3 +108,19 @@ interpolate_single <- function(x, t_bnds, change_only=T, method='linear'){
   
  return(out)
 }
+
+
+#' @title New import record
+#' @description Create new import record and get id
+#' @param con Database connection object
+#' @return id of newly-created import record
+#' 
+new_import_record <- function(con){
+  #make new import record
+  query <- paste0("INSERT INTO imports (import_time, import_parameters) ",
+                  "VALUES ('",format(Sys.time(), "%Y-%m-%d %H:%M:%S%z"),
+                  "','R-import: dbpf_manual_obs_add()') RETURNING id") 
+  iid <- dbGetQuery(con, query)
+  
+  return(iid)
+}
