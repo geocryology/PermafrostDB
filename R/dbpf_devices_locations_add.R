@@ -38,10 +38,15 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con    <- dbpf_con()
+#' devices_locations <- data.frame(serialnumber="E50DBD", 
+#'                                 comment="example",
+#'                                 sitename="field_site_1",
+#'                                 time=now())
 #' result <- dbpf_devices_locations_add(con, devices_locations, mode="test")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

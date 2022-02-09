@@ -32,6 +32,7 @@ representations of time series profiles" with  Example H.16 used as a
 template and a one-dimensional time coordinate variable.
 }
 \examples{
+ \dontrun{
 library(ncdf4)
 library(permafrostDB)
 con <- dbpf_con() 
@@ -43,7 +44,7 @@ dbpf_export_nc_chain_ortho(con = con,
 location_name = c('NGO-RC-169', 'NGO-RC-171', 'NGO-RC-172'),
  file_name = "./test_therm.nc")
 dbDisconnect(con)
-
+}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

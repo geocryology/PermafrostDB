@@ -38,11 +38,12 @@ of the station locations specified by the location parameter
 Interpolate sensor offsets
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 loc <- c("NGO-DD-1005","NGO-DD-1006")
 t_s <- as.POSIXct('2015-07-24 12:30:00', format='\%Y-\%m-\%d \%H:\%M:\%S')
 t_e <- as.POSIXct('2017-09-24 12:30:00', format='\%Y-\%m-\%d \%H:\%M:\%S')
 t_bn <- seq(t_s, t_e, by=3600*24)
 offsets <- interpolate_sensor_offset(con, loc, t_bn)
-
+}
 }

@@ -20,10 +20,11 @@
 #' dbSendQuery() and dbFetch().
 #' 
 #' @examples 
-#' 
+#' \dontrun{
 #' x <- dbpf_export_nc_generic(con, c("NGO-DD-1005", "NGO-DD-1006", "NGO-DD-1007", 
 #'                                   "NGO-DD-1005_ST01", "AIRT1TOP"),
 #'                             "~/example_ncdf.nc")
+#'  }
 #' @export
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
@@ -193,14 +194,15 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 #' 
 #' @export
 #' @examples
+#'  \dontrun{
 #' library(ncdf4) 
 #' # create temperature data
 #' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 #' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=T)
+#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 #' 
 #' #create ncdf file 
-#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 4,  F)
+#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
 #' 
 #' # put some data in the ncdf file
 #' ncvar_put(ncnew, 'soil_temperature', m)
@@ -208,7 +210,7 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 #' 
 #' #close the file
 #' nc_close(ncnew)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createGenericNCDF <- function(file, n_stations, n_timestep, n_levels,

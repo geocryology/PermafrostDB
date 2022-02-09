@@ -35,10 +35,6 @@
 #'              inFile Desktop/Yk2021_test/testdir/testfile.csv
 #'              outFile Desktop/Yk2021_test/testdir_clean/testfile.csv
 #'          
-#' @examples
-#' # Example: passing directory of R files
-#' dbpf_GP5W_file_formatter('/usr/desktop/Yk2021/')
-#' 
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
 library("tools")

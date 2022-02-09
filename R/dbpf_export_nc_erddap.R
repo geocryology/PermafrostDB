@@ -33,13 +33,14 @@
 #' @export
 #' 
 #' @examples
+#' \dontrun{
 #' library(ncdf4)
-#' library(permafrostDB)
+#' library(PermafrostDB)
 #' con <- dbpf_con() 
 #' dbpf_export_nc_chain_multi(con = con, location_name = c('NGO-DD-1005', 'NGO-DD-1006'), 
 #' file_name = "./thermistor_multi.nc")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 
@@ -171,14 +172,15 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
 #' data. Defaults to FALSE.
 #' 
 #' @examples
+#'  \dontrun{
 #' library(ncdf4) 
 #' # create temperature data
 #' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 #' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=T)
+#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 #' 
 #' #create ncdf file 
-#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 4,  F)
+#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
 #' 
 #' # put some data in the ncdf file
 #' ncvar_put(ncnew, 'soil_temperature', m)
@@ -186,7 +188,7 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
 #' 
 #' #close the file
 #' nc_close(ncnew)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createTimeSeriesProfileNCF <- function(file, n_stations, n_timestep, n_levels,

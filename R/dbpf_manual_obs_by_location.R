@@ -46,7 +46,7 @@ sensors.type_of_measurement,
   observations.corrected_utc_time,
   ST_X(ST_Centroid(observations.location)) AS lon, ST_Y(ST_Centroid(observations.location)) AS lat, 
   locations.name,  ST_GeometryType(observations.location) AS geom, 
-  measurement_site"
+  measurement_site, observations.id"
   
   if (class(location)=='character'){  # if searching by names
     query <- paste0(

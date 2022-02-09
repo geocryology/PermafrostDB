@@ -22,10 +22,11 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con() 
 #' bpf_sensor_add_xlsx(con, "/Users/stgruber/sensor.xlsx", mode = 'test')
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {                       

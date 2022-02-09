@@ -42,12 +42,13 @@ Data is checked for existence (or duplication) of sensor and
          location and feedback is returned.
 }
 \examples{
+\dontrun{
 con  <- dbpf_con() 
 data <- dbpf_manual_obs_add(con, sensor_label, location_name, time_UTC, 
 							value, height_min_metres, height_max_metres,
 							insert = FALSE)
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

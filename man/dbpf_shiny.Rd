@@ -23,10 +23,6 @@ Function establishes a connection to the data base and return a
          server permafrost.gcrc.carleton.ca. When finished, close connection
          object (see examples).
 }
-\examples{
-dbpf_shiny() 
-
-}
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>
 }

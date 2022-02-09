@@ -17,13 +17,14 @@
 #' Defaults to true.
 #' 
 #' @examples 
+#' \dontrun{
 #' con <- dbpf_con()
 #' loc <- c("NGO-DD-1005","NGO-DD-1006")
 #' t_s <- as.POSIXct('2015-07-24 12:30:00', format='%Y-%m-%d %H:%M:%S')
 #' t_e <- as.POSIXct('2017-09-24 12:30:00', format='%Y-%m-%d %H:%M:%S')
 #' t_bn <- seq(t_s, t_e, by=3600*24)
 #' offsets <- interpolate_sensor_offset(con, loc, t_bn)
-#' 
+#' }
 #' @return a data.frame whose first column is equal to the time values specified 
 #' by t_bnds. All other colummns are the time-dependent sensor offsets for each
 #' of the station locations specified by the location parameter

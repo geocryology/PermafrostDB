@@ -12,10 +12,6 @@
 #' @output Log of which files were converted
 #'   
 #' @details Function takes a file path, scans for FG2 files to be converted.
-#'          
-#' @examples
-#' # Example: passing directory of R files
-#' dbpf_FG2toGP5W('/usr/desktop/FG2CSVs/')
 #' 
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================

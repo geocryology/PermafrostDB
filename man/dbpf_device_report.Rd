@@ -20,7 +20,8 @@ Given a device serial number, this function return a data frame
 
 }
 \examples{
-dbpf_device_report("E509DA")
+con <- dbpf_con()
+dbpf_device_report(con, "E509DA")
 
 }
 \author{

@@ -22,11 +22,11 @@
 #' @export
 #' 
 #' @examples
-#' 
+#'  \dontrun{
 #' dbpf_export_xlsx_NWT(con=con, location_name = "NGO-DD-1009", 
 #'     file_name = "~/NGO-DD-1009_Hourly_GroundTemperature.xlsx", 
 #'     project_name = "SPSMPS")   
-#'     
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 dbpf_export_xlsx_NWT <- function(con, location_name,  

@@ -71,9 +71,10 @@
 #' @export 
 #' 
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
-#' locationList <- dbpf_TSA_GST(con, "~/Desktop/", "NGO-DD-1004_ST01")
-#'
+#' locationList <- dbpf_TSA_GST(con, "./", "NGO-DD-1004_ST01")
+#' }
 #' @author Thomas Knecht <t.knecht@@hotmail.com>
 # =============================================================================
 

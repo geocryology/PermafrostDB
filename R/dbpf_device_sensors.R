@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' con <- dbpf_con()
-#' dbpf_device_sensors("E509DA")
+#' dbpf_device_sensors(con, "E509DA")
 #' dbDisconnect(con)
 #' 
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>

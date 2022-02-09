@@ -21,10 +21,6 @@
 #' 
 #' @export
 #' 
-#' @examples
-#' dbpf_export_csv_NWT(con, 'NGO-DD-1009', "Slave Province Surficial Materials and 
-#' Permafrost Study")
-#'                  
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 dbpf_export_csv_NWT <- function(con, 

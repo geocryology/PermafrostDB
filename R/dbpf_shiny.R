@@ -15,8 +15,6 @@
 #' @return Returns a DB connection object.   
 #' 
 #' @export
-#' @examples
-#' dbpf_shiny() 
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 #'

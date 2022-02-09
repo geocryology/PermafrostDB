@@ -19,6 +19,7 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' library(ncdf4)
 #' library(reshape2)
 #' con <- dbpf_con() 
@@ -26,7 +27,7 @@
 #' dbpf_export_nc_surface(con, 
 #' c("AIRT1TOP","AIRT2TOP","AIRT2LOW"), "~/air_records.nc")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 
@@ -141,14 +142,15 @@ dbpf_export_nc_air <- function(con, location_name, file_name, freq='daily'){
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' library(ncdf4) 
 #' # create temperature data
 #' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 #' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=T)
+#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 #' 
 #' #create ncdf file 
-#' ncnew <- createAirLoggerNCF("!/Air1.nc", 792, 2,  F)
+#' ncnew <- createAirLoggerNCF("~/Air1.nc", 792, 2,  FALSE)
 #' 
 #' # put some data in the ncdf file
 #' ncvar_put(ncnew, 'air_temperature', m)
@@ -156,7 +158,7 @@ dbpf_export_nc_air <- function(con, location_name, file_name, freq='daily'){
 #' 
 #' #close the file
 #' nc_close(ncnew)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createAirLoggerNCF <- function(file, n_timestep, n_stations, close_file=F, 

@@ -42,14 +42,15 @@ time series profiles representation of time series"
 station must not change between time periods
 }
 \examples{
+\dontrun{
 library(ncdf4) 
 # create temperature data
 t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 t2 <- sin(seq(1:792)*2*pi/365)
-m <- matrix(c(t1,t2), nrow=2, byrow=T)
+m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 
 #create ncdf file 
-ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 4,  F)
+ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
 
 # put some data in the ncdf file
 ncvar_put(ncnew, 'soil_temperature', m)
@@ -57,7 +58,7 @@ ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
 
 #close the file
 nc_close(ncnew)
-
+}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

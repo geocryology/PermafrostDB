@@ -24,7 +24,7 @@ Given a device serial number, this function return a data frame
 }
 \examples{
 con <- dbpf_con()
-dbpf_device_sensors("E509DA")
+dbpf_device_sensors(con, "E509DA")
 dbDisconnect(con)
 
 }

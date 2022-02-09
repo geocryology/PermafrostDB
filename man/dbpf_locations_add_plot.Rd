@@ -47,9 +47,10 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 result <- dbpf_plots_add(con, locations)
-
+}
 }
 \author{
 Thomas Knecht <t.knecht@hotmail.com> 
