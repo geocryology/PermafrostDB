@@ -134,8 +134,6 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
 #'  data. Defaults to FALSE. 
 #' 
 #' @export
-#' @examples
-#' library(ncdf4) 
 #' 
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================

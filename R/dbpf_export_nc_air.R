@@ -19,6 +19,7 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' library(ncdf4)
 #' library(reshape2)
 #' con <- dbpf_con() 
@@ -26,7 +27,7 @@
 #' dbpf_export_nc_surface(con, 
 #' c("AIRT1TOP","AIRT2TOP","AIRT2LOW"), "~/air_records.nc")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 
