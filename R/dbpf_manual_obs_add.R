@@ -20,12 +20,13 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' con  <- dbpf_con() 
 #' data <- dbpf_manual_obs_add(con, sensor_label, location_name, time_UTC, 
 #'								value, height_min_metres, height_max_metres,
 #'								insert = FALSE)
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

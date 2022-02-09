@@ -29,9 +29,10 @@ Function needs to be extended to allow:
          --> assigning shape and colour of icon based on attributes
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 dbpf_kml(con, kmlfile = "~/Desktop/permafrost.kml")
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

@@ -41,9 +41,10 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
-result <- dbpf_locations_add(con, locations, mode="test")
-
+result <- dbpf_locations_add(con, c("site1", "site2"), mode="test")
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

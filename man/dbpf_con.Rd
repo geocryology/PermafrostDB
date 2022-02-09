@@ -53,6 +53,7 @@ Function establishes a connection to the data base and returns a
 }
 \examples{
 #example of using specific user name and password
+\donttest{
 con <- dbpf_con("stephan", "password", "192.168.2.25", "5432")
 dbDisconnect(con)
 
@@ -60,6 +61,7 @@ dbDisconnect(con)
 con <- dbpf_con()  
 loc <- dbGetQuery(con, "SELECT * FROM locations")
 dbDisconnect(con)         # close connection when done 
+}
 
 }
 \author{

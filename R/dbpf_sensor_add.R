@@ -30,13 +30,14 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con() 
 #' dbpf_sensor_add(con, "5265f740-8e09-4d41-b5b6-2136f5d35ea3", 
 #'                 "vegetation_height_max", type_of_measurement = "numeric", 
 #'                 unit_of_measurement = "m", accuracy = 0.5, precision=0.01, 
 #'                 height_in_metres = 0, serial_number = "", mode = 'test')
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

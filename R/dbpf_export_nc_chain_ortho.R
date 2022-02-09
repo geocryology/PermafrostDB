@@ -28,6 +28,7 @@
 #' 
 #' @export
 #' @examples
+#'  \dontrun{
 #' library(ncdf4)
 #' library(permafrostDB)
 #' con <- dbpf_con() 
@@ -39,7 +40,7 @@
 #' location_name = c('NGO-RC-169', 'NGO-RC-171', 'NGO-RC-172'),
 #'  file_name = "./test_therm.nc")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 

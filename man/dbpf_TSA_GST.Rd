@@ -93,9 +93,10 @@ Give a or multiple location names and it returns a list with snow cover start an
 The parameters can be adjusted. The different parameters are used by different functions.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
-locationList <- dbpf_TSA_GST(con, "~/Desktop/", "NGO-DD-1004_ST01")
-
+locationList <- dbpf_TSA_GST(con, "./", "NGO-DD-1004_ST01")
+}
 }
 \author{
 Thomas Knecht <t.knecht@hotmail.com>

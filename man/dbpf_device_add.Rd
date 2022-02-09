@@ -45,12 +45,13 @@ Run in test mode first. If you have no DB login to write data, run
          in test mode with your login and then pass to someone who does.
 }
 \examples{
+\dontrun{
 con <- dbpf_con() 
 dbpf_device_add(con, "MyDev", "Test", serial_number = "Test", access_code = "", 
                 manufacturer = "generic device", manufacturer_device_name = "", 
                 acquired_on = "1950-01-01 00:00:00+00", mode = 'test')
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

@@ -33,9 +33,11 @@
 #' 
 #' @export
 #' @examples
+#' \donttest{
 #' con <- dbpf_con() 
 #' dbpf_defox_bulk(con,'NGO-DD-1004_ST02', "2016-01-01 00:00:00+00","2016-01-10 23:59:00+00")
 #' dbDisconnect(con)
+#' }
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================

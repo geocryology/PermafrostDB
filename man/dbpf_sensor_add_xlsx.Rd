@@ -28,10 +28,11 @@ Run in test mode first. If you have no DB login to write data, run
          in test mode with your login and then pass to someone who does.
 }
 \examples{
+\dontrun{
 con <- dbpf_con() 
 bpf_sensor_add_xlsx(con, "/Users/stgruber/sensor.xlsx", mode = 'test')
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

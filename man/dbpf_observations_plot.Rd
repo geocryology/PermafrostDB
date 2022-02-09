@@ -9,8 +9,8 @@ dbpf_observations_plot(
   location_name,
   unit_of_measurement = "C",
   period = "raw",
-  time_b = "2015-07-01 00:00:00+00",
-  time_e = "2020-08-31 23:59:59+00",
+  time_b = "2018-07-01 00:00:00+00",
+  time_e = "2021-08-05 23:59:59+00",
   verbose = FALSE
 )
 }
@@ -44,7 +44,7 @@ Opens interactive plot in browser in order to check and explore
 Allows to set aggregation parameters.
 }
 \examples{
-dbpf_observations_plot(con, "NGO-RC-163_ST01")
+dbpf_observations_plot(con, "YK16-SO06_01")
 
 }
 \author{

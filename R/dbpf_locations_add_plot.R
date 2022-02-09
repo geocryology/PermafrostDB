@@ -41,9 +41,10 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' result <- dbpf_plots_add(con, locations)
-#' 
+#' }
 #' @author Thomas Knecht <t.knecht@hotmail.com> 
 #'         Stephan Gruber <stephan.gruber@carleton.ca> 
 # =============================================================================

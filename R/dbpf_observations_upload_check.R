@@ -17,7 +17,6 @@
 #' @return An output log indicating whether .csv is fit for upload to sensorDb
 #'
 #' @examples
-#' dbpf_observations_upload_check(con, 'filePath'path/to/csv) 
 #'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================

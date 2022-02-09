@@ -36,14 +36,15 @@ representation of time series"
 The container has 2 dimensions (time and station) and 4 variables (air_temperature, latitude, longitude, platform_id).
 }
 \examples{
+\dontrun{
 library(ncdf4) 
 # create temperature data
 t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 t2 <- sin(seq(1:792)*2*pi/365)
-m <- matrix(c(t1,t2), nrow=2, byrow=T)
+m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 
 #create ncdf file 
-ncnew <- createAirLoggerNCF("!/Air1.nc", 792, 2,  F)
+ncnew <- createAirLoggerNCF("~/Air1.nc", 792, 2,  FALSE)
 
 # put some data in the ncdf file
 ncvar_put(ncnew, 'air_temperature', m)
@@ -51,7 +52,7 @@ ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
 
 #close the file
 nc_close(ncnew)
-
+}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

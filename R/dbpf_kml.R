@@ -22,9 +22,10 @@
 #' 
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_kml(con, kmlfile = "~/Desktop/permafrost.kml")
-#' 
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
