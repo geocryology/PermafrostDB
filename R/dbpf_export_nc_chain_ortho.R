@@ -27,20 +27,6 @@
 #' be aggregated from the database.
 #'
 #' @export
-#' @examples
-#'  \dontrun{
-#' library(ncdf4)
-#' library(permafrostDB)
-#' con <- dbpf_con()
-#' dbpf_export_nc_chain_ortho(con = con, location_name = c('NGO-DD-1012'),
-#' file_name = "./test_therm.nc")
-#' dbpf_export_nc_chain_ortho(con = con,
-#' location_name = c('NGO-RC-170', 'NGO-RC-163'), file_name = "./test_therm.nc")
-#' dbpf_export_nc_chain_ortho(con = con,
-#' location_name = c('NGO-RC-169', 'NGO-RC-171', 'NGO-RC-172'),
-#'  file_name = "./test_therm.nc")
-#' dbDisconnect(con)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 
@@ -54,7 +40,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
                                   period = period)
 
   #reshape and get values
-  db_dat$height = abs(db_dat$height)
+  db_dat$height <- abs(db_dat$height)
   db_dat <- db_dat[,c("loc_name", "height", "agg_avg", "time")]
 
   m <- reshape2::acast(db_dat,
@@ -71,7 +57,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
   }else if(tolower(freq) == 'hourly'){
     vals_time <- as.numeric(vals_time) - as.numeric(refdate)
     time_units <- "seconds since 1970-01-01 00:00:00"
-    print(class(head(vals_time)))
+    print(class(utils::head(vals_time)))
   }
 
   vals_tmp <- m
@@ -79,7 +65,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
   vals_depths <- -as.numeric(dimnames(m)[[1]])
 
   n_ts <- dim(m)[2]
-  n_depths <- dim(m)[1]
+  n_depth <- dim(m)[1]
   n_stations <- dim(m)[3]
 
   ## Get coordinate data
@@ -91,7 +77,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
   nc <- createOrthogonalThermistorNCF(file = file_name,
                                       n_timestep = n_ts,
                                       n_stations = n_stations,
-                                      n_depth = n_depths,
+                                      n_depth = n_depth,
                                       close_file=F)
 
   ## Populate data
@@ -124,7 +110,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
 #' @param n_timestep Integer, the number of unique timesteps for which there is
 #' temperature data
 #'
-#' @param n_depths Integer, the largest number of depth measurements in any
+#' @param n_depth Integer, the largest number of depth measurements in any
 #'  profile
 #'
 #' @param n_stations  Integer, how many sites are to be added to the file
@@ -132,15 +118,17 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
 #' @param close_file Logical, whether or not to close the connection to the file
 #'  after creation. Leaving the file open allows for the immediate addition of
 #'  data. Defaults to FALSE.
+#' 
+#' @param time_units netcdf4-style string description of time units 
 #'
 #' @export
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createOrthogonalThermistorNCF <- function(file, n_stations, n_timestep,
-                                          n_depths, close_file=F,
+                                          n_depth, close_file=F,
                                           time_units="days since 1970-01-01 00:00:00"){
-  missval = -999
+  missval <- -999
   ## Create Dimensions
   dummyDimTime <- c(1:n_timestep)
   dimTime <- ncdim_def("time",
@@ -153,7 +141,7 @@ createOrthogonalThermistorNCF <- function(file, n_stations, n_timestep,
                           unlim = F, vals = dummyDimStation, units = '',
                           create_dimvar = F)
 
-  dummyDimDepth <- c(1:n_depths)*0.1 # so that the coordinate var is float not int
+  dummyDimDepth <- c(1:n_depth)*0.1 # so that the coordinate var is float not int
   dimDepth <- ncdim_def('depth',
                         unlim = F, vals = dummyDimDepth, units = '',
                         create_dimvar = T)
@@ -197,8 +185,8 @@ createOrthogonalThermistorNCF <- function(file, n_stations, n_timestep,
 
   ## Create Attributes from templates in '/PermafrostDB/extdata' or
   ##                                    '/PermafrostDB/inst/extdata' (unbuilt)
-  f = 'extdata'
-  p = 'PermafrostDB'
+  f <- 'extdata'
+  p <- 'PermafrostDB'
   nc_attributes_from_template(ncnew, system.file(f, 'depth.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'latitude.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'longitude.csv', package=p))

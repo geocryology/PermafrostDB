@@ -6,11 +6,6 @@
 \usage{
 dbpf_shiny()
 }
-\arguments{
-\item{user}{User name, defaults to "readonly"}
-
-\item{passwd}{Password, default set for readonly account.}
-}
 \value{
 Returns a DB connection object.
 }

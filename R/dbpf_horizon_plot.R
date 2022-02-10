@@ -22,10 +22,10 @@ dbpf_horizon_plot <- function(con, location){
 }
 
 # plotting parameters
-gridcol = 'lightgrey'
-gridstyle = 2
-skycol = '#87ceeb'
-terraincol = 'grey'
+gridcol <- 'lightgrey'
+gridstyle <- 2
+skycol <- '#87ceeb'
+terraincol <- 'grey'
 
 
 plot_horizon_1 <- function(az, hor){
@@ -44,8 +44,8 @@ plot_horizon_1 <- function(az, hor){
        yaxt='n',
        xaxs='i',
        xaxt='n')
-  xlabels = seq(-360, 360*2, 60)
-  ylabels = seq(0,90,10)
+  xlabels <- seq(-360, 360*2, 60)
+  ylabels <- seq(0,90,10)
   axis(side=2, at=ylabels, labels=as.character(ylabels), las=2, tick=F)
   axis(side=1, at=xlabels, labels=as.character(xlabels%%360))
   axis(side=3, at=seq(-360, 360*2-90, 90), labels=rep(c("N", "E", "S", "W"),3), tick = F)
@@ -59,8 +59,8 @@ plot_horizon_1 <- function(az, hor){
 plot_horizon_2 <- function(az, hor){
   coords <- horiz_to_carte(az, hor)
   par(pty="s")
-  xlab = ""
-  ylab = ""
+  xlab <- ""
+  ylab <- ""
   plot(coords$x,
        coords$y,
        xlim=c(-1,1),
@@ -82,8 +82,8 @@ plot_horizon_2 <- function(az, hor){
           coords$y,
           col=skycol,
           bty='n')
-  spacing=15
-  gridlines = c(seq(0, 180, spacing))
+  spacing<-15
+  gridlines <- c(seq(0, 180, spacing))
   if (90 %in% gridlines){
     abline(v=0, lty=gridstyle, col=gridcol)
     gridlines <- gridlines[gridlines != 90]
@@ -111,14 +111,14 @@ horiz_to_carte <- function(azimuth, horizon){
 }
 
 sphr_to_carte <- function(theta, phi, r){
-  theta = theta %% 360
+  theta <- theta %% 360
  # if  all((0 <= phi) * (phi < 180)):
  #   raise ValueError("phi must be between 0 and 180 degrees")
 
-  x = r*sin(radians(phi))*cos(radians(theta))
-  y = r*sin(radians(phi))*sin(radians(theta))
-  z = r*cos(radians(phi))
-  coords = data.frame(x=x,y=y,z=z)
+  x <- r*sin(radians(phi))*cos(radians(theta))
+  y <- r*sin(radians(phi))*sin(radians(theta))
+  z <- r*cos(radians(phi))
+  coords <- data.frame(x=x,y=y,z=z)
   return(coords)
 }
 

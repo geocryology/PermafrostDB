@@ -37,16 +37,6 @@ For example one thermistor may measure temperature at 1.0, 2.0 and 3.0 m
 and another may measure temperature at 0.5, 1.5 and 5.0 m. Both have three
 measurement depths
 }
-\examples{
-\dontrun{
-library(ncdf4)
-library(PermafrostDB)
-con <- dbpf_con()
-dbpf_export_nc_chain_multi(con = con, location_name = c('NGO-DD-1005', 'NGO-DD-1006'),
-file_name = "./thermistor_multi.nc")
-dbDisconnect(con)
-}
-}
 \author{
 Nick Brown <nick.brown@carleton.ca>
 }

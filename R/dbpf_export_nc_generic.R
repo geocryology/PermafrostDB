@@ -5,6 +5,8 @@
 #' @description Exports temperature and relative humidity data from the database
 #' into a netcdf file compliant with CF conventions v1.6
 #'
+#' @param con Database connection object, as returned by dbpf_con()
+#' 
 #' @param location_name integer, the number of unique timesteps for which there is
 #' temperature data
 #'
@@ -19,12 +21,6 @@
 #' @details Rows are returned from the database using a combination of
 #' dbSendQuery() and dbFetch().
 #'
-#' @examples
-#' \dontrun{
-#' x <- dbpf_export_nc_generic(con, c("NGO-DD-1005", "NGO-DD-1006", "NGO-DD-1007",
-#'                                   "NGO-DD-1005_ST01", "AIRT1TOP"),
-#'                             "~/example_ncdf.nc")
-#'  }
 #' @export
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
@@ -59,7 +55,7 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 
   #reshape and get values
   if (verbose){print("reshaping data")}
-  db_dat$height = -(db_dat$height)
+  db_dat$height <- -(db_dat$height)
   db_dat <- db_dat[,c("loc_name", "height", "agg_avg", "time", "measurement")]
 
   # get depth indices
@@ -91,7 +87,7 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 
   # get generic info about dataset
   vals_name <- dimnames(m)[[3]]
-  n_depths <- dim(m)[1]
+  n_depth <- dim(m)[1]
   n_ts <- dim(m)[2]
   n_stations <- dim(m)[3]
 
@@ -105,7 +101,7 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
   #split temperatures into air and ground files based on depths
   if (all(dim(depths)==1)){
   # a bit of a workaround here if there is only 1 sensor
-    surface_cutoff <- array(-as.numeric(depths), dim=c(n_depths, n_ts, n_stations))
+    surface_cutoff <- array(-as.numeric(depths), dim=c(n_depth, n_ts, n_stations))
   }else{
     surface_cutoff <- replicate(n_ts, -as.matrix(depths), simplify='array')
     surface_cutoff <- aperm(surface_cutoff, c(2, 3, 1))  # rotate array
@@ -119,15 +115,15 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
                 c('name','lon', 'lat', 'elevation_in_metres')]
   ##
   if (length(vals_name) != length(location_name)){
-    nodata = location_name[! location_name %in% vals_name]
+    nodata <- location_name[! location_name %in% vals_name]
     warning(sprintf("The following locations do not have data and are not
                     included in the output: %s",
                     paste(nodata, collapse = ',')))
   }
   ## create NA arrays for any missing data
-  if (0 %in% dim(vals_g_tmp)){vals_g_tmp <- array(NA, dim=c(n_depths, n_ts, n_stations))}
-  if (0 %in% dim(vals_a_tmp)){vals_a_tmp <- array(NA, dim=c(n_depths, n_ts, n_stations))}
-  if (0 %in% dim(vals_a_rh)){vals_a_rh <- array(NA, dim=c(n_depths, n_ts, n_stations))}
+  if (0 %in% dim(vals_g_tmp)){vals_g_tmp <- array(NA, dim=c(n_depth, n_ts, n_stations))}
+  if (0 %in% dim(vals_a_tmp)){vals_a_tmp <- array(NA, dim=c(n_depth, n_ts, n_stations))}
+  if (0 %in% dim(vals_a_rh)){vals_a_rh <- array(NA, dim=c(n_depth, n_ts, n_stations))}
 
   ## Get offset data from stick-up heights
   vals_off <- interpolate_sensor_offset(location = vals_name,
@@ -143,7 +139,7 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
   nc <- createGenericNCDF(file = file_name,
                                  n_timestep = n_ts,
                                  n_stations = n_stations,
-                                 n_levels   = n_depths,
+                                 n_levels   = n_depth,
                                  close_file = F,
                                  time_units = time_units)
 
@@ -178,45 +174,24 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 #' * Depth values are not time-dependent, therefore the depth levels of a
 #' station must not change between time periods
 #'
-#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
-#' 
 #' @param file character, path to output netCDF file (*.nc)
 #'
 #' @param n_timestep integer, the number of unique timesteps for which there is
 #'  temperature data
 #'
-#' @param n_depths integer, the largest number of depth measurements in any
-#' profile
-#'
+#' @param n_levels integer, the largest number of depth measurements in any profile
+#' 
 #' @param n_stations  integer, how many sites are to be added to the file
 #'
 #' @param close_file logical, whether or not to close the connection to the file
 #' after creation. Leaving the file open allows for the immediate addition of
 #' data. Defaults to FALSE.
-#'
+#' @param time_units netcdf4-style string description of time units 
 #' @export
-#' @examples
-#'  \dontrun{
-#' library(ncdf4)
-#' # create temperature data
-#' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
-#' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
-#'
-#' #create ncdf file
-#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
-#'
-#' # put some data in the ncdf file
-#' ncvar_put(ncnew, 'soil_temperature', m)
-#' ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
-#'
-#' #close the file
-#' nc_close(ncnew)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createGenericNCDF <- function(file, n_stations, n_timestep, n_levels,
-                                     close_file=F,
+                                     close_file=FALSE,
                                      time_units="days since 1970-01-01 00:00:00"
 ){
 
@@ -296,8 +271,8 @@ createGenericNCDF <- function(file, n_stations, n_timestep, n_levels,
                                        varHumid, varcrs, varOffset))
 
   ## Create Attributes
-  f = 'extdata'
-  p = 'PermafrostDB'
+  f <- 'extdata'
+  p <- 'PermafrostDB'
   nc_attributes_from_template(ncnew, system.file(f, 'height.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'elevation.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'latitude.csv', package=p))

@@ -24,17 +24,6 @@ loggers
 \details{
 Requires that the PermafrostDB and ncdf4 packages be installed.
 }
-\examples{
-\dontrun{
-library(ncdf4)
-library(reshape2)
-con <- dbpf_con()
-dbpf_export_nc_air(con, "AIRT1TOP", "~/AIRT1TOP.nc")
-dbpf_export_nc_surface(con,
-c("AIRT1TOP","AIRT2TOP","AIRT2LOW"), "~/air_records.nc")
-dbDisconnect(con)
-}
-}
 \author{
 Nick Brown <nick.brown@carleton.ca>
 }

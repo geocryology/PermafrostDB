@@ -16,8 +16,6 @@
 #'
 #' @return An output log indicating whether .csv is fit for upload to sensorDb
 #'
-#' @examples
-#'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
 
@@ -115,7 +113,7 @@ identify_logger <- function(con, filePath){
 
   # If file is unformatted FG2
   fileTypeDf <- fileType(filePath)
-  if (head(fileTypeDf$STATUS, 1) == 'Fail'){
+  if (utils::head(fileTypeDf$STATUS, 1) == 'Fail'){
     # Extracting first 6 digits of filePath
     serial_number <- substr(basename(filePath), 1, 6)
     serial_number <- substr(stringr::str_extract(serial_number, "E5...."), 1, 6)
@@ -160,18 +158,18 @@ identify_logger <- function(con, filePath){
 
 is_file_cleaned <- function(filePath){
   fileTypeDf <- fileType(filePath)
-  if (head(fileTypeDf$STATUS, 1) == 'Fail'){
+  if (utils::head(fileTypeDf$STATUS, 1) == 'Fail'){
     result <- 'Fail'
     note <- 'File is an uncleaned unformatted FG2.'
   }
 
-  else if (head(fileTypeDf$STATUS, 1) == 'Pass'){
+  else if (utils::head(fileTypeDf$STATUS, 1) == 'Pass'){
 
-    df <- try(read.csv(filePath, header=TRUE, skip=1),
+    df <- try(utils::read.csv(filePath, header=TRUE, skip=1),
                 silent = TRUE)
 
     if (class(df) != "try-error") {
-      read.csv(filePath, header=TRUE, skip=1)
+      utils::read.csv(filePath, header=TRUE, skip=1)
       further_testing <- TRUE
     } else {
       result <- 'Fail'
@@ -221,7 +219,7 @@ is_file_uploaded <- function(con, filePath, log){
     most_recent_db_obs <- dbGetQuery(con, obsQuery)
 
     if (nrow(log[grep("Fail", log$STATUS),]) == 0 ){
-      df <- tail(read.csv(filePath, header=FALSE), n=1)
+      df <- tail(utils::read.csv(filePath, header=FALSE), n=1)
       most_recent_file_obs <- as.POSIXct(gsub('\\.', '-', df$V2),
                                          format='%d-%m-%Y %H:%M:%OS')
 

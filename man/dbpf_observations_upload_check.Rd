@@ -24,9 +24,6 @@ Inserts a data frame of new devices_locations into database.
 Function will indicate whether the file you're about to upload is
          safe for uploading.
 }
-\examples{
-
-}
 \author{
 Hannah Macdonell <hannah.macdonell@carleton.ca>
 }

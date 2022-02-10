@@ -10,8 +10,8 @@
 #' 
 #' @param con Database connection object, as returned by \code{\link{dbpf_con}}
 #' 
-#' @param table Character string or vector of table name(s). If empty, fields
-#'              for all tables are returned. Default is table="".
+#' @param tables Character string or vector of table name(s). If empty, fields
+#'              for all tables are returned. Default is tables="".
 #'
 #' @return List of all fields for all tables in DB
 #'

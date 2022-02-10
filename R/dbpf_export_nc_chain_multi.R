@@ -30,17 +30,10 @@
 #'
 #' @param freq Character, one of ('daily', 'hourly'). Interval at which data is to
 #' be aggregated from the database.
+#' 
+#' @param time_units netcdf4-style string description of time units 
 #'
 #' @export
-#' @examples
-#' \dontrun{
-#' library(ncdf4)
-#' library(PermafrostDB)
-#' con <- dbpf_con()
-#' dbpf_export_nc_chain_multi(con = con, location_name = c('NGO-DD-1005', 'NGO-DD-1006'),
-#' file_name = "./thermistor_multi.nc")
-#' dbDisconnect(con)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 #' @importFrom ncdf4 ncvar_put ncdim_def nc_close 
 # =============================================================================
@@ -54,7 +47,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
                                   period = period)
 
   #reshape and get values
-  db_dat$height = abs(db_dat$height)
+  db_dat$height <- abs(db_dat$height)
   db_dat <- db_dat[,c("loc_name", "height", "agg_avg", "time")]
 
   # get depth indices
@@ -86,7 +79,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
   vals_tmp <- m
   vals_name <- dimnames(m)[[3]]
 
-  n_depths <- dim(m)[1]
+  n_depth <- dim(m)[1]
   n_ts <- dim(m)[2]
   n_stations <- dim(m)[3]
 
@@ -99,7 +92,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
   nc <- createMultiThermistorNCF(file = file_name,
                                       n_timestep = n_ts,
                                       n_stations = n_stations,
-                                      n_levels = n_depths,
+                                      n_levels = n_depth,
                                       close_file=F,
                                     time_units=time_units )
 
@@ -136,7 +129,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
 #' @param n_timestep integer, the number of unique timesteps for which there is
 #'  temperature data
 #'
-#' @param n_depths integer, the largest number of depth measurements in any
+#' @param n_levels integer, the largest number of depth measurements in any
 #' profile
 #'
 #' @param n_stations  integer, how many sites are to be added to the file
@@ -146,24 +139,6 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
 #' data. Defaults to FALSE.
 #'
 #' @export
-#' @examples
-#' \dontrun{
-#' library(ncdf4)
-#' # create temperature data
-#' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
-#' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
-#'
-#' #create ncdf file
-#' ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
-#'
-#' # put some data in the ncdf file
-#' ncvar_put(ncnew, 'soil_temperature', m)
-#' ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
-#'
-#' #close the file
-#' nc_close(ncnew)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 #' @importFrom ncdf4 ncvar_put ncdim_def
 # =============================================================================
@@ -171,7 +146,7 @@ createMultiThermistorNCF <- function(file, n_stations, n_timestep, n_levels,
                                      close_file=F,
                                      time_units="days since 1970-01-01 00:00:00"
                                      ){
-  missval = -999
+  missval <- -999
 
   ## Create Dimensions
   dummyDimTime <- c(1:n_timestep)
@@ -231,8 +206,8 @@ createMultiThermistorNCF <- function(file, n_stations, n_timestep, n_levels,
 
   ## Create Attributes from templates in '/PermafrostDB/extdata' or
   ##                                    '/PermafrostDB/inst/extdata' (unbuilt)
-  f = 'extdata'
-  p = 'PermafrostDB'
+  f <- 'extdata'
+  p <- 'PermafrostDB'
   nc_attributes_from_template(ncnew, system.file(f, 'depth.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'latitude.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'longitude.csv', package=p))

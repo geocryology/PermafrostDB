@@ -43,7 +43,7 @@
 #' devices_locations <- data.frame(serialnumber="E50DBD",
 #'                                 comment="example",
 #'                                 sitename="field_site_1",
-#'                                 time=now())
+#'                                 time = lubridate::now())
 #' result <- dbpf_devices_locations_add(con, devices_locations, mode="test")
 #' dbDisconnect(con)
 #' }
@@ -60,13 +60,13 @@ dbpf_devices_locations_add <- function(con, dev_loc, mode="test") {
     }
 
     #test information provided
-    dev_loc <- subset(dev_loc, select = c(serialnumber, comment, sitename, time))
+    dev_loc <- subset(dev_loc, select = c("serialnumber", "comment", "sitename", "time"))
 
     #fix/test column data type, add check columns
     dev_loc$serialnumber <- as.character(dev_loc$serialnumber)
     dev_loc$sitename     <- as.character(dev_loc$sitename)
     dev_loc$comment      <- as.character(dev_loc$comment)
-    if (is.POSIXct(dev_loc$time) == FALSE) {
+    if (lubridate::is.POSIXct(dev_loc$time) == FALSE) {
     	stop("Column 'time' must be in POSIXct")
     }
     dev_loc$dev <- FALSE

@@ -9,8 +9,8 @@ dbpf_fields(con, tables = "")
 \arguments{
 \item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
 
-\item{table}{Character string or vector of table name(s). If empty, fields
-for all tables are returned. Default is table="".}
+\item{tables}{Character string or vector of table name(s). If empty, fields
+for all tables are returned. Default is tables="".}
 }
 \value{
 List of all fields for all tables in DB

@@ -30,6 +30,8 @@ dbpf_TSA_GST(
 
 \item{out.path}{Path to directory where the plot should be saved. e.g: "~/Desktop/"}
 
+\item{inventory}{location names.  Can be a dataframe with column $name or a vector}
+
 \item{time_b}{Begin date for the import. Format: "1950-01-01 00:00:00+00"}
 
 \item{time_e}{End date for the import. Format: "2050-01-01 00:00:00+00"}
@@ -67,15 +69,6 @@ Default: 0.2 degrees Celsius}
 \item{lengthzc}{Length that a zero curtain period should at least have. Default: 2 days.}
 
 \item{wateryear}{start month of the water year. Default is 10 (October) according to the USGS.}
-
-\item{obs_stat}{One dataframe of one location or a list of dataframes of multiple locations.
-A dataframe needs at least the following columns:
-Location name as loc_name;
-Mean daily GST as agg_avg;
-Minimum daily GST as agg_min;
-Maximum daily GST as agg_max;
-Daily sd as agg_sd;
-Date as time (in POSIXct and the following format: YYYY-MM-DD)}
 }
 \value{
 A list containing dataframes for the snow cover, RD dates, warming period start dates and

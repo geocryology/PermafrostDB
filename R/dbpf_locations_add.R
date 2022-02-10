@@ -54,9 +54,9 @@ dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
 
 
     #test information provided
-    input <- subset(locations, select = c(name, lon, lat,
-                    elevation_in_metres, comment,
-                    record_observations, accuracy_in_metres))
+    input <- subset(locations, select = c("name", "lon", "lat",
+                                          "elevation_in_metres", "comment",
+                                          "record_observations", "accuracy_in_metres"))
 
     #fix column data type, add check columns
     input$lat <- as.numeric(as.character(input$lat))
@@ -99,7 +99,7 @@ dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
     			     loc$comment, "', '", loc$record_observations, "')")
      	 	if (mode == "insert") {
      	 		dbExecute(con, query)
-     	 		input$inserted[r] = TRUE
+     	 		input$inserted[r] <- TRUE
      	 	}
     	} else {
     		print(paste0("!!! Location [", loc$name, "] not imported, check returned data frame."))

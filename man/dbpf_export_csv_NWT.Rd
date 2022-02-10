@@ -9,8 +9,7 @@ dbpf_export_csv_NWT(
   location_name,
   project_name,
   file_name,
-  freq = "daily",
-  split = T
+  freq = "daily"
 )
 }
 \arguments{

@@ -27,6 +27,7 @@ With the default settings, only the information for the specific location is ret
          By increasing the distance, all locations within the distance-radius are returned as well.
 }
 \examples{
+con <- dbpf_con()
 dbpf_location_report(con, "NGO-DD-1004_ST04", distance=10)
 
 }

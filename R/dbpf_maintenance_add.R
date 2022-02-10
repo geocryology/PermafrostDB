@@ -30,14 +30,14 @@
 dbpf_maintenance_add <- function(con, location_name, maintenance_text, time_UTC, mode='test'){
 
   if (missing(time_UTC)){
-    time_UTC <- now()
+    time_UTC <- lubridate::now()
   }
 
   dbpf_manual_obs_add(con,
                       sensor_label = 'maintenance_required',
                       time_UTC = time_UTC,
                       location_name = location_name,
-                      text_value = maintenance,
+                      text_value = maintenance_text,
                       height_min_metres = 0,
                       height_max_metres = 0,
                       mode = mode,

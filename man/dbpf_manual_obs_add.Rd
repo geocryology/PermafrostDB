@@ -25,14 +25,16 @@ dbpf_manual_obs_add(
 
 \item{time_UTC}{time of observation [POSIXct]}
 
+\item{numeric_value}{observed value / result [numeric]}
+
+\item{text_value}{observed value / result [character]}
+
 \item{height_min_metres}{[numeric]}
 
 \item{height_max_metres}{[numeric]}
 
 \item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
-
-\item{value}{observed value / result [numeric or character]}
 }
 \description{
 Tests and optionally inserts one manual observation into DB.

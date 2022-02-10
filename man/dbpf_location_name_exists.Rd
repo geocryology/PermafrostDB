@@ -24,7 +24,7 @@ These simple functions return all data as data frames. When
 }
 \examples{
 con <- dbpf_con()
-fds <- dbpf_location_name_exists()
+fds <- dbpf_location_name_exists(con, "Storage")
 dbDisconnect(con)
 
 }

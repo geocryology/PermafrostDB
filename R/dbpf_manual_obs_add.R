@@ -11,7 +11,8 @@
 #' @param sensor_label sensor label used to obtain sensor ID [character]
 #' @param location_name location name used to obtain location ID [character]
 #' @param time_UTC time of observation [POSIXct]
-#' @param value observed value / result [numeric or character]
+#' @param numeric_value observed value / result [numeric]
+#' @param text_value observed value / result [character]
 #' @param height_min_metres [numeric]
 #' @param height_max_metres [numeric]
 #' @param mode Should data be inserted into DB? Defaults to 'test' so that

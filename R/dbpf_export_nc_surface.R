@@ -17,16 +17,6 @@
 #' be aggregated from the database.
 #'
 #' @export
-#' @examples
-#' \dontrun{
-#' library(ncdf4)
-#' library(reshape2)
-#' con <- dbpf_con()
-#' dbpf_export_nc_surface(con, "NGO-DD-2009_ST03", "./DD2009ST03_surf.nc")
-#' dbpf_export_nc_surface(con,
-#' c("NGO-DD-2009_ST03","NGO-DD-2011_ST02","NGO-DD-2009_ST01"), "./DD2009ST03_surf.nc")
-#' dbDisconnect(con)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 
@@ -48,7 +38,7 @@ dbpf_export_nc_surface <- function(con, location_name, file_name, freq='daily'){
                 c('name','lon', 'lat', 'elevation_in_metres')]
 
   ## Create temperature array
-  db_dat$height = abs(db_dat$height) #careful!
+  db_dat$height <- abs(db_dat$height) #careful!
   db_dat <- db_dat[,c("loc_name", "agg_avg", "height", "time")]
 
   m <- reshape2::acast(db_dat,
@@ -68,7 +58,7 @@ dbpf_export_nc_surface <- function(con, location_name, file_name, freq='daily'){
   }else if(tolower(freq) == 'hourly'){
     vals_time <- as.numeric(vals_time) - as.numeric(refdate)
     time_units <- "seconds since 1970-01-01 00:00:00"
-    print(class(head(vals_time)))
+    print(class(utils::head(vals_time)))
   }
 
   vals_tmp <- m
@@ -119,32 +109,16 @@ dbpf_export_nc_surface <- function(con, location_name, file_name, freq='daily'){
 #'
 #' @param close_file logical, whether or not to close the connection to the file after creation.
 #' Leaving the file open allows for the immediate addition of data. Defaults to FALSE.
-#'
+#' 
+#' @param time_units netcdf4-style string description of time units 
+#' 
 #' @export
-#' @examples
-#' \dontrun{
-#' library(ncdf4)
-#' # create temperature data
-#' t1 <- 3*sin(seq(1:792)*2*pi/365)+2
-#' t2 <- sin(seq(1:792)*2*pi/365)
-#' m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
-#'
-#' #create ncdf file
-#' ncnew <- createSurfaceLoggerNCF("./DD2009ST03_surf.nc", 792, 2,  FALSE)
-#'
-#' # put some data in the ncdf file
-#' ncvar_put(ncnew, 'soil_temperature', m)
-#' ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
-#'
-#' #close the file
-#' nc_close(ncnew)
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 createSurfaceLoggerNCF <- function(file, n_timestep, n_stations, close_file=F,
                                    time_units="days since 1970-01-01 00:00:00"){
 
-  missval = -999
+  missval <- -999
 
   ## Create Dimensions
   dummyDimTime <- c(1:n_timestep)
@@ -199,8 +173,8 @@ createSurfaceLoggerNCF <- function(file, n_timestep, n_stations, close_file=F,
 
   ## Create Attributes from templates in '/PermafrostDB/extdata' or
   ##                                    '/PermafrostDB/inst/extdata' (unbuilt)
-  f = 'extdata'
-  p = 'PermafrostDB'
+  f <- 'extdata'
+  p <- 'PermafrostDB'
   nc_attributes_from_template(ncnew, system.file(f, 'depth.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'latitude.csv', package=p))
   nc_attributes_from_template(ncnew, system.file(f, 'longitude.csv', package=p))

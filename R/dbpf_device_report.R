@@ -5,8 +5,6 @@
 #' @description Given a device serial number, this function return a data frame
 #'              showing the locations where this device has been.
 #'
-#' @details
-#' 
 #' @param con Database connection object, as returned by \code{\link{dbpf_con}}
 #' 
 #' @param serial_number Serial number of device to query

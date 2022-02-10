@@ -14,13 +14,9 @@
 #'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
-library("tools")
-library("stringr")
-options(warn=-1)
-
 dbpf_FG2toGP5W <- function(inPath){
-  direc = FALSE
-  file = FALSE
+  direc <- FALSE
+  file <- FALSE
   # test for existence
   if (file_test("-f", inPath) == 1) file <- TRUE
   else if (dir.exists(inPath) == 1) direc <- TRUE
@@ -29,7 +25,7 @@ dbpf_FG2toGP5W <- function(inPath){
     return(0)
   }
 
-  newDir = paste(dirname(inPath),"/convertedFG2",sep='')
+  newDir <- paste(dirname(inPath),"/convertedFG2",sep='')
 
   ############ DIRECTORY #################
 

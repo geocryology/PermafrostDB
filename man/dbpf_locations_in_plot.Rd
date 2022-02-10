@@ -17,9 +17,6 @@ table with all the information for the locations locations within a plot
 \description{
 Insert the name of a plot and the function returns the locations within a plot
 }
-\details{
-
-}
 \examples{
 con <- dbpf_con()
 locations <- dbpf_loggers_in_plot(con,"NGO-DD-1004_PLOT")

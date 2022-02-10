@@ -11,8 +11,6 @@
 #' @param location_name Character string or list of several with the location
 #'                      name(s) to be queried for.
 #'
-#' @param unit_of_measurement Unit of measurments, defaults to "C". Used to
-#' identify the observation time - see Details.
 #'
 #' @param height_top Uppermost height [m] (positive above surface, negative when
 #'                   below surface) of sensor to return in this query.

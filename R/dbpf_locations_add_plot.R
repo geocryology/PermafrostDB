@@ -68,10 +68,10 @@ dbpf_locations_add_plot <- function(con, locations, mode = "test",
 
 
   #test information provided
-  input <- subset(locations, select = c(name, NW_lon, NW_lat, SW_lon, SW_lat,
-                                        NE_lon, NE_lat, SE_lon, SE_lat,
-                                        elevation_in_metres, comment,
-                                        record_observations))
+  input <- subset(locations, select = c("name", "NW_lon", "NW_lat", "SW_lon", "SW_lat",
+                                        "NE_lon", "NE_lat", "SE_lon", "SE_lat",
+                                        "elevation_in_metres", "comment",
+                                        "record_observations"))
 
   #fix column data type, add check columns
   input$NW_lon <- as.numeric(as.character(input$NW_lon))
@@ -127,7 +127,7 @@ dbpf_locations_add_plot <- function(con, locations, mode = "test",
                       , ", loc$elevation_in_metres, ", '",
                       loc$comment, "', '", loc$record_observations, "')")
         dbExecute(con, query)
-        input$inserted[r] = TRUE
+        input$inserted[r] <- TRUE
     } else if (prevent == 1) {
       print(paste0("!!! Location [", loc$name, "] not imported, check returned data frame."))
       print(paste0("Overlapping polygons: [", poly_overlap, "]"))

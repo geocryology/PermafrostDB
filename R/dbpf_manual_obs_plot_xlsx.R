@@ -52,7 +52,7 @@ dbpf_manual_obs_plot_xlsx <- function(con, file_xlsx, mode = "test",
 
     # test or insert data line by line
     for (r in 1:nrow(obs)) {
-    	result = dbpf_manual_obs_add(con, obs[r,'sensor_label'],
+    	result <- dbpf_manual_obs_add(con, obs[r,'sensor_label'],
     	                                  obs[r,'location_name'],
     	                                  obs[r,'time_UTC'],
     	                                  obs[r,'numeric_value'],
@@ -126,7 +126,7 @@ XLS_DB_location_plot_read <- function(file_xlsx) {
     if (ok.data == FALSE) {
     	print(paste("No location data, but location name present.",
     	            "Looking for existing location while importing file", file_xlsx))
-    	data <- subset(data, select=name)
+    	data <- subset(data, select = "name")
     }
     return(data)
 }

@@ -23,17 +23,6 @@ and export as a netCDF file.
 \details{
 Requires that the PermafrostDB and ncdf4 packages be installed.
 }
-\examples{
-\dontrun{
-library(ncdf4)
-library(reshape2)
-con <- dbpf_con()
-dbpf_export_nc_surface(con, "NGO-DD-2009_ST03", "./DD2009ST03_surf.nc")
-dbpf_export_nc_surface(con,
-c("NGO-DD-2009_ST03","NGO-DD-2011_ST02","NGO-DD-2009_ST01"), "./DD2009ST03_surf.nc")
-dbDisconnect(con)
-}
-}
 \author{
 Nick Brown <nick.brown@carleton.ca>
 }

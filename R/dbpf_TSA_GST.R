@@ -10,15 +10,9 @@
 #'
 #'
 #' @param con connection to PermafrostDB
+#' 
+#' @param inventory location names.  Can be a dataframe with column $name or a vector
 #'
-#' @param obs_stat One dataframe of one location or a list of dataframes of multiple locations.
-#'                 A dataframe needs at least the following columns:
-#'                 Location name as loc_name;
-#'                 Mean daily GST as agg_avg;
-#'                 Minimum daily GST as agg_min;
-#'                 Maximum daily GST as agg_max;
-#'                 Daily sd as agg_sd;
-#'                 Date as time (in POSIXct and the following format: YYYY-MM-DD)
 #'
 #' @param out.path Path to directory where the plot should be saved. e.g: "~/Desktop/"
 #'
@@ -231,14 +225,24 @@ f.location <- function(con,loc.name){
 
 
 # function to calculate the MAGST
+#' @param obs_stat One dataframe of one location or a list of dataframes of multiple locations.
+#'                 A dataframe needs at least the following columns:
+#'                 Location name as loc_name;
+#'                 Mean daily GST as agg_avg;
+#'                 Minimum daily GST as agg_min;
+#'                 Maximum daily GST as agg_max;
+#'                 Daily sd as agg_sd;
+#'                 Date as time (in POSIXct and the following format: YYYY-MM-DD)
+#' 
+#' @param wateryear ???
 f.MAGST <- function(obs_stat, wateryear){
 
     # Convert dates into POSIXlt
-    dates.posix = as.POSIXlt(obs_stat$time)
+    dates.posix <- as.POSIXlt(obs_stat$time)
     # Year offset
-    offset = ifelse(dates.posix$mon >= wateryear - 1, 1, 0)
+    offset <- ifelse(dates.posix$mon >= wateryear - 1, 1, 0)
     # Water year
-    obs_stat$year = dates.posix$year + 1900 + offset
+    obs_stat$year <- dates.posix$year + 1900 + offset
     obs_stat$month <- wateryear
 
 
@@ -285,7 +289,8 @@ f.MAGST <- function(obs_stat, wateryear){
 }
 
 
-#plot function
+# plot function
+#' @importFrom ggplot2 theme_bw ylab xlab ggtitle scale_colour_manual guides guide_legend geom_line
 f.plot <- function(out.path, data.location, snow.period, RD.marcol, warming.periods, zero.curtains){
 
   obs_stat <- data.location[[1]]
@@ -328,9 +333,9 @@ f.plot <- function(out.path, data.location, snow.period, RD.marcol, warming.peri
   }
 
 
-  myplot <- ggplot() + geom_line(data=obs_stat, aes(time, agg_avg,color="Mean_Temp")) +
-    geom_line(data=obs_stat, aes(time, agg_max,color="Max_Temp")) +
-    geom_line(data=obs_stat, aes(time, agg_min,color="Min_Temp")) +
+  myplot <- ggplot() + geom_line(data=obs_stat, aes("time", "agg_avg", color="Mean_Temp")) +
+    geom_line(data=obs_stat, aes("time", "agg_max", color="Max_Temp")) +
+    geom_line(data=obs_stat, aes("time", "agg_min", color="Min_Temp")) +
     snowplot +
     zeroplot +
     warmingplot +
@@ -351,11 +356,11 @@ f.plot <- function(out.path, data.location, snow.period, RD.marcol, warming.peri
 
 wtr_yr <- function(obs_stat, start_month=10) {
   # Convert dates into POSIXlt
-  dates.posix = as.POSIXlt(obs_stat$Snow.End)
+  dates.posix <- as.POSIXlt(obs_stat$Snow.End)
   # Year offset
-  offset = ifelse(dates.posix$mon >= start_month - 1, 1, 0)
+  offset <- ifelse(dates.posix$mon >= start_month - 1, 1, 0)
   # Water year
-  obs_stat$wateryear = dates.posix$year + 1900 + offset
+  obs_stat$wateryear <- dates.posix$year + 1900 + offset
   # Return the water year
   return(obs_stat)
 }

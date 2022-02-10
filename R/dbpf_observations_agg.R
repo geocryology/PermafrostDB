@@ -70,7 +70,7 @@ dbpf_observations_agg <- function(con, location_name, unit_of_measurement = "C",
                                   verbose = FALSE,
                                   fetch = FALSE, n = 100000) {
     # make averaging period [s]
-    period = 3600 * period
+    period <- 3600 * period
 
     # make query
     q <- paste0("SELECT locations.name AS loc_name, ",
@@ -106,12 +106,12 @@ dbpf_observations_agg <- function(con, location_name, unit_of_measurement = "C",
         nsite <- length(location_name)
       }
 
-      obs_stat <- list(as.data.table(dbFetch(res, 1)))
+      obs_stat <- list(data.table::as.data.table(dbFetch(res, 1)))
 
       # Fetch records in chunks and append to
       while (!dbHasCompleted(res)){
         rcount <- dbGetRowCount(res)
-        chunk <- as.data.table(dbFetch(res, n = n))
+        chunk <- data.table::as.data.table(dbFetch(res, n = n))
         obs_stat <- c(obs_stat, list(chunk))
 
         if (verbose){
@@ -126,7 +126,7 @@ dbpf_observations_agg <- function(con, location_name, unit_of_measurement = "C",
       if (verbose){
         print('Glueing everything together...')
         }
-      obs_stat <- rbindlist(obs_stat, use.names = T)
+      obs_stat <- data.table::rbindlist(obs_stat, use.names = T)
     }else{
       obs_stat <- dbGetQuery(con, q)
 

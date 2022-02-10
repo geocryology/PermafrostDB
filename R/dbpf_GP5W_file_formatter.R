@@ -1,3 +1,4 @@
+options(warn=-1)
 # =============================================================================
 #'
 #' @title Reformat GP5W file
@@ -40,15 +41,6 @@
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 #' @importFrom utils write.table
 # =============================================================================
-library("tools")
-library("stringr")
-library("data.table")
-library("lubridate")
-options(warn=-1)
-
-
-
-
 dbpf_GP5W_file_formatter <- function(con, inPath) {
   # test for existence
 

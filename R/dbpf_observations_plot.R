@@ -26,7 +26,7 @@
 #'
 #' @return Data frame with locations in rows and columns loc_name, height,
 #'         max, min, avg, cnt
-#'
+#'dbpf_observations_plot
 #' @export
 #' @examples
 #' dbpf_observations_plot(con, "YK16-SO06_01")
@@ -59,7 +59,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     	snames <- NULL
     	for (d in 1:length(heights)) {
     		# match the values to times with merge to get regular series
-    		y <- subset(data, height == heights[d], select=c(value, time))
+    		y <- subset(data, height == heights[d], select=c("value", "time"))
     		m <- merge(x = time, y = y, by = "time", all.x = TRUE)
     		series <- cbind(series, m$value)
     		snames <- c(snames, paste(heights[d], "m"))
@@ -79,7 +79,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     		heights <- unique(data$height)
     		for (d in 1:length(heights)) {
     			# match the values to times with merge to get regular series
-    			y <- subset(data, height == heights[d], select=c(value, time))
+    			y <- subset(data, height == heights[d], select=c("value", "time"))
     			m <- merge(x = time, y = y, by = "time", all.x = TRUE)
     			#only take columns with values
     			if (sum(is.na(m$value) == 0) > 0) {
@@ -97,18 +97,18 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     snamesLen <- length(snames)
 
  	#plot time series
-    graph <- dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [\U00B0C]")
+    graph <- dygraphs::dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [\U00B0 C]")
 
   # iterate to create series labels
   	for (seriesNum in 1:snamesLen)
   	{
-  	  graph <- graph %>% dySeries(paste0("V",seriesNum), label = snames[seriesNum])
+  	  graph <- graph %>% dygraphs::dySeries(paste0("V",seriesNum), label = snames[seriesNum])
   	}
 
   	graph <- graph %>%
-  	dyLegend(width = 400) %>%
-  	dyOptions(labelsUTC = TRUE) %>%
-  	dyHighlight(highlightSeriesOpts = list(strokeWidth = 2))
+  	dygraphs::dyLegend(width = 400) %>%
+  	dygraphs::dyOptions(labelsUTC = TRUE) %>%
+  	dygraphs::dyHighlight(highlightSeriesOpts = list(strokeWidth = 2))
 
   	# display graph
   	graph

@@ -20,9 +20,6 @@ data fame with fields: location_name, timestamp, lon, lat,
 Given a device serial number, this function return a data frame
              showing the locations where this device has been.
 }
-\details{
-
-}
 \examples{
 con <- dbpf_con()
 dbpf_device_locations(con, "E509DA")

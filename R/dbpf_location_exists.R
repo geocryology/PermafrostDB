@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' con <- dbpf_con()
-#' fds <- dbpf_location_name_exists()
+#' fds <- dbpf_location_name_exists(con, "Storage")
 #' dbDisconnect(con)
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>

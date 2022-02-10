@@ -74,15 +74,6 @@ and exports them as a CSV.  The formatting of the output file is fully
 \details{
 Requires the PermafrostDB package.
 }
-\examples{
-\dontrun{
-con <- dbpf_con()
-dbpf_export_csv_generic(con = con, location_name = c("NGO-DD-1012", "NGO-DD-2004"),
-                 output_directory = './', freq='daily')
-dbpf_export_csv_generic(con = con, location_name = c("NGO-DD-1011"),
-                 output_directory = './', freq='hourly')
-}
-}
 \author{
 Nick Brown <nick.brown@carleton.ca>
 }

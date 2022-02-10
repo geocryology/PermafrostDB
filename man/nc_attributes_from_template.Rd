@@ -11,6 +11,8 @@ nc_attributes_from_template(nc_object, templatefile, verbose = F)
 
 \item{templatefile}{character, path to a csv text file that provides
 information about the attributes to add. See details}
+
+\item{verbose}{logical, whether to print additional output}
 }
 \description{
 Write any number of netCDF attributes from a csv template specifying

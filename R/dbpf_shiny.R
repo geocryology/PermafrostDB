@@ -9,9 +9,6 @@
 #'          server permafrost.gcrc.carleton.ca. When finished, close connection
 #'          object (see examples).
 #'
-#' @param user    User name, defaults to "readonly"
-#' @param passwd  Password, default set for readonly account.
-#'
 #' @return Returns a DB connection object.
 #'
 #' @export
@@ -25,13 +22,14 @@
 # =============================================================================
 #' @importFrom shiny runApp
 dbpf_shiny <- function() {
-    runApp(list(ui=ui,server=server))
+    shiny::runApp(list(ui=ui,server=server))
 }
 
 # =============================================================================
 #   SERVER
 # =============================================================================
-#' @import shiny
+#' @importFrom shiny reactiveValues brushedPoints
+#' @importFrom ggplot2 ggplot geom_point scale_color_manual coord_cartesian
 server <- function(input, output) {
 
 
@@ -104,6 +102,9 @@ server <- function(input, output) {
 # =============================================================================
 #   USER INTERFACE
 # =============================================================================
+#' @importFrom shiny fluidPage fluidRow dateRangeInput plotOutput
+#' @importFrom shiny h1 h2 h3 h4 
+#' @importFrom shiny column brushOpts verbatimTextOutput
 ui <- fluidPage(
   fluidRow(
     column(width = 10, class = "well",
@@ -137,8 +138,3 @@ ui <- fluidPage(
     )
   )
 )
-
-
-
-
-

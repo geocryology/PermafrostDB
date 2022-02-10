@@ -6,12 +6,11 @@
 \usage{
 file_name_increment(filepath)
 }
-\description{
-generates numerically incremented filename if existing filename
-is taken
+\arguments{
+\item{filepath}{path to a file}
 }
-\details{
-None
+\description{
+generates numerically incremented filename if filename exists#'
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

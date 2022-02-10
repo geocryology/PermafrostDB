@@ -54,14 +54,6 @@
 #'
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' con <- dbpf_con()
-#' dbpf_export_csv_generic(con = con, location_name = c("NGO-DD-1012", "NGO-DD-2004"),
-#'                  output_directory = './', freq='daily')
-#' dbpf_export_csv_generic(con = con, location_name = c("NGO-DD-1011"),
-#'                  output_directory = './', freq='hourly')
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 #' @importFrom utils write.csv
 # =============================================================================
@@ -116,7 +108,7 @@ dbpf_export_csv_generic <- function(con, location_name, output_directory,
                 row.names = F, quote=F)
       warning(sprintf("Location %s returned no records. An empty file has
                       been written.", loc_i))
-      next()
+      next
     }
 
     #  reshape

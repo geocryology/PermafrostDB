@@ -19,9 +19,6 @@ data fame with fields: label, height_in_metres, type_of_measurement,
 Given a device serial number, this function return a data frame
              showing the locations where this device has been.
 }
-\details{
-
-}
 \examples{
 con <- dbpf_con()
 dbpf_device_sensors(con, "E509DA")

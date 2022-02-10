@@ -53,7 +53,7 @@ Function establishes a connection to the data base and returns a
 }
 \examples{
 #example of using specific user name and password
-\donttest{
+\dontrun{
 con <- dbpf_con("stephan", "password", "192.168.2.25", "5432")
 dbDisconnect(con)
 

@@ -32,7 +32,8 @@
 # =============================================================================
 
 dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
-
+  lon <- lat <- NULL  # to prevent error "no visible binding for global variable ..."
+  
   for (package in c("sp", "rgdal", "plotrix", "plotKML", "rgdal", "sp", "dismo",
                       "pixmap", "RSAGA", "aqp", "stars", "colorRamps")){
       if (!require(package, character.only = TRUE)){
@@ -64,8 +65,8 @@ dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
     df <- loc[,-which(names(loc) %in% c('id', 'record_observations'))]
 
     #make spatial points
-    spdf <- sp::SpatialPointsDataFrame(subset(loc, select=c(lon,lat)),
-                                 subset(loc, select=c(-lon,-lat)))
+    spdf <- sp::SpatialPointsDataFrame(subset(loc, select=c("lon","lat")),
+                                       subset(loc, select=c(-lon,-lat)))
     sp::proj4string(spdf) <- sp::CRS("+init=epsg:4326")
 
     #write kml

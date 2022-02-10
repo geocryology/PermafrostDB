@@ -4,8 +4,6 @@
 #'
 #' @description Insert the name of a plot and the function returns the locations within a plot
 #'
-#' @details
-#'
 #' @param con connection to database
 #'
 #' @param locname name of a plot

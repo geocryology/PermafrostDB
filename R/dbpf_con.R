@@ -44,7 +44,7 @@
 #' @export
 #' @examples
 #' #example of using specific user name and password
-#' \donttest{
+#' \dontrun{
 #' con <- dbpf_con("stephan", "password", "192.168.2.25", "5432")
 #' dbDisconnect(con)
 #'
@@ -65,7 +65,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
     config.file <- get.config()
 
     tryCatch({
-                    credential <- read.csv(config.file, stringsAsFactors = FALSE, nrows=2)
+                    credential <- utils::read.csv(config.file, stringsAsFactors = FALSE, nrows = 2)
                     user <- credential$user
                     passwd <- credential$passwd
                     host <- credential$host
@@ -83,7 +83,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
   require(DBI)
 
   # enforce use of UTC
-  Sys.setenv(TZ="UTC")
+  Sys.setenv(TZ = "UTC")
 
   # DB parameters
   pgDBConDetails <- c(database, host, port, user, passwd)
@@ -129,7 +129,7 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
     config.file <- get.config()
 
     tryCatch({
-      credential <- read.csv(config.file, stringsAsFactors = FALSE, nrows=2)
+      credential <- utils::read.csv(config.file, stringsAsFactors = FALSE, nrows=2)
       user <- credential$user
       passwd <- credential$passwd
       host <- credential$host

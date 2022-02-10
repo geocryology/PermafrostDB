@@ -6,6 +6,9 @@
 \usage{
 dbpf_tables(con)
 }
+\arguments{
+\item{con}{Database connection object, as returned by dbpf_con()}
+}
 \value{
 List of tables in the DB
 }

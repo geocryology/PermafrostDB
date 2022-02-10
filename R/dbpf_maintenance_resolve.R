@@ -25,7 +25,7 @@
 dbpf_maintenance_resolve <- function(con, id, time_UTC, mode='test'){
 
   if (missing(time_UTC)){
-    time_UTC <- now()
+    time_UTC <- lubridate::now()
   }
 
   # check if id exists

@@ -8,7 +8,8 @@
 #' @details Run in test mode first. If you have no DB login to write data, run
 #'          in test mode with your login and then pass to someone who does.
 #'
-#'
+#' @param con Database connection object, as returned by dbpf_con()
+#' 
 #' @param file_xlsx Excel file containing new sensor descriptions and these
 #'                  columns: label, device_id, type_of_measurement,
 #'                  unit_of_measurement, accuracy, precision,
@@ -53,7 +54,7 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
     data$height_in_metres[is.na(data$height_in_metres)] <- 0
 
 
-    data$import_comment = ""  # add new column
+    data$import_comment <- ""  # add new column
 
     # loop over rows
     for (r in 1:nrow(data)) {
@@ -72,7 +73,7 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
 
             # if imported, ass id to list
             if (grepl("Row inserted", res) == TRUE) {
-            	data$sensor_id[r] <- str_sub(res, start = -36)
+            	data$sensor_id[r] <- stringr::str_sub(res, start = -36)
             }
     	}
     }
@@ -81,5 +82,5 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
     #	print(data)
 
     #save
-    write.xlsx(x = data, file = file_xlsx, sheetName = "Data", row.names = FALSE)
+    openxslx::write.xlsx(x = data, file = file_xlsx, sheetName = "Data", row.names = FALSE)
 }

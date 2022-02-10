@@ -33,9 +33,6 @@ below surface) of sensor to return in this query.}
 "1950-01-01 00:00:00+00"}
 
 \item{verbose}{Provide terminal output of the query string? (defaults to FALSE)}
-
-\item{unit_of_measurement}{Unit of measurments, defaults to "C". Used to
-identify the observation time - see Details.}
 }
 \value{
 List of all locations in DB

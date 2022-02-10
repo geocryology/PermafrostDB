@@ -16,6 +16,8 @@
 #' height measurements should be added to the array with NA values for all time.
 #' Defaults to true.
 #'
+#'  @param dt time step, 'daily'
+#' 
 #' @examples
 #' \dontrun{
 #' con <- dbpf_con()

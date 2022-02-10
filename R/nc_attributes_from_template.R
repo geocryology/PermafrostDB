@@ -9,6 +9,8 @@
 #'
 #' @param templatefile character, path to a csv text file that provides
 #' information about the attributes to add. See details
+#' 
+#' @param verbose logical, whether to print additional output
 #'
 #' @details This function allows the same variable attributes to be standardized
 #' across a number of netcdf objects without having to change each one manually.
@@ -25,7 +27,7 @@
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 nc_attributes_from_template <- function(nc_object, templatefile, verbose=F){
-  attr <- read.csv(templatefile, stringsAsFactors = F, )
+  attr <- utils::read.csv(templatefile, stringsAsFactors = F, )
   for (row in 1:nrow(attr)){
     attr_i <- attr[row,]
     if (attr_i$variable_id %in% c('', '0') | is.na(attr_i$variable_id)){

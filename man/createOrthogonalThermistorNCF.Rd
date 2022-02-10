@@ -9,7 +9,7 @@ createOrthogonalThermistorNCF(
   file,
   n_stations,
   n_timestep,
-  n_depths,
+  n_depth,
   close_file = F,
   time_units = "days since 1970-01-01 00:00:00"
 )
@@ -22,12 +22,14 @@ createOrthogonalThermistorNCF(
 \item{n_timestep}{Integer, the number of unique timesteps for which there is
 temperature data}
 
-\item{n_depths}{Integer, the largest number of depth measurements in any
+\item{n_depth}{Integer, the largest number of depth measurements in any
 profile}
 
 \item{close_file}{Logical, whether or not to close the connection to the file
 after creation. Leaving the file open allows for the immediate addition of
 data. Defaults to FALSE.}
+
+\item{time_units}{netcdf4-style string description of time units}
 }
 \description{
 Creates a netCDF file with specified dimensions. The file has no

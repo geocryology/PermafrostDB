@@ -28,8 +28,7 @@ dbpf_export_csv_NWT <- function(con,
                                 location_name,
                                 project_name,
                                 file_name,
-                                freq='daily',
-                                split=T
+                                freq='daily'
                                 ){
 
   # Download data
@@ -84,7 +83,11 @@ dbpf_export_csv_NWT <- function(con,
 #' standards.
 #'
 #' @details None
-#'
+#' 
+#' @param con Database connection object, as returned by dbpf_con()
+#' 
+#' @param data data frame 
+#' 
 #' @param location_name Character, name of site for which data is to be desired.
 #' Used to query the database.
 #'
@@ -93,29 +96,29 @@ dbpf_export_csv_NWT <- function(con,
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
-format_NWT <- function(data, location_name, project_name){
+format_NWT <- function(con, data, location_name, project_name){
   # Get necessary metadata
-  coords <- dbGetQuery(con=con, paste0(
+  coords <- dbGetQuery(con = con, paste0(
     "SELECT name, ST_X(coordinates) as lon, ST_Y(coordinates) as lat
     FROM locations
-    WHERE name = '",location_name,"'"))
+    WHERE name = '", location_name, "'"))
 
   # Construct header metadata table
-  top <- as.data.frame(matrix(data=character(), nrow=7, ncol=ncol(data)),
-                       stringsAsFactors=F)
-  top[1,1] <- "Project Name:"
-  top[2,1] <- "Site ID:"
-  top[3,1] <- "Latitude:"
-  top[4,1] <- "Longitude:"
-  top[6,1] <- "Date Time (UTC)"
+  top <- as.data.frame(matrix(data = character(), nrow = 7, ncol = ncol(data)),
+                       stringsAsFactors=FALSE)
+  top[1, 1] <- "Project Name:"
+  top[2, 1] <- "Site ID:"
+  top[3, 1] <- "Latitude:"
+  top[4, 1] <- "Longitude:"
+  top[6, 1] <- "Date Time (UTC)"
 
-  top[1,2] <- project_name
-  top[2,2] <- location_name
-  top[3,2] <- sprintf("%.4f",coords$lat)
-  top[4,2] <- sprintf("%.4f",coords$lon)
+  top[1, 2] <- project_name
+  top[2, 2] <- location_name
+  top[3, 2] <- sprintf("%.4f",coords$lat)
+  top[4, 2] <- sprintf("%.4f",coords$lon)
 
-  top[6,2:ncol(data)] <- "Measurement Depth (m)"
-  top[7,] <- names(data)
+  top[6, 2:ncol(data)] <- "Measurement Depth (m)"
+  top[7, ] <- names(data)
 
   # Append numeric data (as character)
   data[is.na(data)] <- -999
@@ -131,19 +134,16 @@ format_NWT <- function(data, location_name, project_name){
 #'
 #' @title Increment filename
 #'
-#' @details None
+#' @param filepath path to a file
 #'
-#' @description generates numerically incremented filename if existing filename
-#' is taken
-#'
+#' @description generates numerically incremented filename if filename exists#'
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
-
 file_name_increment <- function(filepath){
   if(file.exists(filepath)){ #does file already exist
     file_orig <- filepath
-    i=1
+    i <- 1
     while(file.exists(filepath)){
       filepath <- gsub("(\\.[^\\.]{2,4})$", paste0("_",i,"\\1"),file_orig)
       i <- i+1

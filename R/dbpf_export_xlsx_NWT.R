@@ -16,21 +16,17 @@
 #'
 #' @param project_name Character, project name associated with the location_name
 #'
+#' @param freq how often to aggregate data (e.g. 'hourly', 'daily')
+#' 
 #' @details This function relies on the Rtools library to create the xlsx file.
 #' This can be downloaded from https://cran.r-project.org/bin/windows/Rtools/
 #'
 #' @export
 #'
-#' @examples
-#'  \dontrun{
-#' dbpf_export_xlsx_NWT(con=con, location_name = "NGO-DD-1009",
-#'     file_name = "~/NGO-DD-1009_Hourly_GroundTemperature.xlsx",
-#'     project_name = "SPSMPS")
-#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 dbpf_export_xlsx_NWT <- function(con, location_name,
-                                 project_name, file_name, freq='hourly', split=T){
+                                 project_name, file_name, freq='hourly'){
   if (!require(openxlsx)){
     stop("Please install the openxslx package")
   }
@@ -41,7 +37,7 @@ dbpf_export_xlsx_NWT <- function(con, location_name,
   # Download Data
   NWT_dat <- dbpf_export_csv_NWT(con=con,  freq=freq,
                              location_name=location_name,
-                             project_name=project_name, split=split)
+                             project_name=project_name)
   if (is.null(NWT_dat)){
     return(NULL)
   }

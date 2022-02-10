@@ -27,7 +27,9 @@ yields linear interpolation (default).}
 
 \item{fill.array}{logical, whether or not locations that lack stick-up
 height measurements should be added to the array with NA values for all time.
-Defaults to true.}
+Defaults to true.
+
+ @param dt time step, 'daily'}
 }
 \value{
 a data.frame whose first column is equal to the time values specified

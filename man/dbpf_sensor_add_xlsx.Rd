@@ -7,6 +7,8 @@
 dbpf_sensor_add_xlsx(con, file_xlsx, mode = "test")
 }
 \arguments{
+\item{con}{Database connection object, as returned by dbpf_con()}
+
 \item{file_xlsx}{Excel file containing new sensor descriptions and these
 columns: label, device_id, type_of_measurement,
 unit_of_measurement, accuracy, precision,
