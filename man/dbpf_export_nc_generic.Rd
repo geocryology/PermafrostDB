@@ -33,10 +33,11 @@ Rows are returned from the database using a combination of
 dbSendQuery() and dbFetch().
 }
 \examples{
-
+\dontrun{
 x <- dbpf_export_nc_generic(con, c("NGO-DD-1005", "NGO-DD-1006", "NGO-DD-1007", 
                                   "NGO-DD-1005_ST01", "AIRT1TOP"),
                             "~/example_ncdf.nc")
+ }
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

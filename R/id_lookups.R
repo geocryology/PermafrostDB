@@ -24,3 +24,6 @@ human_observation_id <- function(con){
                FROM devices
               WHERE device_type='human observation'")
 }
+
+
+

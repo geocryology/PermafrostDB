@@ -1,15 +1,14 @@
 # =============================================================================
 #'
-#' @title dbpf_FG2toGP5W
+#' @title Convert FG2 to GP5W
 #' 
-#'
 #' @description Returns connection to permafrost database
 #'
 #' @param inPath character, path to FG2 directory or specific FG2 file
 #' 
 #' @return Creates directory with new files. 
 #' 
-#' @output Log of which files were converted
+#' @return Log of which files were converted
 #'   
 #' @details Function takes a file path, scans for FG2 files to be converted.
 #' 

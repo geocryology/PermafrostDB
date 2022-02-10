@@ -109,11 +109,7 @@ dbpf_manual_obs_add <- function(con, sensor_label, location_name, time_UTC,
 		#use numeric field to indicate service needed (1) or completed (0)
 		#if (sensor_label == 'service_need') val_num  <- "1"
 		
-		#make new import record
-		query <- paste0("INSERT INTO imports (import_time, import_parameters) ",
-	                    "VALUES ('",format(Sys.time(), "%Y-%m-%d %H:%M:%S%z"),
-	                    "','R-import: dbpf_manual_obs_add()') RETURNING id") 
-	    iid <- dbGetQuery(con, query)
+    iid <- new_import_record(con)
 	
 		#replace NA with "" in text_value
 		if (is.na(text_value)) {text_value <- ""}

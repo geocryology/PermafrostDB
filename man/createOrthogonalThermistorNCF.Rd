@@ -38,10 +38,6 @@ The file structure is based on H.5.1. "Multidimensional array of
  time series profiles representation of time series" 
 (http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_multidimensional_array_representations_of_time_series_profiles)
 }
-\examples{
-library(ncdf4) 
-
-}
 \author{
 Nick Brown <nick.brown@carleton.ca>
 }
