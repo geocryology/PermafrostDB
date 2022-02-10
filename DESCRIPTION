@@ -14,15 +14,15 @@ Depends:
 	stringr (>= 1.2.0),
 	xts
 Imports:
-  data.table,
+	data.table,
 	ncdf4,
 	reshape2
 Suggests:
 	aqp,
-  Cairo,
-  colorRamps,
-  dismo,
-  dygraphs,
+	Cairo,
+	colorRamps,
+	dismo,
+	dygraphs,
  	ggplot2,
  	PermafrostTools (>= 1.3.1),
  	pixmap,

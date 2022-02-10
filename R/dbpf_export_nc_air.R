@@ -29,8 +29,8 @@
 #' dbDisconnect(con)
 #' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
-# =============================================================================
-
+#' @importFrom ncdf4 ncvar_put nc_close ncatt_put nc_close
+# ============================================================================
 dbpf_export_nc_air <- function(con, location_name, file_name, freq='daily'){ 
   if (! freq %in% c("daily", "hourly")){
     stop("Invalid frequency specified.  Try 'daily' or 'hourly'.")

@@ -42,8 +42,8 @@
 #' dbDisconnect(con)
 #' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
+#' @importFrom ncdf4 ncvar_put ncdim_def nc_close nc_attributes_from_template
 # =============================================================================
-
 dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='daily'){ 
   
   period <- switch(tolower(freq), 'daily'=24, 'hourly'=1)
@@ -165,6 +165,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
 #' nc_close(ncnew)
 #' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
+#' @importFrom ncdf4 ncvar_put ncdim_def
 # =============================================================================
 createMultiThermistorNCF <- function(file, n_stations, n_timestep, n_levels,
                                      close_file=F, 
