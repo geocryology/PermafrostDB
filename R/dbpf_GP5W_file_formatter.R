@@ -1,8 +1,16 @@
 # =============================================================================
 #'
-#' @title dbpf_GP5W_file_formatter.R
+#' @title Reformat GP5W file
 #' 
-#' @description This function is very use-specific. It should only ever be
+#' @description Removes some things from GP5W files
+#'              
+#' @param inPath character, path to csv directory
+#' @param con    connection to SensorDB
+#' 
+#' 
+#' @return Creates directory with new cleaned files. 
+#'   
+#' @details This function is very use-specific. It should only ever be
 #'              applied to the following file structure:
 #'              ------------
 #'              Logger: #E50B38 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)
@@ -22,13 +30,7 @@
 #'              It will also (unfortunately) be slow as heck when working with new loggers with no
 #'              observations yet in the DB. Sorry <3
 #'              
-#' @param inPath character, path to csv directory
-#' @param con    connection to SensorDB
-#' 
-#' 
-#' @return Creates directory with new cleaned files. 
-#'   
-#' @details Function takes a file path, scans for csv files to be converted.
+#'              Function takes a file path, scans for csv files to be converted.
 #'              Fun variables: 
 #'              inPath Desktop/Yk2021_test/testdir/
 #'              newDir Desktop/Yk2021_test/testdir_clean/
