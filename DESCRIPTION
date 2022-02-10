@@ -8,15 +8,15 @@ Encoding: UTF-8
 Depends:
 	R (>= 3.0.1),
 	lubridate,
-	RPostgres,
-	openxlsx,
-	shiny,
-	stringr (>= 1.2.0),
-	xts
+	shiny
 Imports:
-	data.table,
-	ncdf4,
-	reshape2
+    data.table,
+    RPostgres,
+    ncdf4,
+    openxlsx,
+    stringr (>= 1.2.0),
+    xts,
+    reshape2
 Suggests:
 	aqp,
 	Cairo,

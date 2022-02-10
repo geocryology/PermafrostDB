@@ -42,7 +42,7 @@
 #' dbDisconnect(con)
 #' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
-#' @importFrom ncdf4 ncvar_put ncdim_def nc_close nc_attributes_from_template
+#' @importFrom ncdf4 ncvar_put ncdim_def nc_close 
 # =============================================================================
 dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='daily'){
 
