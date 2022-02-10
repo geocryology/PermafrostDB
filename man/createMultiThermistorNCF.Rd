@@ -27,6 +27,8 @@ profile}
 \item{close_file}{logical, whether or not to close the connection to the file
 after creation. Leaving the file open allows for the immediate addition of
 data. Defaults to FALSE.}
+
+\item{time_units}{netcdf4-style string description of time units}
 }
 \description{
 Creates a netCDF file with specified dimensions. The file has no

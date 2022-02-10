@@ -16,8 +16,6 @@ correspond to locations with thermistor strings}
 
 \item{freq}{Character, one of ('daily', 'hourly'). Interval at which data is to
 be aggregated from the database.}
-
-\item{time_units}{netcdf4-style string description of time units}
 }
 \description{
 Downloads one or more time series from the carleton permafrost

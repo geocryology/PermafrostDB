@@ -20,6 +20,7 @@
 # =============================================================================
 
 dbpf_devices <- function(con) {
+  id <- NULL
   if (missing(con)){
       con <- dbpf_con() # get connection
   }

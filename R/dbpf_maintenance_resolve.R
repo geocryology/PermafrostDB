@@ -34,7 +34,7 @@ dbpf_maintenance_resolve <- function(con, id, time_UTC, mode='test'){
                    locations.name as loc
               FROM (SELECT id, location
                       FROM observations
-                     WHERE sensor_id = '",maintenance_required_id(con),"')
+                     WHERE sensor_id = '",PermafrostDB::maintenance_required_id(con),"')
                    AS obs
                    LEFT JOIN locations
                    ON locations.coordinates = obs.location
@@ -46,7 +46,7 @@ dbpf_maintenance_resolve <- function(con, id, time_UTC, mode='test'){
     paste0("SELECT observations.text_value as maintenance_id,
                    corrected_utc_time
               FROM observations
-             WHERE sensor_id = '",maintenance_completed_id(con),"'
+             WHERE sensor_id = '",PermafrostDB::maintenance_completed_id(con),"'
             ")
   completed <- dbGetQuery(con, completed)
 

@@ -128,7 +128,6 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
   ## Get offset data from stick-up heights
   vals_off <- interpolate_sensor_offset(location = vals_name,
                                         t_bnds   = vals_time_true,
-                                        dt       = freq,
                                         interpol = 'constant')
 
   vals_off <- vals_off[, c('corrected_utc_time', vals_name)] #reorder cols to match

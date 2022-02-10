@@ -36,10 +36,8 @@ dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
   
   for (package in c("sp", "rgdal", "plotrix", "plotKML", "rgdal", "sp", "dismo",
                       "pixmap", "RSAGA", "aqp", "stars", "colorRamps")){
-      if (!require(package, character.only = TRUE)){
-        message(paste0("Missing package: ", package, ". Installing now."))
+      if (!requireNamespace(package, quietly = TRUE)){
         utils::install.packages(package)
-        library(package, character.only = TRUE)
       }
     }
 

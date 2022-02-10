@@ -9,8 +9,7 @@ interpolate_sensor_offset(
   location,
   t_bnds,
   interpol = "linear",
-  fill.array = TRUE,
-  dt = "daily"
+  fill.array = TRUE
 )
 }
 \arguments{
@@ -27,9 +26,7 @@ yields linear interpolation (default).}
 
 \item{fill.array}{logical, whether or not locations that lack stick-up
 height measurements should be added to the array with NA values for all time.
-Defaults to true.
-
- @param dt time step, 'daily'}
+Defaults to true.}
 }
 \value{
 a data.frame whose first column is equal to the time values specified

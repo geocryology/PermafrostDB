@@ -28,7 +28,7 @@ dbpf_shiny <- function() {
 # =============================================================================
 #   SERVER
 # =============================================================================
-#' @importFrom shiny reactiveValues brushedPoints
+#' @importFrom shiny reactiveValues brushedPoints observe
 #' @importFrom ggplot2 ggplot geom_point scale_color_manual coord_cartesian
 server <- function(input, output) {
 
@@ -60,7 +60,7 @@ server <- function(input, output) {
 
   # plot to zoom and select
   output$plot_zoom <- renderPlot({
-    ggplot(data, aes(time, value)) +
+    ggplot(data, aes("time", "value")) +
       geom_point(aes(colour = selec$set)) +
       coord_cartesian(xlim = range$x, ylim = range$y, expand = FALSE) +
       scale_color_manual(values=c("#000000", "#D55E00"))

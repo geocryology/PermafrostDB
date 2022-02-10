@@ -31,8 +31,6 @@
 #' @param freq Character, one of ('daily', 'hourly'). Interval at which data is to
 #' be aggregated from the database.
 #' 
-#' @param time_units netcdf4-style string description of time units 
-#'
 #' @export
 #' @author Nick Brown <nick.brown@@carleton.ca>
 #' @importFrom ncdf4 ncvar_put ncdim_def nc_close 
@@ -138,6 +136,8 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
 #' after creation. Leaving the file open allows for the immediate addition of
 #' data. Defaults to FALSE.
 #'
+#' @param time_units netcdf4-style string description of time units 
+#' 
 #' @export
 #' @author Nick Brown <nick.brown@@carleton.ca>
 #' @importFrom ncdf4 ncvar_put ncdim_def

@@ -16,7 +16,6 @@
 #' height measurements should be added to the array with NA values for all time.
 #' Defaults to true.
 #'
-#'  @param dt time step, 'daily'
 #' 
 #' @examples
 #' \dontrun{
@@ -32,8 +31,7 @@
 #' of the station locations specified by the location parameter
 #===============================================================================
 interpolate_sensor_offset <- function(con, location, t_bnds,
-                          interpol='linear', fill.array=TRUE,
-                          dt = 'daily'){
+                          interpol='linear', fill.array=TRUE){
 
   stickup <- dbpf_manual_obs_by_location(con=con,
                                          location = location,

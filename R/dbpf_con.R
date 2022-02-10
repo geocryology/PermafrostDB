@@ -225,10 +225,11 @@ create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, loc
   #   stop("could not connect")
   # }
 
-  assign("dbpf.tunnel.pid", pid, envir=.GlobalEnv)
+  assign("dbpf.tunnel.pid", pid, envir = as.environment("package:PermafrostDB"))
   print(stringr::str_glue("Attempting tunnel to database on {db_host}:{db_port} on local port {local_port} through {ssh_host}. Running as process {pid}"))
-
-  return(dbpf.tunnel.pid)
+  pid <- get("dbpf.tunnel.pid", envir = as.environment("package:PermafrostDB"))
+  
+  return(pid)
 }
 
 #' @title Close database ssh tunnel if it exists
@@ -236,7 +237,8 @@ create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, loc
 #' @details Only works in the context of the R session used to create the tunnel.
 #' @export
 dbpf_close_tunnel <- function(){
-  tryCatch({tools::pskill(dbpf.tunnel.pid)   # kill existing tunnel if it exists
+  pid <-  get("dbpf.tunnel.pid", envir = as.environment("package:PermafrostDB"))
+  tryCatch({tools::pskill(pid)   # kill existing tunnel if it exists
     message("Closing existing tunnel")},
     error = function(e) {})
 }
