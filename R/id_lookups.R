@@ -1,5 +1,5 @@
 
-service_required_id <- function(con){
+maintenance_required_id <- function(con){
   #TODO:: memoize this
   dbGetQuery(con, "
              SELECT id 
@@ -8,7 +8,7 @@ service_required_id <- function(con){
 }
 
 
-service_completed_id <- function(con){
+maintenance_completed_id <- function(con){
   #TODO:: memoize this
   dbGetQuery(con, "
              SELECT id
