@@ -23,10 +23,10 @@ name(s) to be queried for.}
 
 \item{unit_of_measurement}{Unit of measurments, defaults to "C"}
 
-\item{height_top}{Uppermost height [m] (positive above surface, negative when 
+\item{height_top}{Uppermost height [m] (positive above surface, negative when
 below surface) of sensor to return in this query.}
 
-\item{height_bot}{Lowermost height [m] (positive above surface, negative when 
+\item{height_bot}{Lowermost height [m] (positive above surface, negative when
 below surface) of sensor to return in this query.}
 
 \item{time_b}{Begin time for the interval to be analysed. Use the format
@@ -47,7 +47,7 @@ Get raw observations per location, height and time slice.
 Fast way to access raw observation data without aggregation.
 }
 \examples{
-con <- dbpf_con() 
+con <- dbpf_con()
 obs <- dbpf_observations_raw(con, "NGO-DD-1004_ST02")
 dbDisconnect(con)
 

@@ -19,31 +19,31 @@ createAirLoggerNCF(
 
 \item{n_stations}{integer, how many sites are to be added to the file}
 
-\item{close_file}{logical, whether or not to close the connection to the file after creation. 
+\item{close_file}{logical, whether or not to close the connection to the file after creation.
 Leaving the file open allows for the immediate addition of data. Defaults to FALSE.}
 }
 \description{
 Creates a netCDF file with specified dimensions. The file has no
 data within it, but must be added in afterwards. The netCDF file structure can accommodate
-one or more surface loggers with different beginning and end dates, but to economise on the 
+one or more surface loggers with different beginning and end dates, but to economise on the
 file type, the time series should share measurement times.
 }
 \details{
 The file structure is based on H.2.1. "Orthogonal multidimensional array
-representation of time series" 
+representation of time series"
 (http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_orthogonal_multidimensional_array_representation_of_time_series)
 
 The container has 2 dimensions (time and station) and 4 variables (air_temperature, latitude, longitude, platform_id).
 }
 \examples{
 \dontrun{
-library(ncdf4) 
+library(ncdf4)
 # create temperature data
 t1 <- 3*sin(seq(1:792)*2*pi/365)+2
 t2 <- sin(seq(1:792)*2*pi/365)
 m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
 
-#create ncdf file 
+#create ncdf file
 ncnew <- createAirLoggerNCF("~/Air1.nc", 792, 2,  FALSE)
 
 # put some data in the ncdf file

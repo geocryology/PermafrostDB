@@ -16,8 +16,8 @@ List of all devices for all tables in DB
 Basic information on permafrost database @ Carleton University
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{

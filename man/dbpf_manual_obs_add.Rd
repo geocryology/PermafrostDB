@@ -29,7 +29,7 @@ dbpf_manual_obs_add(
 
 \item{height_max_metres}{[numeric]}
 
-\item{mode}{Should data be inserted into DB? Defaults to 'test' so that 
+\item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
 
 \item{value}{observed value / result [numeric or character]}
@@ -38,13 +38,13 @@ only testing information is returned. To insert: 'insert'}
 Tests and optionally inserts one manual observation into DB.
 }
 \details{
-Data is checked for existence (or duplication) of sensor and 
+Data is checked for existence (or duplication) of sensor and
          location and feedback is returned.
 }
 \examples{
 \dontrun{
-con  <- dbpf_con() 
-data <- dbpf_manual_obs_add(con, sensor_label, location_name, time_UTC, 
+con  <- dbpf_con()
+data <- dbpf_manual_obs_add(con, sensor_label, location_name, time_UTC,
 							value, height_min_metres, height_max_metres,
 							insert = FALSE)
 dbDisconnect(con)

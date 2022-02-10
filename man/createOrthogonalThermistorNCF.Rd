@@ -2,7 +2,7 @@
 % Please edit documentation in R/dbpf_export_nc_chain_ortho.R
 \name{createOrthogonalThermistorNCF}
 \alias{createOrthogonalThermistorNCF}
-\title{Create empty netCDF file thermistor stations with identical measurement 
+\title{Create empty netCDF file thermistor stations with identical measurement
 depths}
 \usage{
 createOrthogonalThermistorNCF(
@@ -19,14 +19,14 @@ createOrthogonalThermistorNCF(
 
 \item{n_stations}{Integer, how many sites are to be added to the file}
 
-\item{n_timestep}{Integer, the number of unique timesteps for which there is 
+\item{n_timestep}{Integer, the number of unique timesteps for which there is
 temperature data}
 
 \item{n_depths}{Integer, the largest number of depth measurements in any
 profile}
 
 \item{close_file}{Logical, whether or not to close the connection to the file
-after creation. Leaving the file open allows for the immediate addition of 
+after creation. Leaving the file open allows for the immediate addition of
 data. Defaults to FALSE.}
 }
 \description{
@@ -35,7 +35,7 @@ data within it, but must be added in afterwards.
 }
 \details{
 The file structure is based on H.5.1. "Multidimensional array of
- time series profiles representation of time series" 
+ time series profiles representation of time series"
 (http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_multidimensional_array_representations_of_time_series_profiles)
 }
 \author{

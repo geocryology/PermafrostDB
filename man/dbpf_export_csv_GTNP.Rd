@@ -28,7 +28,7 @@ Air_Temperature", "Surface_Temperature", "Ground_Temperature") to match GTN-P
 file naming convention.}
 }
 \description{
-Downloads one or more time series from the carleton permafrost database 
+Downloads one or more time series from the carleton permafrost database
 and exports them as a CSV that is formatted in the same way as GTN-P database
 exports.
 }
@@ -42,7 +42,7 @@ dbpf_export_csv_GTNP(con = con, location_name = c("NGO-DD-1012", "NGO-DD-2004"),
                  output_directory = './', freq='daily')
 dbpf_export_csv_GTNP(con = con, location_name = c("NGO-DD-1011"),
                  output_directory = './', freq='hourly')
- }               
+ }
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

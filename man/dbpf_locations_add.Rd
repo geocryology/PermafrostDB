@@ -7,37 +7,37 @@
 dbpf_locations_add(con, locations, mode = "test", tolerance = 0.1)
 }
 \arguments{
-\item{locations}{Data frame with these columns (type): 
-name (character); 
-lat (numeric, latitude in WGMS84); 
-lon (numeric, longitude in WGMS84); 
+\item{locations}{Data frame with these columns (type):
+name (character);
+lat (numeric, latitude in WGMS84);
+lon (numeric, longitude in WGMS84);
 accuracy_in_metres (numeric);
-elevation_in_metres (numeric);  
-comment (character); 
+elevation_in_metres (numeric);
+comment (character);
 record_observations (character, can only be 't' or 'f')}
 
 \item{mode}{Can be 'test' or 'insert' (requires login with insert previledges)}
 
-\item{tolerance}{Tolerance [m] for how close a new site can be to an existing 
+\item{tolerance}{Tolerance [m] for how close a new site can be to an existing
 site. If too close, the new site is not imported.}
 }
 \value{
-List of all locations with a column 'inserted' indicating which 
+List of all locations with a column 'inserted' indicating which
         ones were inserted, columns 'duplicate_name' indicates existing name
         conflict, 'duplicate_site' indicates that at least one location closer
         than the prescribed tolerance exists.
 }
 \description{
-Inserts a data frame of new locations into database. Insertion 
-             is done one location at a time and feedback is provided. 
-             Duplicate names are identified. 
-             The default mode (mode='test') only tests the data to be 
+Inserts a data frame of new locations into database. Insertion
+             is done one location at a time and feedback is provided.
+             Duplicate names are identified.
+             The default mode (mode='test') only tests the data to be
              inserted. Insert mode (mode='insert') requires a database
              connection generated with a login that has insert priviledge.
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{

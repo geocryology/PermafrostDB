@@ -10,22 +10,22 @@ dbpf_devices_locations_add(con, dev_loc, mode = "test")
 \item{con}{DB connection as returned by dbpf_con(). For insert priviledges
 specific user name and password need to be supplied.}
 
-\item{dev_loc}{Data frame with these columns (type): 
+\item{dev_loc}{Data frame with these columns (type):
 serialnumber (character)
 comment (character)
-sitename (character) 
+sitename (character)
 time (POSIXct, UTC)}
 
-\item{mode}{Can be 'test' (default) or 
+\item{mode}{Can be 'test' (default) or
 'insert' (requires login with insert previledges)}
 }
 \value{
-Original data frame with a new column 'inserted' indicating which 
+Original data frame with a new column 'inserted' indicating which
         rows were inserted. Column 'dup' indicates row for which duplicates
         were found and deleted, column 'dev' indicates whether a device
         with that serial number exits in the DB, column 'loc' indicates
         whether a location with that name exits in the DB. Also a column
-        'db_dup' if an exact duplicate row exists in the database. All five 
+        'db_dup' if an exact duplicate row exists in the database. All five
         new columns are Boolean (True/False or 1/0).
 }
 \description{
@@ -33,21 +33,21 @@ Inserts a data frame of new devices_locations into database.
 }
 \details{
 Devices_locations indicate the time when a device was put into
-         a specific location. Until assigned to a new location, the 
-         device is then interpreted to be at that location. Insertion 
-         is done one row at a time and feedback is provided. 
-         The default mode (mode='test') only tests the data to be 
+         a specific location. Until assigned to a new location, the
+         device is then interpreted to be at that location. Insertion
+         is done one row at a time and feedback is provided.
+         The default mode (mode='test') only tests the data to be
          inserted. Insert mode (mode='insert') requires a database
-         onnection generated with a login that has insert priviledge. 
+         onnection generated with a login that has insert priviledge.
          In Test Mode, duplicate rows in the input data are identified.
          Locations and devices listed are tested for existance in the DB.
-         The input data frame is retuned with three new columns containing 
+         The input data frame is retuned with three new columns containing
          test results.
 }
 \examples{
 \dontrun{
 con    <- dbpf_con()
-devices_locations <- data.frame(serialnumber="E50DBD", 
+devices_locations <- data.frame(serialnumber="E50DBD",
                                 comment="example",
                                 sitename="field_site_1",
                                 time=now())

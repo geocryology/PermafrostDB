@@ -9,7 +9,7 @@ dbpf_sensors(con, manual = TRUE)
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
 
-\item{manual}{Return only sensors for manual observation? 
+\item{manual}{Return only sensors for manual observation?
 This is the default. [boolean]}
 }
 \value{
@@ -19,12 +19,12 @@ List of sensors in DB
 Basic information on permafrost database @ Carleton University
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{
-con <- dbpf_con() 
+con <- dbpf_con()
 sen <- dbpf_sensors(con)
 dbDisconnect(con)
 

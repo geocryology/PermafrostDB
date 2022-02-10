@@ -17,12 +17,12 @@ convert_to_xlsx(NWT_dat, file_name, location_name)
 Write NWT csv table to formatted xlsx
 }
 \details{
-dbpf_export_xlsx_NWT is a wrapper for this function to allow for 
+dbpf_export_xlsx_NWT is a wrapper for this function to allow for
 file generation when there is sensor movement.
 }
 \examples{
 
-    
+
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

@@ -7,22 +7,22 @@
 interpolate_single(x, t_bnds, change_only = T, method = "linear")
 }
 \arguments{
-\item{x}{a dataframe containing, at a minimum, the columns 
-'corrected_utc_time' and 'numeric_value'. These are the points 
+\item{x}{a dataframe containing, at a minimum, the columns
+'corrected_utc_time' and 'numeric_value'. These are the points
  used to perform the interpolation}
 
 \item{t_bnds}{a POSIXct vector containing values for every timestep for which
 an estimate of the sensor offset is desired.}
 
 \item{change_only}{logical, whether or not to return the raw stick-up
-height values, or to return the net change from the first reported 
+height values, or to return the net change from the first reported
 stick-up height}
 
 \item{method}{one of ('linear', 'constant') the interpolation method
 to be passed to approx()}
 }
 \value{
-a numeric vector of the same length as t_bnds which gives an 
+a numeric vector of the same length as t_bnds which gives an
 interpolated sensor offset for each timestep.
 }
 \description{

@@ -34,40 +34,40 @@ function will return the table as an R object instead of writing it to disk.}
 be aggregated from the database.}
 
 \item{unit_of_measurement}{character, used to identify the desired measurement
-type in the database.  Common values are 'C' for temperature or '\%RH' 
+type in the database.  Common values are 'C' for temperature or '\%RH'
 for relative humidity.  Defaults to 'C'}
 
 \item{measurement_name}{character, description of what is being measured.
-Used in file naming.  Examples incldue 'Ground_Temperature' or 
+Used in file naming.  Examples incldue 'Ground_Temperature' or
 'Relative_Humidity'. Defaults to 'Ground_Temperature'}
 
 \item{date_header}{character, string to be used for the header of the date/time
 column.  Defaults to 'Date'.}
 
-\item{date_format}{character, date format string for database. Defaults to 
+\item{date_format}{character, date format string for database. Defaults to
 '\%Y/\%m/\%d \%H:\%M:\%S'.}
 
 \item{depth_header_units}{Character string, one of ('m', 'cm', 'mm'). Desired
 units for depth values in column header. Defaults to 'm'.}
 
-\item{depth_header_prefix}{(optional) character string to be placed before 
+\item{depth_header_prefix}{(optional) character string to be placed before
 numeric depth values in column headers.}
 
-\item{depth_header_suffix}{(optional) character string to be placed after 
+\item{depth_header_suffix}{(optional) character string to be placed after
 numeric depth values in column headers.}
 
-\item{depth_header_precision}{(optional) integer, number of decimal places to 
+\item{depth_header_precision}{(optional) integer, number of decimal places to
 use for depth header values. If not provided, depth values are allowed to have
 as many decimal places as required.}
 
 \item{depth_positive_down}{logical, whether or not depths should be given as
 positive values. Defaults to TRUE.}
 
-\item{measurement_precision}{integer, number of decimal places to include for 
+\item{measurement_precision}{integer, number of decimal places to include for
 measurement values. Defaults to 2.}
 }
 \description{
-Downloads one or more time series from the carleton permafrost database 
+Downloads one or more time series from the carleton permafrost database
 and exports them as a CSV.  The formatting of the output file is fully
  customizable.
 }

@@ -11,7 +11,7 @@ dbpf_manual_obs_subplot_xlsx(con, file_xlsx, mode = "test", dbformat = FALSE)
 
 \item{file_xlsx}{file name of the xlsx workbook to be imported [character]}
 
-\item{mode}{Should data be inserted into DB? Defaults to 'test' so that 
+\item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
 
 \item{dbformat}{Defaults to FALSE for reading complete sub-plot xls file.
@@ -22,11 +22,11 @@ DB_format_manual_observation and ingests the data found there.}
 Tests and optionally inserts manual observations into DB.
 }
 \details{
-Data is checked for existence (or duplication) of sensor and 
+Data is checked for existence (or duplication) of sensor and
          location and feedback is returned.
 }
 \examples{
-con  <- dbpf_con() 
+con  <- dbpf_con()
 data <- dbpf_manual_obs_subplot_xlsx(con, file_xlsx)
 dbDisconnect(con)
 

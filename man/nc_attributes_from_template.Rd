@@ -9,7 +9,7 @@ nc_attributes_from_template(nc_object, templatefile, verbose = F)
 \arguments{
 \item{nc_object}{An object of class ncdf4, indicating what file to write to.}
 
-\item{templatefile}{character, path to a csv text file that provides 
+\item{templatefile}{character, path to a csv text file that provides
 information about the attributes to add. See details}
 }
 \description{
@@ -23,7 +23,7 @@ across a number of netcdf objects without having to change each one manually.
 The templatefile csv should have the following column headers:
 variable_id: the name of the variable to which to add an attirubte. Leave blank
 to create global attributes
-attribute_name: the name of the desired attribute 
+attribute_name: the name of the desired attribute
 attribute_value: the value of the attribute
 precision: the precision of the attribute.  Can have values of "short",
 "float", "double", or "text". If unspecified, the written precision is the same

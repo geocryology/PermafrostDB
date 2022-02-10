@@ -14,16 +14,16 @@ dbpf_location_report(con, location_name, distance = 0.1)
 \item{distance}{Search radius in meters for other locations, with centre at the origin location}
 }
 \value{
-Coordinates of location, details for the location such as device and number of observations and 
-        a remark if device is still at this location. Depending on the distance, locations with 
+Coordinates of location, details for the location such as device and number of observations and
+        a remark if device is still at this location. Depending on the distance, locations with
         information within the search radius.
 }
 \description{
-Give a location name and it returns the coordinates, the device serial number 
+Give a location name and it returns the coordinates, the device serial number
              and number of observations as well as a comment if the device is still at this location
 }
 \details{
-With the default settings, only the information for the specific location is returned. 
+With the default settings, only the information for the specific location is returned.
          By increasing the distance, all locations within the distance-radius are returned as well.
 }
 \examples{

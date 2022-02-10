@@ -44,11 +44,11 @@ Connect to database through an SSH tunnel
 }
 \details{
 Acts as a wrapper combining \code{\link{dbpf_con}} and \code{\link{create_tunnel}}.
-Refer to those functions for more information. To auto-connect, add the following parameter keywords to the database configuration file 
+Refer to those functions for more information. To auto-connect, add the following parameter keywords to the database configuration file
 described in  \code{\link{dbpf_con}}.
 
-             
+
              \code{user,passwd,host,port,ssh_user,ssh_host,ssh_port,ssh_keyfile,local_port}
-             
+
              \code{"readonly","fjZfwg?H9jDsd","256.245.11.15","5432","user01","125.25.1.35","5432","/home/user/.ssh/keyfile.pem","5555"}
 }

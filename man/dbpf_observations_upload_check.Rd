@@ -10,8 +10,8 @@ dbpf_observations_upload_check(con, dirPath)
 \item{con}{DB connection as returned by dbpf_con(). For insert priviledges
 specific user name and password need to be supplied.}
 
-\item{dirPath}{To local observations .csv file directory. Files should follow 
-proper GP5W or FG2 naming convention. 
+\item{dirPath}{To local observations .csv file directory. Files should follow
+proper GP5W or FG2 naming convention.
 ie. E50BDA_YYYYMMDDhhmmss.csv}
 }
 \value{
@@ -21,7 +21,7 @@ An output log indicating whether .csv is fit for upload to sensorDb
 Inserts a data frame of new devices_locations into database.
 }
 \details{
-Function will indicate whether the file you're about to upload is 
+Function will indicate whether the file you're about to upload is
          safe for uploading.
 }
 \examples{

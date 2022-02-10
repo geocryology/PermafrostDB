@@ -7,7 +7,7 @@
 file_name_increment(filepath)
 }
 \description{
-generates numerically incremented filename if existing filename 
+generates numerically incremented filename if existing filename
 is taken
 }
 \details{

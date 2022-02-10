@@ -35,9 +35,9 @@ This can be downloaded from https://cran.r-project.org/bin/windows/Rtools/
 }
 \examples{
  \dontrun{
-dbpf_export_xlsx_NWT(con=con, location_name = "NGO-DD-1009", 
-    file_name = "~/NGO-DD-1009_Hourly_GroundTemperature.xlsx", 
-    project_name = "SPSMPS")   
+dbpf_export_xlsx_NWT(con=con, location_name = "NGO-DD-1009",
+    file_name = "~/NGO-DD-1009_Hourly_GroundTemperature.xlsx",
+    project_name = "SPSMPS")
 }
 }
 \author{

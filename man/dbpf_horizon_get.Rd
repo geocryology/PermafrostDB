@@ -18,7 +18,7 @@ a dataframe with columns \code{azimuth} and \code{horizon} [data.frame]
 Get a collection of (azimuth, horizon) measurements for a location.
 }
 \details{
-Adds a collection of horizon measurements (i.e. (azimuth, horizon) pairs) 
+Adds a collection of horizon measurements (i.e. (azimuth, horizon) pairs)
 to the database for a particular location.
 }
 \author{

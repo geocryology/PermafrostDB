@@ -9,7 +9,7 @@ dbpf_kml(con, kmlfile, location_name, bounding_box)
 \arguments{
 \item{kmlfile}{Filename for kml to be produced.}
 
-\item{location_name}{(optional) Character, one or more location names to 
+\item{location_name}{(optional) Character, one or more location names to
 convert.}
 
 \item{bounding_box}{(optional) numeric vector of the form
@@ -24,7 +24,7 @@ Exports site locations as a kml file.
 }
 \details{
 Function needs to be extended to allow:
-         --> filtering by location, etc. 
+         --> filtering by location, etc.
          --> display of summary information per site
          --> assigning shape and colour of icon based on attributes
 }

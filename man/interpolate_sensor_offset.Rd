@@ -18,19 +18,19 @@ interpolate_sensor_offset(
 
 \item{location}{a character vector with one or more site names}
 
-\item{t_bnds}{a vector of POSIXct times for which estimates of vertical 
+\item{t_bnds}{a vector of POSIXct times for which estimates of vertical
 sensor offset are desired.}
 
 \item{interpol}{one of ('constant', 'linear'). Passed to the interpolation
 function. 'Constant' interpolation results in step-changes whereas 'linear'
 yields linear interpolation (default).}
 
-\item{fill.array}{logical, whether or not locations that lack stick-up 
+\item{fill.array}{logical, whether or not locations that lack stick-up
 height measurements should be added to the array with NA values for all time.
 Defaults to true.}
 }
 \value{
-a data.frame whose first column is equal to the time values specified 
+a data.frame whose first column is equal to the time values specified
 by t_bnds. All other colummns are the time-dependent sensor offsets for each
 of the station locations specified by the location parameter
 }

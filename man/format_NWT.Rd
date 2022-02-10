@@ -13,7 +13,7 @@ Used to query the database.}
 \item{project_name}{Character, used in file header metadata}
 }
 \description{
-adds header information to a csv to conform with NTGS data 
+adds header information to a csv to conform with NTGS data
 standards.
 }
 \details{
