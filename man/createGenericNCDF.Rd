@@ -25,6 +25,8 @@ temperature data}
 after creation. Leaving the file open allows for the immediate addition of
 data. Defaults to FALSE.}
 
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{n_depths}{integer, the largest number of depth measurements in any
 profile}
 }

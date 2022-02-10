@@ -57,7 +57,7 @@ dbpf_export_nc_chain_ortho <- function(con, location_name, file_name, freq='dail
   db_dat$height = abs(db_dat$height)
   db_dat <- db_dat[,c("loc_name", "height", "agg_avg", "time")]
 
-  m <- acast(db_dat,
+  m <- reshape2::acast(db_dat,
            formula = height ~ time ~ loc_name,
            value.var = 'agg_avg',
            fun.aggregate = function(x) x[1])

@@ -83,7 +83,7 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
     Z <- by(site_dat$height, site_dat$loc_name, function(x) as.numeric(as.factor(x)))
     site_dat$height <- as.numeric(unlist(Z))
 
-    m <- acast(site_dat,
+    m <- reshape2::acast(site_dat,
                formula = height ~ time ~ loc_name,
                value.var = 'agg_avg',
                fun.aggregate = function(x) x[1])

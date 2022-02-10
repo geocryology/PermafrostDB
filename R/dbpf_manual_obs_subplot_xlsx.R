@@ -66,7 +66,7 @@ dbpf_manual_obs_subplot_xlsx <- function(con, file_xlsx, mode = "test", dbformat
 # helper function to read and check the sheets DB_format_location
 XLS_DB_location_read <- function(file_xlsx) {
     # read data
-    data <- read.xlsx(file_xlsx, sheet = "DB_format_location", colNames = TRUE)
+    data <- openxlsx::read.xlsx(file_xlsx, sheet = "DB_format_location", colNames = TRUE)
 
     # test formalities
     if (length(names(data)) != 7) {
@@ -115,7 +115,7 @@ XLS_DB_location_read <- function(file_xlsx) {
 # helper function to read and check the sheets DB_format_manual_observation
 XLS_DB_observations_read <- function(file_xlsx) {
     # read data
-    data <- read.xlsx(file_xlsx, sheet = "DB_format_manual_observation", colNames = TRUE)
+    data <- openxlsx::read.xlsx(file_xlsx, sheet = "DB_format_manual_observation", colNames = TRUE)
 
     # test formalities
     if (length(names(data)) != 7) {

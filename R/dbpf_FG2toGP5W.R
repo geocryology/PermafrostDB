@@ -80,7 +80,7 @@ convertFG2 <- function(filePath){
   for(line in lines){
     # If info line: translate
     if (grepl("<LOGGER", line) == 1) {
-      logger <- substr(str_extract(line, "\\$......\\>"), 2, 7) # Pulls out 6-Digit logger ID
+      logger <- substr(stringr::str_extract(line, "\\$......\\>"), 2, 7) # Pulls out 6-Digit logger ID
       newLine <- sprintf("Logger: #%s 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)\n", logger)
       cat(newLine)
       next

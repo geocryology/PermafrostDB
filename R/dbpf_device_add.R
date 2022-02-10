@@ -8,6 +8,8 @@
 #' @details Run in test mode first. If you have no DB login to write data, run
 #'          in test mode with your login and then pass to someone who does.
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param device_type Charcter string decribing type of device
 #'
 #' @param notes Notes for the device.

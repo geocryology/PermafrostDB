@@ -7,6 +7,8 @@
 #'
 #' @details Return data frame with a summary of observations in DB
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param type Character string indicating the type of inventory to be returned.
 #'             Defaults to 'observations_by_locations', others currently not
 #'             implemented.

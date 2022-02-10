@@ -6,7 +6,9 @@
 #'              showing the locations where this device has been.
 #'
 #' @details
-#'
+#' 
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param serial_number Serial number of device to query
 #'
 #' @return data fame with fields: location_name, timestamp, lon, lat,

@@ -22,6 +22,7 @@
 #' @export
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
+#' @importFrom utils write.table
 # =============================================================================
 dbpf_export_csv_NWT <- function(con,
                                 location_name,

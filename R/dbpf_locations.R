@@ -7,6 +7,9 @@
 #' @details These simple functions return all data as data frames. When
 #'          making a query many times, optimise the SQL statement to only
 #'          request the data you actually need.
+#' 
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param type Identifies the geometry type for which locations are returned.
 #'             The default is 'point', otherwise set type='polygon'. [character]
 #'

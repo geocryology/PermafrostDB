@@ -21,7 +21,10 @@
 #' @export
 #' @examples
 #' location_cols <- dbpf_table_columns('locations')
-#'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
+#' @param tablename Name of the table for which to retrieve field names
+#' 
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 dbpf_table_columns <- function(con, tablename, detailed=F){

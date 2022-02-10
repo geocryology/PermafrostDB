@@ -67,7 +67,7 @@ dbpf_export_nc_chain_multi <- function(con, location_name, file_name, freq='dail
   Z <- by(db_dat$height, db_dat$loc_name, function(x) as.numeric(as.factor(x)))
   db_dat$height <- as.numeric(unlist(Z))
 
-  m <- acast(db_dat,
+  m <- reshape2::acast(db_dat,
              formula = height ~ time ~ loc_name,
              value.var = 'agg_avg',
              fun.aggregate = function(x) x[1])

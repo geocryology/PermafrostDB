@@ -190,7 +190,7 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
 create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, local_port=5555, ssh_port=22){
 
   if (!require(ssh)){
-    install.packages('ssh')
+    utils::install.packages('ssh')
   }
 
   dbpf_close_tunnel()
@@ -200,9 +200,9 @@ create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, loc
 
 
   cmd <- paste0("ssh::ssh_tunnel(ssh::ssh_connect(",
-                str_glue("host = '{ssh_user}@{ssh_host}:{ssh_port}', "),
-                str_glue("keyfile='{gsub( '\\\\\\\\', '/', ssh_keyfile)}'),"),
-                str_glue("port = {local_port}, target = '{db_host}:{db_port}')"))
+                stringr::str_glue("host = '{ssh_user}@{ssh_host}:{ssh_port}', "),
+                stringr::str_glue("keyfile='{gsub( '\\\\\\\\', '/', ssh_keyfile)}'),"),
+                stringr::str_glue("port = {local_port}, target = '{db_host}:{db_port}')"))
 
   pid <- sys::r_background(
     std_out = FALSE,

@@ -7,8 +7,9 @@
 dbpf_table_columns(con, tablename, detailed = F)
 }
 \arguments{
-\item{tablename}{character, name of a table within the database. For a
-complete list, use the function \link{dbpf_tables}.}
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
+\item{tablename}{Name of the table for which to retrieve field names}
 
 \item{detailed}{logical, whether or not to return a list of all column
 information or just names. Default to false.}
@@ -27,7 +28,6 @@ These simple functions return all data as data frames. When
 }
 \examples{
 location_cols <- dbpf_table_columns('locations')
-
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

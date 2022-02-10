@@ -7,6 +7,8 @@
 dbpf_locations_add(con, locations, mode = "test", tolerance = 0.1)
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{locations}{Data frame with these columns (type):
 name (character);
 lat (numeric, latitude in WGMS84);

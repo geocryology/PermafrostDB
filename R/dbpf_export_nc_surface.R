@@ -51,12 +51,12 @@ dbpf_export_nc_surface <- function(con, location_name, file_name, freq='daily'){
   db_dat$height = abs(db_dat$height) #careful!
   db_dat <- db_dat[,c("loc_name", "agg_avg", "height", "time")]
 
-  m <- acast(db_dat,
+  m <- reshape2::acast(db_dat,
              formula = time ~ loc_name,
              value.var = 'agg_avg',
              fun.aggregate = function(x) x[1])
 
-  m_height <- acast(db_dat,
+  m_height <- reshape2::acast(db_dat,
              formula = time ~ loc_name,
              value.var = 'height',
              fun.aggregate = function(x) x[1])

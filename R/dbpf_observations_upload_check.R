@@ -118,7 +118,7 @@ identify_logger <- function(con, filePath){
   if (head(fileTypeDf$STATUS, 1) == 'Fail'){
     # Extracting first 6 digits of filePath
     serial_number <- substr(basename(filePath), 1, 6)
-    serial_number <- substr(str_extract(serial_number, "E5...."), 1, 6)
+    serial_number <- substr(stringr::str_extract(serial_number, "E5...."), 1, 6)
     # Ensuring serial_number is correct.
     if (is.na(serial_number)){
       result <- "Fail"
@@ -132,7 +132,7 @@ identify_logger <- function(con, filePath){
 
   # If file formatted FG2 or GP5W
   if (grepl("Logger", firstLine) == 1){
-    serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7)
+    serial_number <- substr(stringr::str_extract(firstLine, "\\#E5...."), 2, 7)
     if (is.na(serial_number)){
       result <- "Fail"
       note <- "Unable to read logger serial_number"
@@ -212,7 +212,7 @@ is_file_uploaded <- function(con, filePath, log){
   # If file hasn't failed any other tests, or we at least have logger id:
   if (log$STATUS[2] == "Pass" ){
 
-    serial_number <- substr(str_extract(log$NOTES[2], "E5...."), 1, 6)
+    serial_number <- substr(stringr::str_extract(log$NOTES[2], "E5...."), 1, 6)
     devIdQuery <- paste0("SELECT id FROM devices WHERE serial_number = '",
                          serial_number, "'")
     obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",

@@ -7,6 +7,8 @@
 dbpf_locations(con, type = "point")
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{type}{Identifies the geometry type for which locations are returned.
 The default is 'point', otherwise set type='polygon'. [character]}
 }

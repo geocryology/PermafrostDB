@@ -97,7 +97,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     snamesLen <- length(snames)
 
  	#plot time series
-    graph <- dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [ºC]")
+    graph <- dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [\U00B0C]")
 
   # iterate to create series labels
   	for (seriesNum in 1:snamesLen)

@@ -17,6 +17,8 @@ dbpf_device_add(
 )
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{device_type}{Charcter string decribing type of device}
 
 \item{notes}{Notes for the device.}

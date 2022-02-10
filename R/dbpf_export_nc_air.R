@@ -64,17 +64,17 @@ dbpf_export_nc_air <- function(con, location_name, file_name, freq='daily'){
   db_dat$height = abs(db_dat$height)
   db_dat <- db_dat[,c("loc_name", "temperature", "humidity", "height", "time")]
 
-  m <- acast(db_dat,
+  m <- reshape2::acast(db_dat,
              formula = time ~ loc_name,
              value.var = 'temperature',
              fun.aggregate = function(x) x[1])
 
-  m_humid <- acast(db_dat,
+  m_humid <- reshape2::acast(db_dat,
              formula = time ~ loc_name,
              value.var = 'humidity',
              fun.aggregate = function(x) x[1])
 
-  m_height <- acast(db_dat,
+  m_height <- reshape2::acast(db_dat,
                     formula = time ~ loc_name,
                     value.var = 'height',
                     fun.aggregate = function(x) x[1])

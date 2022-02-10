@@ -178,6 +178,8 @@ dbpf_export_nc_generic <- function(con, location_name, file_name, freq='daily',
 #' * Depth values are not time-dependent, therefore the depth levels of a
 #' station must not change between time periods
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param file character, path to output netCDF file (*.nc)
 #'
 #' @param n_timestep integer, the number of unique timesteps for which there is

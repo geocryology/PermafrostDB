@@ -38,6 +38,7 @@
 #'              outFile Desktop/Yk2021_test/testdir_clean/testfile.csv
 #'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
+#' @importFrom utils write.table
 # =============================================================================
 library("tools")
 library("stringr")
@@ -84,11 +85,11 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
     # Reading in first line of csv
     conFile <- file(inFile,"r")
     firstLine <- readLines(conFile,n=1)
-    firstLine <- str_replace(firstLine, "#2:rH", "#2:%rH")
+    firstLine <- stringr::str_replace(firstLine, "#2:rH", "#2:%rH")
     close(conFile)
 
     # Open as DF, del HK col and del Parameter rows
-    data <- fread(inFile,
+    data <- data.table::fread(inFile,
                   skip = "No,",
                   sep = ',',
                   stringsAsFactors = TRUE,
@@ -124,7 +125,7 @@ time_cleaner <- function(con, firstLine, data){
 
   # Get serial_number from firstLine
   if (grepl("Logger", firstLine) == 1){
-    serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7)
+    serial_number <- substr(stringr::str_extract(firstLine, "\\#E5...."), 2, 7)
   }
 
   else{

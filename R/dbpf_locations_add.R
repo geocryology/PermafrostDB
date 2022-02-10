@@ -13,6 +13,8 @@
 #'          making a query many times, optimise the SQL statement to only
 #'          request the data you actually need.
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param locations Data frame with these columns (type):
 #'                  name (character);
 #'                  lat (numeric, latitude in WGMS84);

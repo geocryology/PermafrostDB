@@ -14,6 +14,8 @@ dbpf_trumpet_curve(
 )
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{borehole_name}{Character string of the location to be plotted.}
 
 \item{gst_names}{Unit of measurments, defaults to "C"}

@@ -7,6 +7,8 @@
 dbpf_device_report(con, serial_number)
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{serial_number}{Serial number of device to query}
 }
 \value{

@@ -8,6 +8,8 @@
 #' @details Run in test mode first. If you have no DB login to write data, run
 #'          in test mode with your login and then pass to someone who does.
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param device_id Charcter string of device that this is linked to.
 #'
 #' @param label Name for the new sensor.

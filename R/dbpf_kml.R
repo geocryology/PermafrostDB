@@ -8,7 +8,9 @@
 #'          --> filtering by location, etc.
 #'          --> display of summary information per site
 #'          --> assigning shape and colour of icon based on attributes
-#'
+#' 
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param kmlfile Filename for kml to be produced.
 #'
 #' @param location_name (optional) Character, one or more location names to
@@ -35,7 +37,7 @@ dbpf_kml <- function(con, kmlfile, location_name, bounding_box) {
                       "pixmap", "RSAGA", "aqp", "stars", "colorRamps")){
       if (!require(package, character.only = TRUE)){
         message(paste0("Missing package: ", package, ". Installing now."))
-        install.packages(package)
+        utils::install.packages(package)
         library(package, character.only = TRUE)
       }
     }

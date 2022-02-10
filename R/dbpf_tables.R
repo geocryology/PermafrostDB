@@ -22,7 +22,7 @@ dbpf_tables <- function(con) {
       con <- dbpf_con() # get connection
     }
 
-    tables <- dbListTables(con)
+    tables <- DBI::dbListTables(con)
 
     return(tables)
 }

@@ -63,6 +63,7 @@
 #'                  output_directory = './', freq='hourly')
 #' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
+#' @importFrom utils write.csv
 # =============================================================================
 
 dbpf_export_csv_generic <- function(con, location_name, output_directory,

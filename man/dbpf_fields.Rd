@@ -7,6 +7,8 @@
 dbpf_fields(con, tables = "")
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{table}{Character string or vector of table name(s). If empty, fields
 for all tables are returned. Default is table="".}
 }
@@ -23,7 +25,6 @@ These simple functions return all data as data frames. When
 }
 \examples{
 con <- dbpf_con()
-fds   <- dbpf_fields(con, tables = "")
 fds_o <- dbpf_fields(tables = "observations")
 
 }

@@ -35,7 +35,7 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
     }
 
     # open file and check
-    data <- read.xlsx(file_xlsx, 1)  # read first sheet
+    data <- openxlsx::read.xlsx(file_xlsx, 1)  # read first sheet
     data$label <- as.character(data$label)
     data$device_id <- as.character(data$device_id)
     data$type_of_measurement <- as.character(data$type_of_measurement)

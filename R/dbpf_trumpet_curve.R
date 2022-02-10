@@ -7,7 +7,9 @@
 #'
 #' @details Plots a trumpet curve for one location and optionally includes
 #'          near surface temperature and air temperature in this.
-#'
+#' 
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param borehole_name Character string of the location to be plotted.
 #'
 #' @param gst_names Unit of measurments, defaults to "C"
@@ -53,7 +55,7 @@ dbpf_trumpet_curve <- function(con, borehole_name, gst_names="", air_names="",
     #min(bh$min),max(bh$max)
     plot(bh$avg, bh$height, type="l",
          xlim=c(-25,15), ylim=c(min(bh$height),2),
-         xlab="Temperature [ºC]", ylab="Height [m]",
+         xlab="Temperature [\U00B0C]", ylab="Height [m]",
          main = paste("Ground thermal regime:",
          borehole_name))
     lines(bh$min, bh$height, col="blue")

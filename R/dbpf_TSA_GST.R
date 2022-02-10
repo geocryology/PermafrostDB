@@ -76,8 +76,8 @@
 #' locationList <- dbpf_TSA_GST(con, "./", "NGO-DD-1004_ST01")
 #' }
 #' @author Thomas Knecht <t.knecht@@hotmail.com>
+#' @importFrom ggplot2 aes geom_segment
 # =============================================================================
-
 dbpf_TSA_GST <- function(con, out.path, inventory, time_b="1950-01-01 00:00:00+00",time_e="2050-01-01 00:00:00+00",
                          v1 = 0.1, v2 = 0.3, lengthsnow = 5, MDr.sd = 0.3, v= 0.25,
                          tperc = 40, sdoutlier = 3, sdsteep = 0.75,
@@ -150,23 +150,23 @@ ForOneLocation <- function(location, con, out.path, time_b,time_e, v1, v2, lengt
                            tperc, sdoutlier, sdsteep, temp, slopesd, tempsd, lengthzc,wateryear){
 
   #imports data
-  data.location <- TSA_data_import(con, location, time_b, time_e)
+  data.location <- PermafrostTools::TSA_data_import(con, location, time_b, time_e)
 
   #calculates snow period
-  snow.period <- TSA_snow_cover(data.location, v1, v2, lengthsnow, MDr.sd)
+  snow.period <- PermafrostTools::TSA_snow_cover(data.location, v1, v2, lengthsnow, MDr.sd)
   snow.period <- wtr_yr(snow.period)
 
 
   #detects RD
-  RD.marcol <- TSA_RD(data.location, v, snow.period=snow.period)
+  RD.marcol <- PermafrostTools::TSA_RD(data.location, v, snow.period=snow.period)
   RD.marcol <- wtr_yr(RD.marcol)
 
   #detects warming period start dates
-  warming.period <- TSA_warming_periods(data.location, tperc, sdoutlier, sdsteep, snow.period = snow.period)
+  warming.period <- PermafrostTools::TSA_warming_periods(data.location, tperc, sdoutlier, sdsteep, snow.period = snow.period)
   warming.period <- wtr_yr(warming.period)
 
   #detects zero curtains
-  zero.curtain <- TSA_zero_curtain(data.location, temp, slopesd, tempsd, lengthzc, snow.period = snow.period)
+  zero.curtain <- PermafrostTools::TSA_zero_curtain(data.location, temp, slopesd, tempsd, lengthzc, snow.period = snow.period)
   zero.curtain <- wtr_yr(zero.curtain)
 
   #creates plot

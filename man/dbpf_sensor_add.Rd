@@ -18,6 +18,8 @@ dbpf_sensor_add(
 )
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{device_id}{Charcter string of device that this is linked to.}
 
 \item{label}{Name for the new sensor.}

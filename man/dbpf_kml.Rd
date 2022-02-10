@@ -7,6 +7,8 @@
 dbpf_kml(con, kmlfile, location_name, bounding_box)
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{kmlfile}{Filename for kml to be produced.}
 
 \item{location_name}{(optional) Character, one or more location names to

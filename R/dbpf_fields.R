@@ -7,7 +7,9 @@
 #' @details These simple functions return all data as data frames. When
 #'          making a query many times, optimise the SQL statement to only
 #'          request the data you actually need.
-#'
+#' 
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param table Character string or vector of table name(s). If empty, fields
 #'              for all tables are returned. Default is table="".
 #'
@@ -16,7 +18,6 @@
 #' @export
 #' @examples
 #' con <- dbpf_con()
-#' fds   <- dbpf_fields(con, tables = "")
 #' fds_o <- dbpf_fields(tables = "observations")
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
@@ -28,11 +29,11 @@ dbpf_fields <- function(con, tables = "") {
   }
 
     if (tables[1] == "") {
-    	tables <- dbpf_tables(con)$table_name
+    	tables <- dbpf_tables(con)
     }
     fields <- NULL
     for (t in 1:length(tables)) {
-    	fields <- rbind(fields, dbGetFields(con,tables[t]))
+    	fields <- rbind(fields, dbpf_table_columns(con, tables[t]))
     }
     return(fields)
 }
