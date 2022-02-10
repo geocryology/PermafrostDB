@@ -27,10 +27,29 @@
 # =============================================================================
 dbpf_horizon_add <- function(con, azimuth, horizon, location, time_UTC, mode='test'){
   
-  sen <- horizon_angle_sensors(con, azimuth)
-  
   teststring <- "Testing"
   
+  # check inputs
+  if ( length(unique(azimuth)) != length(azimuth) ){
+    teststring <- paste(teststring, "Duplicate azimuth values found", sep = " : ")
+  }
+  
+  
+  if ( ( sum(floor(azimuth)) != sum(azimuth) ) ){ 
+    teststring <- paste(teststring, "Azimuth values must all be integers", sep = " : ")
+    azimuth <- floor(azimuth)
+  }
+  
+  if ( (any(azimuth >= 360)) || any(azimuth < 0)){
+    teststring <- paste(teststring, "Azimuth values must be on the interval [0, 360)", sep = " : ")
+  }
+  
+  if ( (any(horizon > 90)) || any(horizon < 0)){
+    teststring <- paste(teststring, "Horizon values must be on the interval [0, 90]", sep = " : ")
+  }
+  
+  sen <- na.omit(horizon_angle_sensors(con, azimuth))
+
   # check for existing horizon measurements
   q <- paste0("SELECT sensors.label,
                       locations.name,
@@ -48,7 +67,7 @@ dbpf_horizon_add <- function(con, azimuth, horizon, location, time_UTC, mode='te
   hrz <- dbGetQuery(con, q)
   
   if (nrow(hrz) > 0){
-    teststring <- paste(teststring, ": Existing horizon measurements found at location (",
+    teststring <- paste(teststring, " Existing horizon measurements found at location (",
                         paste(substr(hrz$label, 18, 20), 
                               hrz$horizon, 
                               sep=': ', 
@@ -66,11 +85,11 @@ dbpf_horizon_add <- function(con, azimuth, horizon, location, time_UTC, mode='te
   
   } else if (nrow(lc) < length(location)) {
     
-    teststring <- paste(teststring, ": Location name missing in DB", sep = " : ")
+    teststring <- paste(teststring, " Location name missing in DB", sep = " : ")
     
   } else if (length(unique(lc$name)) != nrow(lc)) {
     
-    teststring <- paste(teststring, ": One or more location names duplicated in DB", sep = " : ")
+    teststring <- paste(teststring, " One or more location names duplicated in DB", sep = " : ")
     
   } 
   
