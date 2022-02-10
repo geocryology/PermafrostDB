@@ -10,10 +10,10 @@
 #'          object (see examples).
 #'
 #' @param user    User name, defaults to "readonly"
-#' @param passwd  Password, default set for readonly account. 
-#' 
-#' @return Returns a DB connection object.   
-#' 
+#' @param passwd  Password, default set for readonly account.
+#'
+#' @return Returns a DB connection object.
+#'
 #' @export
 #'
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
@@ -34,28 +34,28 @@ server <- function(input, output) {
 
 
   #
-  
-  # get data, ugly and not interactive for now 
+
+  # get data, ugly and not interactive for now
   con <- dbpf_con()
   data <- dbpf_observations_raw(con, "NGO-RC-172_ST01", unit_of_measurement = "C")
 
 # selectig input range does not work yet
-#                                time_b = input$dates[1], 
+#                                time_b = input$dates[1],
 #                                time_e = input$dates[2])
-  
+
   # -------------------------------------------------------------------
-  # Linked plots to navigate (left) and select points in a zoom (right) 
+  # Linked plots to navigate (left) and select points in a zoom (right)
   # -------------------------------------------------------------------
-  
+
   # make changeable variables
   range <- reactiveValues(x = NULL, y = NULL)
   selec <- reactiveValues(set = rep(FALSE, nrow(data)))
 
-  # navigation plot	
+  # navigation plot
   output$plot_navigate <- renderPlot({
     ggplot(data, aes(time, value)) +
       geom_point(aes(colour = selec$set)) +
-      scale_color_manual(values=c("#000000", "#D55E00")) 
+      scale_color_manual(values=c("#000000", "#D55E00"))
   })
 
   # plot to zoom and select
@@ -71,25 +71,25 @@ server <- function(input, output) {
   observe({
     brush <- input$plot_navigate_brush
     if (!is.null(brush)) {
-      range$x <- as.POSIXct(c(brush$xmin, brush$xmax), 
+      range$x <- as.POSIXct(c(brush$xmin, brush$xmax),
                             origin = "1970-01-01", tz = "UTC")
       range$y <- c(brush$ymin, brush$ymax)
 
     } else {
       range$x <- NULL
       range$y <- NULL
-    }    
+    }
   })
-  
+
   # Observe selections
   observe({
     # alter data frame with raw data
     selec$set[data$id %in% brushedPoints(data, input$plot_zoom_brush)$id] <- TRUE
   })
-  
-  
+
+
   # -------------------------------------------------------------------
-  
+
   # show table of selected points
   #output$brush_info <- renderPrint({
   #  brushedPoints(data, input$plot_zoom_brush)
@@ -107,7 +107,7 @@ ui <- fluidPage(
     column(width = 10, class = "well",
       #date range
       dateRangeInput("dates", label = h3("Date range for analysis"), start = "2015-01-01"),
- 	  # plots 
+ 	  # plots
       h4("Overview plot (left) controls zoom (right). Select points in zoom."),
       fluidRow(
         column(width = 4,
@@ -123,9 +123,9 @@ ui <- fluidPage(
             brush = brushOpts(
                id = "plot_zoom_brush"
             )
-          ) 
+          )
         )
-      )  
+      )
     )
   ),
   fluidRow(

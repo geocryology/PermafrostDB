@@ -3,10 +3,10 @@
 #' @title Return statistics about observations in DB
 #'
 #' @description Provides mean min max and count for a certain period and one
-#'              or several locations.  
+#'              or several locations.
 #'
-#' @details These simple functions return all data as data frames. When 
-#'          making a query many times, optimise the SQL statement to only 
+#' @details These simple functions return all data as data frames. When
+#'          making a query many times, optimise the SQL statement to only
 #'          request the data you actually need.
 #'
 #' @param con Database connection object, as returned by dbpf_con()
@@ -23,13 +23,13 @@
 #'               "1950-01-01 00:00:00+00"
 #'
 #' @param verbose Provide terminal output of the query string? (defaults to FALSE)
-#' 
+#'
 #' @return Data frame with locations in rows and columns loc_name, height,
 #'         max, min, avg, cnt
-#' 
+#'
 #' @export
 #' @examples
-#' con <- dbpf_con() 
+#' con <- dbpf_con()
 #' stat <- dbpf_observations_stats(con, "NGO-RC-163")
 #' dbDisconnect(con)
 #'
@@ -37,10 +37,10 @@
 # =============================================================================
 
 dbpf_observations_stats <- function(con, location_name, unit_of_measurement = "C",
-                                    time_b = "2015-09-01 00:00:00+00", 
+                                    time_b = "2015-09-01 00:00:00+00",
                                     time_e = "2016-08-31 23:59:59+00",
                                     verbose = FALSE) {
-	
+
 	# make query
 	q <- paste0("SELECT locations.name AS loc_name, ",
 	            "observations.height_min_metres AS height, ",
@@ -63,7 +63,7 @@ dbpf_observations_stats <- function(con, location_name, unit_of_measurement = "C
 		print(q)
 	}
 	obs_stat <- dbGetQuery(con, q)
-	
+
 	#return result
 	return(obs_stat)
 }

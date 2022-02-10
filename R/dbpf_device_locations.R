@@ -3,16 +3,16 @@
 #' @title Return location history for one device
 #'
 #' @description Given a device serial number, this function return a data frame
-#'              showing the locations where this device has been.  
+#'              showing the locations where this device has been.
 #'
-#' @details 
+#' @details
 #'
 #' @param serial_number Serial number of device to query
 #'
 #' @return data fame with fields: location_name, timestamp, lon, lat,
 #'           elevation_in_metres, serial_number, notes. The data frame
-#'           is sorted by time. 
-#' 
+#'           is sorted by time.
+#'
 #' @export
 #' @examples
 #' con <- dbpf_con()

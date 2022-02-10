@@ -2,8 +2,8 @@
 maintenance_required_id <- function(con){
   #TODO:: memoize this
   dbGetQuery(con, "
-             SELECT id 
-               FROM sensors 
+             SELECT id
+               FROM sensors
               WHERE label='maintenance_required'")
 }
 
