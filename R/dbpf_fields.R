@@ -27,12 +27,12 @@ dbpf_fields <- function(con, tables = "") {
     con <- dbpf_con()
   }
 
-	if (tables[1] == "") {
-		tables <- dbpf_tables(con)$table_name
-	}
-	fields <- NULL
-	for (t in 1:length(tables)) {
-		fields <- rbind(fields, dbGetFields(con,tables[t]))
-	}
-	return(fields)
+    if (tables[1] == "") {
+    	tables <- dbpf_tables(con)$table_name
+    }
+    fields <- NULL
+    for (t in 1:length(tables)) {
+    	fields <- rbind(fields, dbGetFields(con,tables[t]))
+    }
+    return(fields)
 }

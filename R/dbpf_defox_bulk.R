@@ -45,41 +45,41 @@
 dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
                             unit_of_measurement = "C") {
 
-	# check for the number of devices during period, first build WHERE clause
-	nwc <- paste0("observations.corrected_utc_time BETWEEN '", time_b, "' AND '", time_e, "' AND ",
-	              "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
-	              "observations.location = (SELECT coordinates FROM locations ",
-	              "WHERE name = '", location_name ,"')")
+    # check for the number of devices during period, first build WHERE clause
+    nwc <- paste0("observations.corrected_utc_time BETWEEN '", time_b, "' AND '", time_e, "' AND ",
+                  "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
+                  "observations.location = (SELECT coordinates FROM locations ",
+                  "WHERE name = '", location_name ,"')")
 
-	qry <- paste0("SELECT COUNT (DISTINCT device_id) AS dev_count, ",
-	              "COUNT (DISTINCT sensor_id) AS sen_count,",
-	              "COUNT (DISTINCT id) AS obs_count FROM observations ",
-	              "WHERE ", nwc)
-	stat <- dbGetQuery(con, qry)
+    qry <- paste0("SELECT COUNT (DISTINCT device_id) AS dev_count, ",
+                  "COUNT (DISTINCT sensor_id) AS sen_count,",
+                  "COUNT (DISTINCT id) AS obs_count FROM observations ",
+                  "WHERE ", nwc)
+    stat <- dbGetQuery(con, qry)
 
     # error if more or less than one device
     if (stat$dev_count > 1) {
     	stop("More than one device found, de-foxing interrupted")
-	} else if (stat$dev_count < 1) {
-		stop("No device/data found, de-foxing interrupted")
-	}
+    } else if (stat$dev_count < 1) {
+    	stop("No device/data found, de-foxing interrupted")
+    }
 
-	# check if observations are already in observations_dois
+    # check if observations are already in observations_dois
     qdoi <- paste0("SELECT COUNT (DISTINCT observations.id) FROM observations INNER JOIN ",
-	              "observations_dois ON observations.id = observations_dois.observation_id ",
-	              "WHERE observations_dois.doi_id = (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AND ", nwc)
-	ndoi <- dbGetQuery(con, qdoi)$count
+                  "observations_dois ON observations.id = observations_dois.observation_id ",
+                  "WHERE observations_dois.doi_id = (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AND ", nwc)
+    ndoi <- dbGetQuery(con, qdoi)$count
     if (ndoi > 0) {stop("One or more of these observations are already in DOI")}
 
-	#feedback
-	print(paste("==>", stat$sen_count, "sensors,", stat$obs_count, "observations."))
+    #feedback
+    print(paste("==>", stat$sen_count, "sensors,", stat$obs_count, "observations."))
 
-	#--- START TRANSACTION ----
-	dbBegin(con)
+    #--- START TRANSACTION ----
+    dbBegin(con)
 
-	# add changes observations to table observations_dois
-	#doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
-	#oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
+    # add changes observations to table observations_dois
+    #doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
+    #oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
     qry <- paste0("INSERT INTO observations_dois (observation_id, doi_id) ",
                   "SELECT id AS observation_id, (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AS doi_id FROM observations WHERE ", nwc, ";")
     # == update observations_dois

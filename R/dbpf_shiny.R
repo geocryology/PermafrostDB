@@ -25,7 +25,7 @@
 # =============================================================================
 #' @importFrom shiny runApp
 dbpf_shiny <- function() {
-	runApp(list(ui=ui,server=server))
+    runApp(list(ui=ui,server=server))
 }
 
 # =============================================================================

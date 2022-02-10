@@ -41,29 +41,29 @@ dbpf_observations_stats <- function(con, location_name, unit_of_measurement = "C
                                     time_e = "2016-08-31 23:59:59+00",
                                     verbose = FALSE) {
 
-	# make query
-	q <- paste0("SELECT locations.name AS loc_name, ",
-	            "observations.height_min_metres AS height, ",
-	            "MAX(observations.numeric_value) AS max, ",
-	            "MIN(observations.numeric_value) AS min, ",
-	            "AVG(observations.numeric_value) as avg, ",
-	            "COUNT(observations.numeric_value) as cnt ",
-	            "FROM observations INNER JOIN ",
-	            "locations ON observations.location = locations.coordinates ",
-	            "WHERE observations.corrected_utc_time BETWEEN ",
-	            "'", time_b, "' AND '", time_e, "' AND ",
-	            "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[]) ",
-	            "AND observations.unit_of_measure = '", unit_of_measurement, "' ",
-	            "GROUP BY observations.height_min_metres, locations.name ",
-	            "ORDER BY loc_name ASC, height DESC;")
+    # make query
+    q <- paste0("SELECT locations.name AS loc_name, ",
+                "observations.height_min_metres AS height, ",
+                "MAX(observations.numeric_value) AS max, ",
+                "MIN(observations.numeric_value) AS min, ",
+                "AVG(observations.numeric_value) as avg, ",
+                "COUNT(observations.numeric_value) as cnt ",
+                "FROM observations INNER JOIN ",
+                "locations ON observations.location = locations.coordinates ",
+                "WHERE observations.corrected_utc_time BETWEEN ",
+                "'", time_b, "' AND '", time_e, "' AND ",
+                "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[]) ",
+                "AND observations.unit_of_measure = '", unit_of_measurement, "' ",
+                "GROUP BY observations.height_min_metres, locations.name ",
+                "ORDER BY loc_name ASC, height DESC;")
 
-	#query
-	if (verbose == TRUE) {
-		print("=== Query sent:")
-		print(q)
-	}
-	obs_stat <- dbGetQuery(con, q)
+    #query
+    if (verbose == TRUE) {
+    	print("=== Query sent:")
+    	print(q)
+    }
+    obs_stat <- dbGetQuery(con, q)
 
-	#return result
-	return(obs_stat)
+    #return result
+    return(obs_stat)
 }

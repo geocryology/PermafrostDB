@@ -26,11 +26,11 @@
 dbpf_sensors <- function(con, manual=TRUE) {
 
     if (manual) {
-		query <- "SELECT * FROM sensors WHERE device_id = '5265f740-8e09-4d41-b5b6-2136f5d35ea3'"
-	} else {
-		query <- "SELECT * FROM sensors"
-	}
+    	query <- "SELECT * FROM sensors WHERE device_id = '5265f740-8e09-4d41-b5b6-2136f5d35ea3'"
+    } else {
+    	query <- "SELECT * FROM sensors"
+    }
 
-	sensors <- dbGetQuery(con, query)
-	return(sensors)
+    sensors <- dbGetQuery(con, query)
+    return(sensors)
 }

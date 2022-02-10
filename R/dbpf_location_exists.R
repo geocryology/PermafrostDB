@@ -24,9 +24,9 @@
 # =============================================================================
 
 dbpf_location_name_exists <- function(con, location_name) {
-	query <- paste0("SELECT COUNT(*) FROM locations WHERE name = '",
-	               location_name, "'")
-	exists <- dbGetQuery(con, query)
+    query <- paste0("SELECT COUNT(*) FROM locations WHERE name = '",
+                   location_name, "'")
+    exists <- dbGetQuery(con, query)
 
-	return(exists$count)
+    return(exists$count)
 }

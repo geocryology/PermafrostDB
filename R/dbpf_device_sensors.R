@@ -24,13 +24,13 @@
 # =============================================================================
 
 dbpf_device_sensors <- function(con, serial_number) {
-	#make query to run
-	query <- paste0("SELECT sensors.label, sensors.height_in_metres, ",
-	                	"sensors.type_of_measurement, sensors.unit_of_measurement, ",
-	                	"sensors.accuracy, sensors.precision ",
-	                "FROM sensors ",
-	                "INNER JOIN devices ON sensors.device_id = devices.id ",
-	                "WHERE devices.serial_number = '", serial_number, "'")
-	dev_loc <- dbGetQuery(con, query)
-	return(dev_loc)
+    #make query to run
+    query <- paste0("SELECT sensors.label, sensors.height_in_metres, ",
+                    	"sensors.type_of_measurement, sensors.unit_of_measurement, ",
+                    	"sensors.accuracy, sensors.precision ",
+                    "FROM sensors ",
+                    "INNER JOIN devices ON sensors.device_id = devices.id ",
+                    "WHERE devices.serial_number = '", serial_number, "'")
+    dev_loc <- dbGetQuery(con, query)
+    return(dev_loc)
 }

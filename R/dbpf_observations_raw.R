@@ -45,32 +45,32 @@ dbpf_observations_raw <- function(con, location_name, unit_of_measurement = "C",
                                   time_e = "2050-01-01 00:00:00+00",
                                   verbose = FALSE) {
 
-	#construct query
-	q <- paste0("SELECT observations.id, observations.height_min_metres AS height, ",
-	            "locations.name AS loc_name, corrected_utc_time AT TIME ZONE 'UTC' AS time, ",
-	             "observations.numeric_value AS value ",
-	             "FROM observations INNER JOIN ",
-	             "locations ON observations.location = locations.coordinates ",
-	             "WHERE observations.corrected_utc_time BETWEEN ",
-	             "'", time_b, "' AND '", time_e, "' AND ",
-	             "observations.height_min_metres >= ", height_bot, " AND ",
-	             "observations.height_max_metres <= ", height_top, " AND ",
-	             "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
-	             "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[])",
-		           "ORDER BY time ASC, height DESC;")
+    #construct query
+    q <- paste0("SELECT observations.id, observations.height_min_metres AS height, ",
+                "locations.name AS loc_name, corrected_utc_time AT TIME ZONE 'UTC' AS time, ",
+                 "observations.numeric_value AS value ",
+                 "FROM observations INNER JOIN ",
+                 "locations ON observations.location = locations.coordinates ",
+                 "WHERE observations.corrected_utc_time BETWEEN ",
+                 "'", time_b, "' AND '", time_e, "' AND ",
+                 "observations.height_min_metres >= ", height_bot, " AND ",
+                 "observations.height_max_metres <= ", height_top, " AND ",
+                 "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
+                 "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[])",
+    	           "ORDER BY time ASC, height DESC;")
 
-	# feedback
-	if (verbose == TRUE) {
-		print("=== SQL string sent ===")
-		print(q)
-	}
+    # feedback
+    if (verbose == TRUE) {
+    	print("=== SQL string sent ===")
+    	print(q)
+    }
 
-	#get data
-	data <- dbGetQuery(con, q)
+    #get data
+    data <- dbGetQuery(con, q)
 
-	#handle time
-	data$time <- as.POSIXct(data$time)
+    #handle time
+    data$time <- as.POSIXct(data$time)
 
-	#return result
-	return(data)
+    #return result
+    return(data)
 }

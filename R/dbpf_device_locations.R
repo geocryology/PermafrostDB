@@ -23,17 +23,17 @@
 # =============================================================================
 
 dbpf_device_locations <- function(con, serial_number) {
-	#make query to run
-	query <- paste0("SELECT locations.name AS location_name, devices_locations.timestamp, ",
-	                "ST_X(locations.coordinates) AS lon, ",
-	                "ST_Y(locations.coordinates) AS lat, ",
-	                "locations.elevation_in_metres, ",
-	                "devices.serial_number, devices_locations.notes FROM devices_locations ",
-	                "INNER JOIN devices ON devices_locations.device_id = devices.id ",
-	                "INNER JOIN locations ON devices_locations.location_id = locations.id ",
-	                "WHERE devices.serial_number = '", serial_number, "'")
+    #make query to run
+    query <- paste0("SELECT locations.name AS location_name, devices_locations.timestamp, ",
+                    "ST_X(locations.coordinates) AS lon, ",
+                    "ST_Y(locations.coordinates) AS lat, ",
+                    "locations.elevation_in_metres, ",
+                    "devices.serial_number, devices_locations.notes FROM devices_locations ",
+                    "INNER JOIN devices ON devices_locations.device_id = devices.id ",
+                    "INNER JOIN locations ON devices_locations.location_id = locations.id ",
+                    "WHERE devices.serial_number = '", serial_number, "'")
 
-	dev_loc <- dbGetQuery(con, query)
-	time <- as.POSIXct(dev_loc$timestamp)
-	return(dev_loc[order(time),])
+    dev_loc <- dbGetQuery(con, query)
+    time <- as.POSIXct(dev_loc$timestamp)
+    return(dev_loc[order(time),])
 }

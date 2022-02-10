@@ -43,41 +43,41 @@ dbpf_device_add <- function(con, device_type, notes, serial_number = "",
                             manufacturer_device_name = "",
                             acquired_on = "1950-01-01 00:00:00+00",
                             mode = 'test') {
-	# === RUN TESTS
-	# initial string
-	teststring <- "Test result"
-	passed <- FALSE
+    # === RUN TESTS
+    # initial string
+    teststring <- "Test result"
+    passed <- FALSE
 
-	# check how many devices of this type exists
-	query <- paste0("SELECT serial_number FROM devices WHERE device_type = '", device_type ,"'")
-	res <- dbGetQuery(con, query)
-	if (length(res$serial_number) > 0) {
-		teststring <- paste(teststring, "device(s) with equal device_type found", sep = ": ")
-	}
+    # check how many devices of this type exists
+    query <- paste0("SELECT serial_number FROM devices WHERE device_type = '", device_type ,"'")
+    res <- dbGetQuery(con, query)
+    if (length(res$serial_number) > 0) {
+    	teststring <- paste(teststring, "device(s) with equal device_type found", sep = ": ")
+    }
 
-	# check if devices_type and serial_nunmber exist
-	if (sum(res$serial_number == serial_number) > 0) {
-		teststring <- paste(teststring, "serial number already exists with the same device_type", sep = ": ")
-	}
+    # check if devices_type and serial_nunmber exist
+    if (sum(res$serial_number == serial_number) > 0) {
+    	teststring <- paste(teststring, "serial number already exists with the same device_type", sep = ": ")
+    }
 
-	if (teststring == "Test result") {
-		teststring <- "Test result: OK"
-		passed <- TRUE
-	}
+    if (teststring == "Test result") {
+    	teststring <- "Test result: OK"
+    	passed <- TRUE
+    }
 
-	# === INSERT
-	if ((mode == 'insert') * (passed == TRUE)) {
-		query <- paste0("INSERT INTO devices (device_type, notes, serial_number, ",
-		                "access_code, manufacturer, manufacturer_device_name, ",
-		                "acquired_on) VALUES ('", paste(device_type, notes,
-		                serial_number, access_code, manufacturer,
-		                manufacturer_device_name, acquired_on, sep="', '"), "') RETURNING id")
-		try(ins <- dbGetQuery(con, query), silent = TRUE)
-		if (exists("ins")) {
-			teststring <- paste0(teststring, " ==> Row inserted. Resulting device id: ", ins)
-		}
-	}
+    # === INSERT
+    if ((mode == 'insert') * (passed == TRUE)) {
+    	query <- paste0("INSERT INTO devices (device_type, notes, serial_number, ",
+    	                "access_code, manufacturer, manufacturer_device_name, ",
+    	                "acquired_on) VALUES ('", paste(device_type, notes,
+    	                serial_number, access_code, manufacturer,
+    	                manufacturer_device_name, acquired_on, sep="', '"), "') RETURNING id")
+    	try(ins <- dbGetQuery(con, query), silent = TRUE)
+    	if (exists("ins")) {
+    		teststring <- paste0(teststring, " ==> Row inserted. Resulting device id: ", ins)
+    	}
+    }
 
-	#return result
-	return(teststring)
+    #return result
+    return(teststring)
 }

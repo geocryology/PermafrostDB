@@ -23,22 +23,22 @@
 dbpf_locations <- function(con, type='point') {
 
   if (missing(con)){
-	  con <- dbpf_con()
+      con <- dbpf_con()
   }
 
-	if (toupper(type) == 'POINT') {
-		query <- paste("SELECT id, name, ST_X(coordinates) AS lon,",
-	               	"ST_Y(coordinates) AS lat,",
-	               	"elevation_in_metres, comment, record_observations",
-	               	"FROM locations WHERE ST_GeometryType(coordinates)='ST_Point'")
-	} else if (toupper(type) == 'POLYGON') {
-		query <- paste("SELECT id, name, ST_AsText(coordinates) as coordinates, ",
-	               	"elevation_in_metres, comment, record_observations",
-	               	"FROM locations WHERE ST_GeometryType(coordinates)='ST_Polygon'")
-	} else {
-		stop('Value for type not valid.')
-	}
+    if (toupper(type) == 'POINT') {
+    	query <- paste("SELECT id, name, ST_X(coordinates) AS lon,",
+                   	"ST_Y(coordinates) AS lat,",
+                   	"elevation_in_metres, comment, record_observations",
+                   	"FROM locations WHERE ST_GeometryType(coordinates)='ST_Point'")
+    } else if (toupper(type) == 'POLYGON') {
+    	query <- paste("SELECT id, name, ST_AsText(coordinates) as coordinates, ",
+                   	"elevation_in_metres, comment, record_observations",
+                   	"FROM locations WHERE ST_GeometryType(coordinates)='ST_Polygon'")
+    } else {
+    	stop('Value for type not valid.')
+    }
 
-	locations <- dbGetQuery(con, query)
-	return(locations)
+    locations <- dbGetQuery(con, query)
+    return(locations)
 }

@@ -35,34 +35,34 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
     }
 
     # open file and check
-	data <- read.xlsx(file_xlsx, 1)  # read first sheet
-	data$label <- as.character(data$label)
-	data$device_id <- as.character(data$device_id)
-	data$type_of_measurement <- as.character(data$type_of_measurement)
-	data$unit_of_measurement <- as.character(data$unit_of_measurement)
-	data$accuracy <- as.numeric(as.character(data$accuracy))
-	data$precision <- as.numeric(as.character(data$precision))
-	data$height_in_metres <- as.numeric(as.character(data$height_in_metres))
-	data$serial_number <- as.character(data$serial_number)
-	data$sensor_id <- as.character(data$sensor_id)
-	data$unit_of_measurement[is.na(data$unit_of_measurement)] <- ""
-	data$serial_number[is.na(data$serial_number)] <- ""
-	data$sensor_id[is.na(data$sensor_id)] <- ""
-	data$accuracy[is.na(data$accuracy)]   <- 0
-	data$precision[is.na(data$precision)] <- 0
-	data$height_in_metres[is.na(data$height_in_metres)] <- 0
+    data <- read.xlsx(file_xlsx, 1)  # read first sheet
+    data$label <- as.character(data$label)
+    data$device_id <- as.character(data$device_id)
+    data$type_of_measurement <- as.character(data$type_of_measurement)
+    data$unit_of_measurement <- as.character(data$unit_of_measurement)
+    data$accuracy <- as.numeric(as.character(data$accuracy))
+    data$precision <- as.numeric(as.character(data$precision))
+    data$height_in_metres <- as.numeric(as.character(data$height_in_metres))
+    data$serial_number <- as.character(data$serial_number)
+    data$sensor_id <- as.character(data$sensor_id)
+    data$unit_of_measurement[is.na(data$unit_of_measurement)] <- ""
+    data$serial_number[is.na(data$serial_number)] <- ""
+    data$sensor_id[is.na(data$sensor_id)] <- ""
+    data$accuracy[is.na(data$accuracy)]   <- 0
+    data$precision[is.na(data$precision)] <- 0
+    data$height_in_metres[is.na(data$height_in_metres)] <- 0
 
 
-	data$import_comment = ""  # add new column
+    data$import_comment = ""  # add new column
 
-	# loop over rows
-	for (r in 1:nrow(data)) {
-		# only use rows without sensor_id
-		if (data$sensor_id[r] != "") {
-			data$import_comment[r] <- "Skipped: already has id"
-		} else {
-			res <- dbpf_sensor_add(con, data$device_id[r], data$label[r],
-			                       data$type_of_measurement[r],
+    # loop over rows
+    for (r in 1:nrow(data)) {
+    	# only use rows without sensor_id
+    	if (data$sensor_id[r] != "") {
+    		data$import_comment[r] <- "Skipped: already has id"
+    	} else {
+    		res <- dbpf_sensor_add(con, data$device_id[r], data$label[r],
+    		                       data$type_of_measurement[r],
                                    data$unit_of_measurement[r],
                                    data$accuracy[r], data$precision[r],
                                    data$height_in_metres[r],
@@ -74,12 +74,12 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
             if (grepl("Row inserted", res) == TRUE) {
             	data$sensor_id[r] <- str_sub(res, start = -36)
             }
-		}
-	}
+    	}
+    }
 
 
-	#	print(data)
+    #	print(data)
 
-	#save
-	write.xlsx(x = data, file = file_xlsx, sheetName = "Data", row.names = FALSE)
+    #save
+    write.xlsx(x = data, file = file_xlsx, sheetName = "Data", row.names = FALSE)
 }

@@ -21,19 +21,19 @@
 # =============================================================================
 
 dbpf_inventory <- function(con, type="observations_by_locations") {
-	#obs locations
+    #obs locations
 
   if (missing(con)){
     con <- dbpf_con()
   }
 
-	if (type == "observations_by_locations") {
-		res<- dbGetQuery(con, paste0("SELECT DISTINCT locations.name ",
-		                 "FROM locations INNER JOIN observations ON ",
-		                 "locations.coordinates = observations.location ",
-		                 "ORDER BY locations.name ASC;"))
-		return(res)
-	}
+    if (type == "observations_by_locations") {
+    	res<- dbGetQuery(con, paste0("SELECT DISTINCT locations.name ",
+    	                 "FROM locations INNER JOIN observations ON ",
+    	                 "locations.coordinates = observations.location ",
+    	                 "ORDER BY locations.name ASC;"))
+    	return(res)
+    }
 
 }
 

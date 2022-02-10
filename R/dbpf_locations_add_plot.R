@@ -108,15 +108,15 @@ dbpf_locations_add_plot <- function(con, locations, mode = "test",
                    loc$SE_lon," ", loc$SE_lat,", ", loc$SW_lon," ", loc$SW_lat,",",
                    loc$NW_lon," ", loc$NW_lat, ")')), 4326)")
 
-	# find overlaping polygons
-	query <- paste0("SELECT name FROM locations WHERE ST_Intersects(", pgs,
-	                ", coordinates) AND ST_GeometryType(coordinates)='ST_Polygon';")
-	poly_overlap <- dbGetQuery(con, query)$name
+    # find overlaping polygons
+    query <- paste0("SELECT name FROM locations WHERE ST_Intersects(", pgs,
+                    ", coordinates) AND ST_GeometryType(coordinates)='ST_Polygon';")
+    poly_overlap <- dbGetQuery(con, query)$name
     poly_overlap <- paste(t(poly_overlap), collapse=", ")
     if (poly_overlap == "") {input$intersect_plot[r] <- FALSE}
 
-	# decide: import or now
-	prevent <- input$duplicate_name[r] + input$intersect_plot[r] * (toupper(overlap) != "ALLOW")
+    # decide: import or now
+    prevent <- input$duplicate_name[r] + input$intersect_plot[r] * (toupper(overlap) != "ALLOW")
 
 
     #test feedback and insert or message

@@ -71,7 +71,7 @@ dbpf_location_report <- function(con, location_name, distance=0.1){
                               by(devices.table, devices.table$device,
                                  function(X){
       								if(length(X$device)>1) {
-								        mintime <- min(X$time)
+    							        mintime <- min(X$time)
       									X$device_remark[X$time != mintime] <- "wrongly assigned"
       									X
       								} else {X}

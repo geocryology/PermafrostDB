@@ -54,51 +54,51 @@ dbpf_devices_locations_add <- function(con, dev_loc, mode="test") {
 
     #test mode
     test_mo <- (mode == "test") + (mode == "insert")
-	if (test_mo != 1) {
-		stop(paste("Parameter 'mode' must be either",
-	               "'test' or 'insert'."))
-	}
+    if (test_mo != 1) {
+    	stop(paste("Parameter 'mode' must be either",
+                   "'test' or 'insert'."))
+    }
 
-	#test information provided
-	dev_loc <- subset(dev_loc, select = c(serialnumber, comment, sitename, time))
+    #test information provided
+    dev_loc <- subset(dev_loc, select = c(serialnumber, comment, sitename, time))
 
-	#fix/test column data type, add check columns
-	dev_loc$serialnumber <- as.character(dev_loc$serialnumber)
-	dev_loc$sitename     <- as.character(dev_loc$sitename)
-	dev_loc$comment      <- as.character(dev_loc$comment)
-	if (is.POSIXct(dev_loc$time) == FALSE) {
-		stop("Column 'time' must be in POSIXct")
-	}
-	dev_loc$dev <- FALSE
+    #fix/test column data type, add check columns
+    dev_loc$serialnumber <- as.character(dev_loc$serialnumber)
+    dev_loc$sitename     <- as.character(dev_loc$sitename)
+    dev_loc$comment      <- as.character(dev_loc$comment)
+    if (is.POSIXct(dev_loc$time) == FALSE) {
+    	stop("Column 'time' must be in POSIXct")
+    }
+    dev_loc$dev <- FALSE
     dev_loc$loc <- FALSE
     dev_loc$dup <- FALSE
     dev_loc$inserted <- FALSE
 
-	# make time string for postgresql "2015-06-14 15:24:00+00"
+    # make time string for postgresql "2015-06-14 15:24:00+00"
     dev_loc$strtime <- substr(format(dev_loc$time, format="%Y-%m-%d %H:%M:%S%z"), 1, 22)
 
-	#check for duplicates
-	nr <- nrow(dev_loc)
-	dev_loc$dup <- (duplicated(dev_loc) + duplicated(dev_loc, fromLast = TRUE)) != 0
-	dev_loc <- unique(dev_loc)
-	if ((nr - nrow(dev_loc)) > 0) {
-		print(paste(nr - nrow(dev_loc), " duplicate rows removed."))
-	}
+    #check for duplicates
+    nr <- nrow(dev_loc)
+    dev_loc$dup <- (duplicated(dev_loc) + duplicated(dev_loc, fromLast = TRUE)) != 0
+    dev_loc <- unique(dev_loc)
+    if ((nr - nrow(dev_loc)) > 0) {
+    	print(paste(nr - nrow(dev_loc), " duplicate rows removed."))
+    }
 
 
-	#loop over rows in table
-	for (r in 1:nrow(dev_loc)) {
-		dev_loc$dev[r] <- dbpf_device_exists(con, dev_loc$serialnumber[r]) == 1
-		dev_loc$loc[r] <- dbpf_location_name_exists(con, dev_loc$sitename[r]) == 1
+    #loop over rows in table
+    for (r in 1:nrow(dev_loc)) {
+    	dev_loc$dev[r] <- dbpf_device_exists(con, dev_loc$serialnumber[r]) == 1
+    	dev_loc$loc[r] <- dbpf_location_name_exists(con, dev_loc$sitename[r]) == 1
 
         #feedback
-		print(paste("Processing:", dev_loc$sitename[r],
-		            dev_loc$serialnumber[r], dev_loc$strtime[r],
-		            "(row", r, "of", nrow(dev_loc), ")"))
+    	print(paste("Processing:", dev_loc$sitename[r],
+    	            dev_loc$serialnumber[r], dev_loc$strtime[r],
+    	            "(row", r, "of", nrow(dev_loc), ")"))
 
-		#work on records that have existing dev and loc
-		if (dev_loc$dev[r] + dev_loc$loc[r] == 2) {
-			dev_id <- dbGetQuery(con, paste0("SELECT id
+    	#work on records that have existing dev and loc
+    	if (dev_loc$dev[r] + dev_loc$loc[r] == 2) {
+    		dev_id <- dbGetQuery(con, paste0("SELECT id
                                                 FROM devices
                                                WHERE serial_number ='", dev_loc$serialnumber[r],"'"))
 
@@ -108,9 +108,9 @@ dbpf_devices_locations_add <- function(con, dev_loc, mode="test") {
 
 
             query <- paste0("INSERT INTO devices_locations",
-		                "(timestamp, device_id, location_id, notes) VALUES ('",
-		                dev_loc$strtime[r], "', '", dev_id, "', '", loc_id, "', '",
-		                dev_loc$comment[r],"');")
+    	                "(timestamp, device_id, location_id, notes) VALUES ('",
+    	                dev_loc$strtime[r], "', '", dev_id, "', '", loc_id, "', '",
+    	                dev_loc$comment[r],"');")
 
             # check for duplicates in database
             qry <- dbGetQuery(con,
@@ -128,20 +128,20 @@ dbpf_devices_locations_add <- function(con, dev_loc, mode="test") {
                 next
             }
 
-		    if (mode == 'test') {
-		    	print(paste("  --> passed testing"))
-		    } else {
-		    	try({res <- dbSendQuery(con, query)}, silent = TRUE)
+    	    if (mode == 'test') {
+    	    	print(paste("  --> passed testing"))
+    	    } else {
+    	    	try({res <- dbSendQuery(con, query)}, silent = TRUE)
                 try(dbClearResult(res))
-		    	dev_loc$inserted[r] <- TRUE
-		    	print(paste("  --> inserted into DB"))
-		    }
-		}
-	}
+    	    	dev_loc$inserted[r] <- TRUE
+    	    	print(paste("  --> inserted into DB"))
+    	    }
+    	}
+    }
 
-	#finish
-	return(dev_loc)
-	print("=== FINISHED: dbpf_devices_locations_add() ===")
+    #finish
+    return(dev_loc)
+    print("=== FINISHED: dbpf_devices_locations_add() ===")
 }
 
 

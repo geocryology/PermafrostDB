@@ -69,71 +69,71 @@ dbpf_observations_agg <- function(con, location_name, unit_of_measurement = "C",
                                   time_e = "2050-01-01 00:00:00+00",
                                   verbose = FALSE,
                                   fetch = FALSE, n = 100000) {
-	# make averaging period [s]
-	period = 3600 * period
+    # make averaging period [s]
+    period = 3600 * period
 
-	# make query
-	q <- paste0("SELECT locations.name AS loc_name, ",
-	            "observations.height_min_metres AS height, ",
-	            "AVG(observations.numeric_value) as agg_avg, ",
-	            "COUNT(observations.numeric_value) as agg_cnt, ",
-	            "TO_TIMESTAMP(FLOOR(EXTRACT('epoch' FROM observations.corrected_utc_time) / ",
-	            period, ") * ", period,
+    # make query
+    q <- paste0("SELECT locations.name AS loc_name, ",
+                "observations.height_min_metres AS height, ",
+                "AVG(observations.numeric_value) as agg_avg, ",
+                "COUNT(observations.numeric_value) as agg_cnt, ",
+                "TO_TIMESTAMP(FLOOR(EXTRACT('epoch' FROM observations.corrected_utc_time) / ",
+                period, ") * ", period,
                 ") AT TIME ZONE 'UTC' AS time ",
-	            "FROM observations INNER JOIN ",
-	            "locations ON observations.location = locations.coordinates ",
-	            "WHERE observations.corrected_utc_time BETWEEN ",
-	            "'", time_b, "' AND '", time_e, "' AND ",
-	            "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[]) ",
-	            "AND observations.unit_of_measure = '", unit_of_measurement, "' ",
-	            "GROUP BY observations.height_min_metres, locations.name, time ",
-	            "ORDER BY loc_name ASC, height DESC;")
+                "FROM observations INNER JOIN ",
+                "locations ON observations.location = locations.coordinates ",
+                "WHERE observations.corrected_utc_time BETWEEN ",
+                "'", time_b, "' AND '", time_e, "' AND ",
+                "locations.name = ANY('{", paste(location_name, collapse=", ") ,"}'::text[]) ",
+                "AND observations.unit_of_measure = '", unit_of_measurement, "' ",
+                "GROUP BY observations.height_min_metres, locations.name, time ",
+                "ORDER BY loc_name ASC, height DESC;")
 
-	#query
-	if (verbose) {
-		print("=== Query sent:")
-		print(q)
-	}
-	if (fetch){
-	  if (!require(data.table)){
-	    stop("Package data.table is required")
-	  }
-	  res <- dbSendQuery(con, q)
+    #query
+    if (verbose) {
+    	print("=== Query sent:")
+    	print(q)
+    }
+    if (fetch){
+      if (!require(data.table)){
+        stop("Package data.table is required")
+      }
+      res <- dbSendQuery(con, q)
 
-	  if (verbose){
-	    print('Fetching query...')
-	    completed <- character()
-	    nsite <- length(location_name)
-	  }
+      if (verbose){
+        print('Fetching query...')
+        completed <- character()
+        nsite <- length(location_name)
+      }
 
-	  obs_stat <- list(as.data.table(dbFetch(res, 1)))
+      obs_stat <- list(as.data.table(dbFetch(res, 1)))
 
-	  # Fetch records in chunks and append to
-	  while (!dbHasCompleted(res)){
-	    rcount <- dbGetRowCount(res)
-	    chunk <- as.data.table(dbFetch(res, n = n))
-	    obs_stat <- c(obs_stat, list(chunk))
+      # Fetch records in chunks and append to
+      while (!dbHasCompleted(res)){
+        rcount <- dbGetRowCount(res)
+        chunk <- as.data.table(dbFetch(res, n = n))
+        obs_stat <- c(obs_stat, list(chunk))
 
-	    if (verbose){
-	      completed <- unique(c(completed, unique(chunk$loc_name)))
-	      pdone <- 100 * (length(completed) / nsite)
-	      print(sprintf('Copied rows %d to %d. (~%i%% of sites)',
-	                    rcount, rcount + nrow(chunk) - 1, round(pdone,0)))
-	      }
-	  }
-	  dbClearResult(res) # close result set
+        if (verbose){
+          completed <- unique(c(completed, unique(chunk$loc_name)))
+          pdone <- 100 * (length(completed) / nsite)
+          print(sprintf('Copied rows %d to %d. (~%i%% of sites)',
+                        rcount, rcount + nrow(chunk) - 1, round(pdone,0)))
+          }
+      }
+      dbClearResult(res) # close result set
 
-	  if (verbose){
-	    print('Glueing everything together...')
-	    }
-	  obs_stat <- rbindlist(obs_stat, use.names = T)
-	}else{
-	  obs_stat <- dbGetQuery(con, q)
+      if (verbose){
+        print('Glueing everything together...')
+        }
+      obs_stat <- rbindlist(obs_stat, use.names = T)
+    }else{
+      obs_stat <- dbGetQuery(con, q)
 
-	  #handle time
-	  obs_stat$time <- as.POSIXct(obs_stat$time)
-	}
+      #handle time
+      obs_stat$time <- as.POSIXct(obs_stat$time)
+    }
 
-	#return result
-	return(obs_stat)
+    #return result
+    return(obs_stat)
 }

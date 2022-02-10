@@ -40,11 +40,11 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
                                   time_e = "2021-08-05 23:59:59+00",
                                   verbose = FALSE) {
 
-	require(xts)
-	require(dygraphs)
-	Sys.setenv(TZ='UTC')
+    require(xts)
+    require(dygraphs)
+    Sys.setenv(TZ='UTC')
 
-	# get data
+    # get data
     #con <- dbpf_con()
     if (period == "raw") {
     	# only take one location, not a vector
@@ -93,11 +93,11 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     #make time series
  	qxts <- xts(series, order.by = time$time)
 
-	#get the number of time series
-	snamesLen <- length(snames)
+    #get the number of time series
+    snamesLen <- length(snames)
 
  	#plot time series
-	graph <- dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [ºC]")
+    graph <- dygraph(qxts, main=paste(location_name, collapse=", "), ylab = "Temperature [ºC]")
 
   # iterate to create series labels
   	for (seriesNum in 1:snamesLen)

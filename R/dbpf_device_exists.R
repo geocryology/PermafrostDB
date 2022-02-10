@@ -24,9 +24,9 @@
 # =============================================================================
 
 dbpf_device_exists <- function(con, serial_number) {
-	query <- paste0("SELECT COUNT(*) FROM devices WHERE serial_number = '",
-	               serial_number, "'")
-	exists <- dbGetQuery(con, query)
+    query <- paste0("SELECT COUNT(*) FROM devices WHERE serial_number = '",
+                   serial_number, "'")
+    exists <- dbGetQuery(con, query)
 
-	return(exists$count)
+    return(exists$count)
 }

@@ -18,11 +18,11 @@
 # =============================================================================
 
 dbpf_tables <- function(con) {
-	if (missing(con)){
-	  con <- dbpf_con() # get connection
-	}
+    if (missing(con)){
+      con <- dbpf_con() # get connection
+    }
 
-	tables <- dbListTables(con)
+    tables <- dbListTables(con)
 
-	return(tables)
+    return(tables)
 }
