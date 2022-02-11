@@ -77,7 +77,7 @@ dbpf_TSA_GST <- function(con, out.path, inventory, time_b="1950-01-01 00:00:00+0
                          tperc = 40, sdoutlier = 3, sdsteep = 0.75,
                          temp= 0.2, slopesd= 0.1, tempsd= 0.01, lengthzc= 2,wateryear=10){
 
-  if (!require('PermafrostTools')){
+  if (!requireNamespace('PermafrostTools')){
     cat(paste0("Missing package: 'PermafrostTools'",
            "\n    Please install it from the geocryology/R-packages repository"))
     return()

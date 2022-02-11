@@ -95,7 +95,7 @@ dbpf_observations_agg <- function(con, location_name, unit_of_measurement = "C",
     	print(q)
     }
     if (fetch){
-      if (!require(data.table)){
+      if (!requireNamespace("data.table")){
         stop("Package data.table is required")
       }
       res <- dbSendQuery(con, q)

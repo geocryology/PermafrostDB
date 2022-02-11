@@ -37,10 +37,10 @@
 
 dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
 
-  if (!require(reshape2)){
+  if (!requireNamespace("reshape2")){
     return("You must install package ncdf4")
   }
-  if (!require(ncdf4)){
+  if (!requireNamespace("ncdf4")){
     return("You must install package ncdf4")
   }
 

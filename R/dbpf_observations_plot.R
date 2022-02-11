@@ -39,13 +39,18 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
                                   time_b = "2018-07-01 00:00:00+00",
                                   time_e = "2021-08-05 23:59:59+00",
                                   verbose = FALSE) {
+    height <- NULL  # workaround to prevent 'no visible binding for global variable' 
+    if (!requireNamespace("xts", quietly = TRUE)){
+    utils::install.packages("xts")
+    }
 
-    require(xts)
-    require(dygraphs)
+    if (!requireNamespace("dygraphs", quietly = TRUE)){
+    utils::install.packages("dygraphs")
+    }
+
     Sys.setenv(TZ='UTC')
 
     # get data
-    #con <- dbpf_con()
     if (period == "raw") {
     	# only take one location, not a vector
     	location_name <- location_name[1]
@@ -91,7 +96,7 @@ dbpf_observations_plot <- function(con, location_name, unit_of_measurement = "C"
     }
 
     #make time series
- 	qxts <- xts(series, order.by = time$time)
+ 	qxts <- xts::xts(series, order.by = time$time)
 
     #get the number of time series
     snamesLen <- length(snames)

@@ -27,8 +27,8 @@
 # =============================================================================
 dbpf_export_xlsx_NWT <- function(con, location_name,
                                  project_name, file_name, freq='hourly'){
-  if (!require(openxlsx)){
-    stop("Please install the openxslx package")
+  if (!requireNamespace("openxlsx")){
+    stop("Please install the openxlsx package")
   }
   if (!grepl("xlsx$", file_name)){
     stop("Please ensure file_name ends in '.xlsx'")
@@ -71,8 +71,6 @@ dbpf_export_xlsx_NWT <- function(con, location_name,
 #' @param location_name NWT_dat a data.frame returned from dbpf_export_csv_NWT
 #'
 #' @param file_name Character, path to an xlsx file to be written
-#'
-#' @examples
 #'
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>

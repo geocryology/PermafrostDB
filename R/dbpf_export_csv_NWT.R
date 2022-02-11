@@ -7,7 +7,7 @@
 #'
 #' @details None
 #'
-#' @param con Database connection object, as returned by dbpf_con
+#' @param con Database connection object, as returned by dbpf_con()
 #'
 #' @param location_name Character, name of site for which data is to be desired.
 #' Used to query the database.
@@ -32,7 +32,7 @@ dbpf_export_csv_NWT <- function(con,
                                 ){
 
   # Download data
-  data <- dbpf_export_csv_generic(con=con, freq = freq,
+  data <- dbpf_export_csv_generic(con, freq = freq,
                                   location_name=location_name,
                                   date_format = "%d/%m/%Y %H:%M",
                                   date_header = "(DD/MM/YYYY HH:MM)")
@@ -93,12 +93,12 @@ dbpf_export_csv_NWT <- function(con,
 #'
 #' @param project_name Character, used in file header metadata
 #'
-#'
+#' @export
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 format_NWT <- function(con, data, location_name, project_name){
   # Get necessary metadata
-  coords <- dbGetQuery(con = con, paste0(
+  coords <- dbGetQuery(con, paste0(
     "SELECT name, ST_X(coordinates) as lon, ST_Y(coordinates) as lat
     FROM locations
     WHERE name = '", location_name, "'"))

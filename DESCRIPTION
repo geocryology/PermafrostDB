@@ -22,8 +22,7 @@ Authors@R: c(
            )
 Encoding: UTF-8
 Depends:
-    R (>= 3.0.1),
-    lubridate
+    R (>= 3.0.1)
 Imports:
     data.table,
     RPostgres,
@@ -35,7 +34,9 @@ Imports:
 	DBI,
 	ggplot2,
     shiny,
-	magrittr
+	magrittr,
+    lubridate, 
+    sys
 Suggests:
     aqp,
     Cairo,
@@ -51,6 +52,6 @@ Suggests:
     sp,
     ssh,
     stars
-License: use_gpl3_license()
+License: GPL (>=3)
 LazyData: true
 RoxygenNote: 7.1.1

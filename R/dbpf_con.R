@@ -80,10 +80,10 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
   }
 
   # Load PGSQL requirements
-  require(DBI)
+  requireNamespace("DBI")
 
   # enforce use of UTC
-  Sys.setenv(TZ = "UTC")
+  base::Sys.setenv(TZ = "UTC")
 
   # DB parameters
   pgDBConDetails <- c(database, host, port, user, passwd)
@@ -189,7 +189,7 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
 #' @export
 create_tunnel <- function(ssh_user, ssh_host, ssh_keyfile, db_host, db_port, local_port=5555, ssh_port=22){
 
-  if (!require(ssh)){
+  if (!requireNamespace("ssh")){
     utils::install.packages('ssh')
   }
 
