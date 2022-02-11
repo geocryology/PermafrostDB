@@ -22,17 +22,17 @@ dbpf_maintenance_add(
 \item{time_UTC}{(optional) When the issue was discovered. If not provided
 the current time is used. [POSIXct]}
 
-\item{mode}{Should data be inserted into DB? Defaults to 'test' so that 
+\item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
 }
 \description{
 Record maintenance or service issue at a location
 }
 \details{
-Adds an observation to using the 'maintenance_required' sensor 
+Adds an observation to using the 'maintenance_required' sensor
 for a particular location. A description of what maintenance is needed should
-be provided, and should include: who is reporting the issue, what is needed, 
-why it is needed, and a description of where the problem is, if the location is 
+be provided, and should include: who is reporting the issue, what is needed,
+why it is needed, and a description of where the problem is, if the location is
 not specific enough.
 }
 \author{

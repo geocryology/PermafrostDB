@@ -11,7 +11,7 @@ dbpf_manual_obs_plot_xlsx(con, file_xlsx, mode = "test", overlap = "prevent")
 
 \item{file_xlsx}{file name of the xlsx workbook to be imported [character]}
 
-\item{mode}{Should data be inserted into DB? Defaults to 'test' so that 
+\item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
 
 \item{overlap}{Can be 'allow' or 'prevent' (default) and governs whether
@@ -21,13 +21,13 @@ a new polygon can overlap an existing one.}
 Tests and optionally inserts manual observations into DB.
 }
 \details{
-Data is checked for existence (or duplication) of sensor and 
+Data is checked for existence (or duplication) of sensor and
          location and feedback is returned.  If this is the first time a
          plot is being added, the testing will return a warning that the
          plot location doesn't exist in the database.
 }
 \examples{
-con  <- dbpf_con() 
+con  <- dbpf_con()
 dbpf_manual_obs_plot_xlsx(con, file_xlsx)
 dbDisconnect(con)
 

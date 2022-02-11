@@ -14,15 +14,15 @@ dbpf_maintenance_resolve(con, id, time_UTC, mode = "test")
 \item{time_UTC}{(optional) When the issue was discovered. If not provided
 the current time is used. [POSIXct]}
 
-\item{mode}{Should data be inserted into DB? Defaults to 'test' so that 
+\item{mode}{Should data be inserted into DB? Defaults to 'test' so that
 only testing information is returned. To insert: 'insert'}
 }
 \description{
 Mark a maintenance item as 'complete'
 }
 \details{
-Adds an observation to using the 'maintenance_completed' sensor 
-for a particular location. The observation references the maintenance 
+Adds an observation to using the 'maintenance_completed' sensor
+for a particular location. The observation references the maintenance
 issue using the database ID of that issue.
 }
 \author{

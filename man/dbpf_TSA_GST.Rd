@@ -30,14 +30,16 @@ dbpf_TSA_GST(
 
 \item{out.path}{Path to directory where the plot should be saved. e.g: "~/Desktop/"}
 
+\item{inventory}{location names.  Can be a dataframe with column $name or a vector}
+
 \item{time_b}{Begin date for the import. Format: "1950-01-01 00:00:00+00"}
 
 \item{time_e}{End date for the import. Format: "2050-01-01 00:00:00+00"}
 
-\item{v1}{Max. daily standard deviation indicating snow for POSITIVE Ground Surface Temperature. 
+\item{v1}{Max. daily standard deviation indicating snow for POSITIVE Ground Surface Temperature.
 Default is 0.1.}
 
-\item{v2}{Max. daily standard deviation indicating snow for NEGATIVE Ground Surface Temperature. 
+\item{v2}{Max. daily standard deviation indicating snow for NEGATIVE Ground Surface Temperature.
 Default is 0.3.}
 
 \item{lengthsnow}{Number of days that the snow cover should at least have to be selected as a valid snow cover.
@@ -48,16 +50,16 @@ Default is 5 days}
 \item{v}{Threshold zero curtain (if dailymax & dailymin is within +/- v, this day is a zero curtain day)
 Default: 0.25}
 
-\item{tperc}{Percentage of the 10-percent-quantile of the winter temperatures that the 
+\item{tperc}{Percentage of the 10-percent-quantile of the winter temperatures that the
 warming period should at least reach. Default is 40 percent.}
 
 \item{sdoutlier}{The number implies how many multiples of the standard deviation of the slope are taken to define a threshold.
 The threshold is used to detect slope outliers.}
 
-\item{sdsteep}{The number implies what fraction of the standard deviation of the slope 
+\item{sdsteep}{The number implies what fraction of the standard deviation of the slope
 is taken to select the steepest part of a warming period.}
 
-\item{temp}{The temperature boundary whithin the mean agg_avg of a zero curtain period has to be. 
+\item{temp}{The temperature boundary whithin the mean agg_avg of a zero curtain period has to be.
 Default: 0.2 degrees Celsius}
 
 \item{slopesd}{Fraction of the standard deviation of the slope used as threshold for the slope. Default: 0.1}
@@ -67,20 +69,11 @@ Default: 0.2 degrees Celsius}
 \item{lengthzc}{Length that a zero curtain period should at least have. Default: 2 days.}
 
 \item{wateryear}{start month of the water year. Default is 10 (October) according to the USGS.}
-
-\item{obs_stat}{One dataframe of one location or a list of dataframes of multiple locations.
-A dataframe needs at least the following columns:
-Location name as loc_name;
-Mean daily GST as agg_avg;
-Minimum daily GST as agg_min;
-Maximum daily GST as agg_max;
-Daily sd as agg_sd;
-Date as time (in POSIXct and the following format: YYYY-MM-DD)}
 }
 \value{
 A list containing dataframes for the snow cover, RD dates, warming period start dates and
         zero curtain period dates. Each Dataframe has as well the location coordinates,
-        the MAGST, the wateryear for which the MAGST was calculated as well as the number of the 
+        the MAGST, the wateryear for which the MAGST was calculated as well as the number of the
         number of missing values of a certain water year.
         Furthermore, a plot is saved as a pdf file in the assigned directory.
 }

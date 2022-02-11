@@ -7,6 +7,8 @@
 dbpf_locations(con, type = "point")
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{type}{Identifies the geometry type for which locations are returned.
 The default is 'point', otherwise set type='polygon'. [character]}
 }
@@ -17,8 +19,8 @@ Data frame of all [point / polygon] locations in DB
 Basic information on permafrost database @ Carleton University
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{

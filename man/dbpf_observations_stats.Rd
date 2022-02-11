@@ -38,12 +38,12 @@ Provides mean min max and count for a certain period and one
              or several locations.
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{
-con <- dbpf_con() 
+con <- dbpf_con()
 stat <- dbpf_observations_stats(con, "NGO-RC-163")
 dbDisconnect(con)
 

@@ -3,15 +3,17 @@
 #'
 #' @title Inventory observations
 #'
-#' @description Return data frame with a summary of observations in DB  
+#' @description Return data frame with a summary of observations in DB
 #'
-#' @details Return data frame with a summary of observations in DB 
+#' @details Return data frame with a summary of observations in DB
 #'
+#' @param con Database connection object, as returned by \code{\link{dbpf_con}}
+#' 
 #' @param type Character string indicating the type of inventory to be returned.
 #'             Defaults to 'observations_by_locations', others currently not
 #'             implemented.
 #'
-#' 
+#'
 #' @export
 #' @examples
 #' con <- dbpf_con()
@@ -21,20 +23,20 @@
 # =============================================================================
 
 dbpf_inventory <- function(con, type="observations_by_locations") {
-	#obs locations
-  
+    #obs locations
+
   if (missing(con)){
     con <- dbpf_con()
   }
-  
-	if (type == "observations_by_locations") {
-		res<- dbGetQuery(con, paste0("SELECT DISTINCT locations.name ",
-		                 "FROM locations INNER JOIN observations ON ",
-		                 "locations.coordinates = observations.location ",
-		                 "ORDER BY locations.name ASC;"))
-		return(res)
-	}
-	
+
+    if (type == "observations_by_locations") {
+    	res<- dbGetQuery(con, paste0("SELECT DISTINCT locations.name ",
+    	                 "FROM locations INNER JOIN observations ON ",
+    	                 "locations.coordinates = observations.location ",
+    	                 "ORDER BY locations.name ASC;"))
+    	return(res)
+    }
+
 }
 
 

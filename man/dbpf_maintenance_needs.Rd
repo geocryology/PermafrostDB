@@ -18,10 +18,10 @@ resolved. [logical]}
 Display maintenance or service issues at a location
 }
 \details{
-Adds an observation to using the 'maintenance_required' sensor 
+Adds an observation to using the 'maintenance_required' sensor
 for a particular location. A description of what maintenance is needed should
-be provided, and should include: who is reporting the issue, what is needed, 
-why it is needed, and a description of where the problem is, if the location is 
+be provided, and should include: who is reporting the issue, what is needed,
+why it is needed, and a description of where the problem is, if the location is
 not specific enough.
 }
 \author{

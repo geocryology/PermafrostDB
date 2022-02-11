@@ -17,23 +17,12 @@ dbpf_export_nc_air(con, location_name, file_name, freq = "daily")
 be aggregated from the database.}
 }
 \description{
-Downloads one or more time series from the carleton permafrost database 
+Downloads one or more time series from the carleton permafrost database
 and export as a netCDF file. Designed to work with Geoprecision LOG-HC2-RC-US
 loggers
 }
 \details{
 Requires that the PermafrostDB and ncdf4 packages be installed.
-}
-\examples{
-\dontrun{
-library(ncdf4)
-library(reshape2)
-con <- dbpf_con() 
-dbpf_export_nc_air(con, "AIRT1TOP", "~/AIRT1TOP.nc")
-dbpf_export_nc_surface(con, 
-c("AIRT1TOP","AIRT2TOP","AIRT2LOW"), "~/air_records.nc")
-dbDisconnect(con)
-}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

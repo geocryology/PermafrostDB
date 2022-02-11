@@ -2,21 +2,19 @@
 #'
 #' @title Used to see if .csv is primed for upload.
 #'
-#' @description Inserts a data frame of new devices_locations into database.    
+#' @description Inserts a data frame of new devices_locations into database.
 #'
-#' @details Function will indicate whether the file you're about to upload is 
-#'          safe for uploading. 
+#' @details Function will indicate whether the file you're about to upload is
+#'          safe for uploading.
 #'
-#' @param dirPath To local observations .csv file directory. Files should follow 
-#'                proper GP5W or FG2 naming convention. 
+#' @param dirPath To local observations .csv file directory. Files should follow
+#'                proper GP5W or FG2 naming convention.
 #'                ie. E50BDA_YYYYMMDDhhmmss.csv
 #'
 #' @param con DB connection as returned by dbpf_con(). For insert priviledges
 #'            specific user name and password need to be supplied.
-#' 
-#' @return An output log indicating whether .csv is fit for upload to sensorDb
 #'
-#' @examples
+#' @return An output log indicating whether .csv is fit for upload to sensorDb
 #'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
@@ -33,11 +31,11 @@ dbpf_observations_upload_check <- function(con, dirPath) {
     dirPath <- paste0(dirPath,'/',sep='')
   }
 
-  # Initializing log dataframe 
-  log <- data.frame(TEST=character(), 
+  # Initializing log dataframe
+  log <- data.frame(TEST=character(),
                     STATUS=character(),
                     NOTES=character(),
-                    stringsAsFactors=FALSE) 
+                    stringsAsFactors=FALSE)
 
   files <- list.files(dirPath, full.names = TRUE)
 
@@ -50,7 +48,7 @@ dbpf_observations_upload_check <- function(con, dirPath) {
     log <- rbind(log, fileType(filePath))
     log <- rbind(log, is_file_cleaned(filePath))
     log <- rbind(log, is_file_uploaded(con, filePath, log))
-    readline(prompt=paste0("Next file is ", 
+    readline(prompt=paste0("Next file is ",
                             basename(filePath),
                             ". Press [enter] to continue."))
     print.data.frame(log, row.names=FALSE, right=FALSE)
@@ -71,8 +69,8 @@ file_exist <- function(filePath){
     note <- paste0("File ",basename(filePath)," could not be found", sep='')
   }
 
-  test.result <- data.frame("Does file exist?", result, note)      
-  names(test.result) <- c("TEST", "STATUS", "NOTES")  
+  test.result <- data.frame("Does file exist?", result, note)
+  names(test.result) <- c("TEST", "STATUS", "NOTES")
   return (test.result)
 }
 
@@ -102,8 +100,8 @@ fileType <- function(filePath){
     result <- "Fail"
   }
 
-  test.result <- data.frame('Is file GP5W formatted?', result, note)      
-  names(test.result) <- c("TEST", "STATUS", "NOTES")  
+  test.result <- data.frame('Is file GP5W formatted?', result, note)
+  names(test.result) <- c("TEST", "STATUS", "NOTES")
   return (test.result)
 
 }
@@ -113,12 +111,12 @@ identify_logger <- function(con, filePath){
   result <- 'Fail'
   note <- 'Unable to perform test.'
 
-  # If file is unformatted FG2 
+  # If file is unformatted FG2
   fileTypeDf <- fileType(filePath)
-  if (head(fileTypeDf$STATUS, 1) == 'Fail'){
+  if (utils::head(fileTypeDf$STATUS, 1) == 'Fail'){
     # Extracting first 6 digits of filePath
-    serial_number <- substr(basename(filePath), 1, 6)  
-    serial_number <- substr(str_extract(serial_number, "E5...."), 1, 6) 
+    serial_number <- substr(basename(filePath), 1, 6)
+    serial_number <- substr(stringr::str_extract(serial_number, "E5...."), 1, 6)
     # Ensuring serial_number is correct.
     if (is.na(serial_number)){
       result <- "Fail"
@@ -132,7 +130,7 @@ identify_logger <- function(con, filePath){
 
   # If file formatted FG2 or GP5W
   if (grepl("Logger", firstLine) == 1){
-    serial_number <- substr(str_extract(firstLine, "\\#E5...."), 2, 7) 
+    serial_number <- substr(stringr::str_extract(firstLine, "\\#E5...."), 2, 7)
     if (is.na(serial_number)){
       result <- "Fail"
       note <- "Unable to read logger serial_number"
@@ -152,26 +150,26 @@ identify_logger <- function(con, filePath){
     }
   }
 
-  test.result <- data.frame('Does logger exist?', result, note)      
-  names(test.result) <- c("TEST", "STATUS", "NOTES")  
+  test.result <- data.frame('Does logger exist?', result, note)
+  names(test.result) <- c("TEST", "STATUS", "NOTES")
   return (test.result)
 
 }
 
 is_file_cleaned <- function(filePath){
   fileTypeDf <- fileType(filePath)
-  if (head(fileTypeDf$STATUS, 1) == 'Fail'){
+  if (utils::head(fileTypeDf$STATUS, 1) == 'Fail'){
     result <- 'Fail'
     note <- 'File is an uncleaned unformatted FG2.'
   }
 
-  else if (head(fileTypeDf$STATUS, 1) == 'Pass'){
+  else if (utils::head(fileTypeDf$STATUS, 1) == 'Pass'){
 
-    df <- try(read.csv(filePath, header=TRUE, skip=1), 
+    df <- try(utils::read.csv(filePath, header=TRUE, skip=1),
                 silent = TRUE)
 
     if (class(df) != "try-error") {
-      read.csv(filePath, header=TRUE, skip=1)
+      utils::read.csv(filePath, header=TRUE, skip=1)
       further_testing <- TRUE
     } else {
       result <- 'Fail'
@@ -179,7 +177,7 @@ is_file_cleaned <- function(filePath){
       further_testing <- FALSE
     }
 
-    # If df is readable, further testing 
+    # If df is readable, further testing
     if (further_testing) {
       if (!any(grepl("No", colnames(df)))){
         result <- 'Fail'
@@ -202,8 +200,8 @@ is_file_cleaned <- function(filePath){
   }
 
 
-  test.result <- data.frame('Is file clean?', result, note)      
-  names(test.result) <- c("TEST", "STATUS", "NOTES")  
+  test.result <- data.frame('Is file clean?', result, note)
+  names(test.result) <- c("TEST", "STATUS", "NOTES")
   return (test.result)
 
 }
@@ -212,16 +210,16 @@ is_file_uploaded <- function(con, filePath, log){
   # If file hasn't failed any other tests, or we at least have logger id:
   if (log$STATUS[2] == "Pass" ){
 
-    serial_number <- substr(str_extract(log$NOTES[2], "E5...."), 1, 6)
+    serial_number <- substr(stringr::str_extract(log$NOTES[2], "E5...."), 1, 6)
     devIdQuery <- paste0("SELECT id FROM devices WHERE serial_number = '",
-                         serial_number, "'")        
+                         serial_number, "'")
     obsQuery <- paste0("SELECT corrected_utc_time, location FROM observations ",
-                       "WHERE device_id = '", dbGetQuery(con, devIdQuery), 
+                       "WHERE device_id = '", dbGetQuery(con, devIdQuery),
                        "' ORDER BY corrected_utc_time DESC LIMIT 1 ")
     most_recent_db_obs <- dbGetQuery(con, obsQuery)
 
     if (nrow(log[grep("Fail", log$STATUS),]) == 0 ){
-      df <- tail(read.csv(filePath, header=FALSE), n=1)
+      df <- tail(utils::read.csv(filePath, header=FALSE), n=1)
       most_recent_file_obs <- as.POSIXct(gsub('\\.', '-', df$V2),
                                          format='%d-%m-%Y %H:%M:%OS')
 
@@ -247,8 +245,8 @@ is_file_uploaded <- function(con, filePath, log){
     result <- "Fail"
     note <- "Failed to read file or identify logger id. Clean first."
   }
-  test.result <- data.frame('Is file already uploaded?', result, note)      
-  names(test.result) <- c("TEST", "STATUS", "NOTES")  
+  test.result <- data.frame('Is file already uploaded?', result, note)
+  names(test.result) <- c("TEST", "STATUS", "NOTES")
   return (test.result)
 }
 

@@ -4,16 +4,20 @@
 \alias{format_NWT}
 \title{Format data in NTGS-style}
 \usage{
-format_NWT(data, location_name, project_name)
+format_NWT(con, data, location_name, project_name)
 }
 \arguments{
+\item{con}{Database connection object, as returned by dbpf_con()}
+
+\item{data}{data frame}
+
 \item{location_name}{Character, name of site for which data is to be desired.
 Used to query the database.}
 
 \item{project_name}{Character, used in file header metadata}
 }
 \description{
-adds header information to a csv to conform with NTGS data 
+adds header information to a csv to conform with NTGS data
 standards.
 }
 \details{

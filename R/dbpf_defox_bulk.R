@@ -2,17 +2,17 @@
 #'
 #' @title De-fox data in bulk, as identified by location and time.
 #'
-#' @description Treatment of subsurface logger that have been exposed at the 
-#'              terrain surface. As we suspect that animals (foxes) yanked 
+#' @description Treatment of subsurface logger that have been exposed at the
+#'              terrain surface. As we suspect that animals (foxes) yanked
 #'              loggers out of the ground, we call this de-foxing.
 #'
-#' @details The observations identified (1) are added to a set (DOI) that 
+#' @details The observations identified (1) are added to a set (DOI) that
 #'          identifies them as bulk-defoxed and (2) have their height set to
 #'          0 m as the sensors are exposed on the ground surface. A check on
-#'          device ID is performed: Only one device ID can be present at that 
+#'          device ID is performed: Only one device ID can be present at that
 #'          location during the interval de-foxed. The installation of a new
-#'          sensor would have ocurred at the correct depth. If a sensor chain 
-#'          is present at the location, all sensors are assumed to be pulled 
+#'          sensor would have ocurred at the correct depth. If a sensor chain
+#'          is present at the location, all sensors are assumed to be pulled
 #'          out. The DOI used is called "Exposed Temperature Sensor". A further
 #'          check is performed on table observations_dois to detect if some of
 #'          the observations have already been treated.
@@ -30,11 +30,11 @@
 #'
 #' @param time_e End time for the interval to be analysed. Use the format
 #'               "1950-01-01 00:00:00+00"
-#' 
+#'
 #' @export
 #' @examples
 #' \donttest{
-#' con <- dbpf_con() 
+#' con <- dbpf_con()
 #' dbpf_defox_bulk(con,'NGO-DD-1004_ST02', "2016-01-01 00:00:00+00","2016-01-10 23:59:00+00")
 #' dbDisconnect(con)
 #' }
@@ -42,63 +42,63 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_defox_bulk <- function(con, location_name, time_b, time_e, 
+dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
                             unit_of_measurement = "C") {
-	
-	# check for the number of devices during period, first build WHERE clause
-	nwc <- paste0("observations.corrected_utc_time BETWEEN '", time_b, "' AND '", time_e, "' AND ",
-	              "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
-	              "observations.location = (SELECT coordinates FROM locations ",
-	              "WHERE name = '", location_name ,"')")
-	
-	qry <- paste0("SELECT COUNT (DISTINCT device_id) AS dev_count, ",
-	              "COUNT (DISTINCT sensor_id) AS sen_count,",
-	              "COUNT (DISTINCT id) AS obs_count FROM observations ",
-	              "WHERE ", nwc)
-	stat <- dbGetQuery(con, qry)             
+
+    # check for the number of devices during period, first build WHERE clause
+    nwc <- paste0("observations.corrected_utc_time BETWEEN '", time_b, "' AND '", time_e, "' AND ",
+                  "observations.unit_of_measure = '", unit_of_measurement, "' AND ",
+                  "observations.location = (SELECT coordinates FROM locations ",
+                  "WHERE name = '", location_name ,"')")
+
+    qry <- paste0("SELECT COUNT (DISTINCT device_id) AS dev_count, ",
+                  "COUNT (DISTINCT sensor_id) AS sen_count,",
+                  "COUNT (DISTINCT id) AS obs_count FROM observations ",
+                  "WHERE ", nwc)
+    stat <- dbGetQuery(con, qry)
 
     # error if more or less than one device
     if (stat$dev_count > 1) {
     	stop("More than one device found, de-foxing interrupted")
-	} else if (stat$dev_count < 1) {
-		stop("No device/data found, de-foxing interrupted")
-	}
+    } else if (stat$dev_count < 1) {
+    	stop("No device/data found, de-foxing interrupted")
+    }
 
-	# check if observations are already in observations_dois
+    # check if observations are already in observations_dois
     qdoi <- paste0("SELECT COUNT (DISTINCT observations.id) FROM observations INNER JOIN ",
-	              "observations_dois ON observations.id = observations_dois.observation_id ",
-	              "WHERE observations_dois.doi_id = (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AND ", nwc)
-	ndoi <- dbGetQuery(con, qdoi)$count
+                  "observations_dois ON observations.id = observations_dois.observation_id ",
+                  "WHERE observations_dois.doi_id = (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AND ", nwc)
+    ndoi <- dbGetQuery(con, qdoi)$count
     if (ndoi > 0) {stop("One or more of these observations are already in DOI")}
 
-	#feedback 
-	print(paste("==>", stat$sen_count, "sensors,", stat$obs_count, "observations."))
-	
-	#--- START TRANSACTION ----
-	dbBegin(con)
+    #feedback
+    print(paste("==>", stat$sen_count, "sensors,", stat$obs_count, "observations."))
 
-	# add changes observations to table observations_dois
-	#doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
-	#oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
+    #--- START TRANSACTION ----
+    dbBegin(con)
+
+    # add changes observations to table observations_dois
+    #doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
+    #oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
     qry <- paste0("INSERT INTO observations_dois (observation_id, doi_id) ",
-                  "SELECT id AS observation_id, (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AS doi_id FROM observations WHERE ", nwc, ";")           
+                  "SELECT id AS observation_id, (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AS doi_id FROM observations WHERE ", nwc, ";")
     # == update observations_dois
   	ncd <- dbExecute(con, qry)
- 
+
   	# == update observations table
   	qry <- paste0("UPDATE observations SET height_min_metres = 0, ",
   	              "height_max_metres = 0 WHERE ", nwc ,";")
   	nco <- dbExecute(con, qry)
-  	
-  	# Make another safety check: the numer of dois found now mjust equal the 
+
+  	# Make another safety check: the numer of dois found now mjust equal the
   	# number of observations that had to be changed. If this is not true, the
   	# transaction will be rolled back.
   	check <- stat$obs_count - dbGetQuery(con, qdoi)$count
   	if (check == 0) {
   		dbCommit(con)
-  		message("OK, defoxed.")	
+  		message("OK, defoxed.")
   	} else {
-  		dbRollback(con)  
-  		message("Final check NOT PASSED, transaction rolled back.")		
+  		dbRollback(con)
+  		message("Final check NOT PASSED, transaction rolled back.")
   	}
 }

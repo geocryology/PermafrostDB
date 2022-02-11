@@ -21,44 +21,27 @@ createTimeSeriesProfileNCF(
 \item{n_timestep}{integer, the number of unique timesteps for which there is
 temperature data}
 
-\item{close_file}{logical, whether or not to close the connection to the file 
-after creation. Leaving the file open allows for the immediate addition of 
+\item{n_levels}{integer, the largest number of depth measurements in any
+profile}
+
+\item{close_file}{logical, whether or not to close the connection to the file
+after creation. Leaving the file open allows for the immediate addition of
 data. Defaults to FALSE.}
 
-\item{n_depths}{integer, the largest number of depth measurements in any 
-profile}
+\item{time_units}{netcdf4-style string description of time units}
 }
 \description{
 Creates a netCDF file with specified dimensions. The file has no
 data within it, but must be added in afterwards. Thermistors should may have
-different measurement depths but should have the same number of measurement  
+different measurement depths but should have the same number of measurement
 depths (levels)
 }
 \details{
-The file structure is based on H.5.1. "Multidimensional array of 
-time series profiles representation of time series" 
+The file structure is based on H.5.1. "Multidimensional array of
+time series profiles representation of time series"
 (http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_multidimensional_array_representations_of_time_series_profiles)
-* Depth values are not time-dependent, therefore the depth levels of a 
+* Depth values are not time-dependent, therefore the depth levels of a
 station must not change between time periods
-}
-\examples{
- \dontrun{
-library(ncdf4) 
-# create temperature data
-t1 <- 3*sin(seq(1:792)*2*pi/365)+2
-t2 <- sin(seq(1:792)*2*pi/365)
-m <- matrix(c(t1,t2), nrow=2, byrow=TRUE)
-
-#create ncdf file 
-ncnew <- createMultiThermistorNCF("./thermistor_multi.nc", 2, 792, 1,  FALSE)
-
-# put some data in the ncdf file
-ncvar_put(ncnew, 'soil_temperature', m)
-ncvar_put(ncnew, 'platform_id', c('station1', 'station2'))
-
-#close the file
-nc_close(ncnew)
-}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

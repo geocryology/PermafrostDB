@@ -18,6 +18,8 @@ dbpf_sensor_add(
 )
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{device_id}{Charcter string of device that this is linked to.}
 
 \item{label}{Name for the new sensor.}
@@ -49,10 +51,10 @@ Run in test mode first. If you have no DB login to write data, run
 }
 \examples{
 \dontrun{
-con <- dbpf_con() 
-dbpf_sensor_add(con, "5265f740-8e09-4d41-b5b6-2136f5d35ea3", 
-                "vegetation_height_max", type_of_measurement = "numeric", 
-                unit_of_measurement = "m", accuracy = 0.5, precision=0.01, 
+con <- dbpf_con()
+dbpf_sensor_add(con, "5265f740-8e09-4d41-b5b6-2136f5d35ea3",
+                "vegetation_height_max", type_of_measurement = "numeric",
+                unit_of_measurement = "m", accuracy = 0.5, precision=0.01,
                 height_in_metres = 0, serial_number = "", mode = 'test')
 dbDisconnect(con)
 }

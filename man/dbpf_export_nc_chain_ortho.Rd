@@ -18,33 +18,18 @@ correspond to locations with thermistor strings}
 be aggregated from the database.}
 }
 \description{
-Downloads one or more time series from the carleton permafrost 
-database and export as a netCDF file. The netCDF file is designed to 
-accommodate many stations with the same measurement depths.  It is possible 
+Downloads one or more time series from the carleton permafrost
+database and export as a netCDF file. The netCDF file is designed to
+accommodate many stations with the same measurement depths.  It is possible
 to group stations with different measurement depths but this is at the cost
-of wasted space because any non-shared measurement depths will be filled with 
+of wasted space because any non-shared measurement depths will be filled with
 null values.
 }
 \details{
-Requires that the PermafrostDB, reshape2 and ncdf4 packages be 
-installed. The file structure is based on H.5.1. "Multidimensional array 
+Requires that the PermafrostDB, reshape2 and ncdf4 packages be
+installed. The file structure is based on H.5.1. "Multidimensional array
 representations of time series profiles" with  Example H.16 used as a
 template and a one-dimensional time coordinate variable.
-}
-\examples{
- \dontrun{
-library(ncdf4)
-library(permafrostDB)
-con <- dbpf_con() 
-dbpf_export_nc_chain_ortho(con = con, location_name = c('NGO-DD-1012'), 
-file_name = "./test_therm.nc")
-dbpf_export_nc_chain_ortho(con = con, 
-location_name = c('NGO-RC-170', 'NGO-RC-163'), file_name = "./test_therm.nc")
-dbpf_export_nc_chain_ortho(con = con, 
-location_name = c('NGO-RC-169', 'NGO-RC-171', 'NGO-RC-172'),
- file_name = "./test_therm.nc")
-dbDisconnect(con)
-}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

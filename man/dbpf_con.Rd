@@ -27,40 +27,40 @@ Returns connection to permafrost database
 Function establishes a connection to the data base and returns a
          connection object for easy use. When finished, make sure to close the connection
          object (see examples).
-         
+
          As of \code{PermafrostDB v1.0.0}, Database credentials and host location must now be explicitly provided.
-             Default connection information is no longer provided. This is done as a 
+             Default connection information is no longer provided. This is done as a
              security consideration. However, to retain the convenience of older version of this function,
-             you can create a text file called \code{permafrostdb.config} that provides the 
+             you can create a text file called \code{permafrostdb.config} that provides the
              necessary information.
-             
-             The location of the \code{permafrostdb.config} file is determined by the R function \code{path.expand("~")}. 
+
+             The location of the \code{permafrostdb.config} file is determined by the R function \code{path.expand("~")}.
              On linux computers, this usually corresponds to \code{/home/username}. On Windows machines, this is usually either
-             \code{C:/Users/yourUserName} or \code{C:/Users/yourUserName/Documents} (RStudio). To be sure, run the command 
+             \code{C:/Users/yourUserName} or \code{C:/Users/yourUserName/Documents} (RStudio). To be sure, run the command
              \code{path.expand("~")} in your R terminal of choice.
-             
+
              The file should be structured like a csv table, and should use quotes around the parameters:
-           
+
              \code{user,passwd,host,port}
-             
+
              \code{"your_username","your_pasword","your_db_host","your_db_port"}
-             
+
              an example might look like:
-             
+
              \code{user,passwd,host,port}
-             
+
              \code{"readonly","fjZ$fwg?H9(<jDsd","256.245.11.15","5432"}
 }
 \examples{
 #example of using specific user name and password
-\donttest{
+\dontrun{
 con <- dbpf_con("stephan", "password", "192.168.2.25", "5432")
 dbDisconnect(con)
 
 # get connection object (using default values from a permafrostdb.config file)
-con <- dbpf_con()  
+con <- dbpf_con()
 loc <- dbGetQuery(con, "SELECT * FROM locations")
-dbDisconnect(con)         # close connection when done 
+dbDisconnect(con)         # close connection when done
 }
 
 }

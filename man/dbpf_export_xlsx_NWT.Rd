@@ -9,8 +9,7 @@ dbpf_export_xlsx_NWT(
   location_name,
   project_name,
   file_name,
-  freq = "hourly",
-  split = T
+  freq = "hourly"
 )
 }
 \arguments{
@@ -22,6 +21,8 @@ Used to query the database.}
 \item{project_name}{Character, project name associated with the location_name}
 
 \item{file_name}{Character, path to an xlsx file to be written}
+
+\item{freq}{how often to aggregate data (e.g. 'hourly', 'daily')}
 }
 \description{
 Downloads data from the database in a csv format that is consistent
@@ -32,13 +33,6 @@ Details in NWT open report (unpublished)
 
 This function relies on the Rtools library to create the xlsx file.
 This can be downloaded from https://cran.r-project.org/bin/windows/Rtools/
-}
-\examples{
- \dontrun{
-dbpf_export_xlsx_NWT(con=con, location_name = "NGO-DD-1009", 
-    file_name = "~/NGO-DD-1009_Hourly_GroundTemperature.xlsx", 
-    project_name = "SPSMPS")   
-}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

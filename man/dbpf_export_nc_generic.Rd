@@ -13,6 +13,8 @@ dbpf_export_nc_generic(
 )
 }
 \arguments{
+\item{con}{Database connection object, as returned by dbpf_con()}
+
 \item{location_name}{integer, the number of unique timesteps for which there is
 temperature data}
 
@@ -29,15 +31,8 @@ Exports temperature and relative humidity data from the database
 into a netcdf file compliant with CF conventions v1.6
 }
 \details{
-Rows are returned from the database using a combination of 
+Rows are returned from the database using a combination of
 dbSendQuery() and dbFetch().
-}
-\examples{
-\dontrun{
-x <- dbpf_export_nc_generic(con, c("NGO-DD-1005", "NGO-DD-1006", "NGO-DD-1007", 
-                                  "NGO-DD-1005_ST01", "AIRT1TOP"),
-                            "~/example_ncdf.nc")
- }
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

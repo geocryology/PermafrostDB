@@ -1,38 +1,57 @@
 Package: PermafrostDB
 Title: PermafrostDB
 Description: R interface for Carleton Permafrost database. This interface uses a read-only login to the database and is mostly for data access. Data import is done over a web interface with separate credentials, INSERT, UPDATE, DELETE queries run from this R interface need to establish a database connection with suitable login credentials, first. When you use R to INSERT, UPDATE, DELETE, please: (a) document your work meticulously, (b) think before you execute, and (c) make sure you use transactions with BEGIN / ROLLBACK / COMMIT where you can first test your changes before making them permanent.
-Version: 1.2.1
-Author: Stephan Gruber <stephan.gruber@carleton.ca>
-Maintainer: Stephan Gruber <stephan.gruber@carleton.ca>
+Version: 1.3.0
+Authors@R: c( 
+    person(given = "Stephan",
+           family = " Gruber",
+           role = c("aut"),
+           email = "stephan.gruber@carleton.ca",
+           comment = c(ORCID = "0000-0002-1079-1542")),
+    person(given = "Nick",
+           family = "Brown",
+           role = c("aut", "cre"),
+           email = "nick.brown@carleton.ca",
+           comment = c(ORCID = "0000-0002-2719-0671")),
+    person(given = "Thomas",
+           family = "Knecht",
+           role = c("ctb")),
+    person(given = "Hannah",
+           family = "Macdonnel",
+           role = c("ctb"))
+           )
 Encoding: UTF-8
 Depends:
-	R (>= 3.0.1),
-	lubridate,
-	RPostgres,
-	openxlsx,
-	shiny,
-	stringr (>= 1.2.0),
-	xts
+    R (>= 3.0.1)
 Imports:
-  data.table,
-	ncdf4,
-	reshape2
+    data.table,
+    RPostgres,
+    ncdf4,
+    openxlsx,
+    stringr (>= 1.2.0),
+    xts,
+    reshape2,
+	DBI,
+	ggplot2,
+    shiny,
+	magrittr,
+    lubridate, 
+    sys
 Suggests:
-	aqp,
-  Cairo,
-  colorRamps,
-  dismo,
-  dygraphs,
- 	ggplot2,
+    aqp,
+    Cairo,
+    colorRamps,
+    dismo,
+    dygraphs,
  	PermafrostTools (>= 1.3.1),
  	pixmap,
  	plotrix,
-	plotKML,
-	rgdal,
-	RSAGA,
-	sp,
-	ssh,
-	stars
-License: # getOptions('devtools.desc.license')
+    plotKML,
+    rgdal,
+    RSAGA,
+    sp,
+    ssh,
+    stars
+License: GPL (>=3)
 LazyData: true
 RoxygenNote: 7.1.1

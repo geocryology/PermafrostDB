@@ -18,35 +18,25 @@ correspond to locations with thermistor strings}
 be aggregated from the database.}
 }
 \description{
-Downloads one or more time series from the carleton permafrost 
-database and export as a netCDF file. The netCDF file is designed to 
-accommodate many stations with the same number of measurement depths (same 
-number of thermistors), but with different depth values.  It is possible 
-to group stations with different numbers of measurement depths but this is 
+Downloads one or more time series from the carleton permafrost
+database and export as a netCDF file. The netCDF file is designed to
+accommodate many stations with the same number of measurement depths (same
+number of thermistors), but with different depth values.  It is possible
+to group stations with different numbers of measurement depths but this is
 at the cost of wasted space: any station with fewer measurement depths will
 have missing values for any depth levels that it lacks.
 }
 \details{
-Requires that the PermafrostDB, reshape2 and ncdf4 packages be 
-installed. The file structure is based on H.5.1. "Multidimensional array 
+Requires that the PermafrostDB, reshape2 and ncdf4 packages be
+installed. The file structure is based on H.5.1. "Multidimensional array
 representations of time series profiles" with  Example H.16 used as a
 template and a one-dimensional time coordinate variable.
 
 This structure is designed to accommodate stations with the same number of
-measurement depths (levels) but with different depth values for each level. 
-For example one thermistor may measure temperature at 1.0, 2.0 and 3.0 m 
-and another may measure temperature at 0.5, 1.5 and 5.0 m. Both have three 
+measurement depths (levels) but with different depth values for each level.
+For example one thermistor may measure temperature at 1.0, 2.0 and 3.0 m
+and another may measure temperature at 0.5, 1.5 and 5.0 m. Both have three
 measurement depths
-}
-\examples{
-\dontrun{
-library(ncdf4)
-library(PermafrostDB)
-con <- dbpf_con() 
-dbpf_export_nc_chain_multi(con = con, location_name = c('NGO-DD-1005', 'NGO-DD-1006'), 
-file_name = "./thermistor_multi.nc")
-dbDisconnect(con)
-}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

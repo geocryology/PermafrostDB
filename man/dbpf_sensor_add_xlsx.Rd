@@ -7,7 +7,9 @@
 dbpf_sensor_add_xlsx(con, file_xlsx, mode = "test")
 }
 \arguments{
-\item{file_xlsx}{Excel file containing new sensor descriptions and these 
+\item{con}{Database connection object, as returned by dbpf_con()}
+
+\item{file_xlsx}{Excel file containing new sensor descriptions and these
 columns: label, device_id, type_of_measurement,
 unit_of_measurement, accuracy, precision,
 height_in_metres, serial_number, sensor_id
@@ -29,7 +31,7 @@ Run in test mode first. If you have no DB login to write data, run
 }
 \examples{
 \dontrun{
-con <- dbpf_con() 
+con <- dbpf_con()
 bpf_sensor_add_xlsx(con, "/Users/stgruber/sensor.xlsx", mode = 'test')
 dbDisconnect(con)
 }

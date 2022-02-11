@@ -7,6 +7,8 @@
 dbpf_device_locations(con, serial_number)
 }
 \arguments{
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
 \item{serial_number}{Serial number of device to query}
 }
 \value{
@@ -17,9 +19,6 @@ data fame with fields: location_name, timestamp, lon, lat,
 \description{
 Given a device serial number, this function return a data frame
              showing the locations where this device has been.
-}
-\details{
-
 }
 \examples{
 con <- dbpf_con()

@@ -7,8 +7,10 @@
 dbpf_fields(con, tables = "")
 }
 \arguments{
-\item{table}{Character string or vector of table name(s). If empty, fields 
-for all tables are returned. Default is table="".}
+\item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
+\item{tables}{Character string or vector of table name(s). If empty, fields
+for all tables are returned. Default is tables="".}
 }
 \value{
 List of all fields for all tables in DB
@@ -17,13 +19,12 @@ List of all fields for all tables in DB
 Basic information on permafrost database @ Carleton University
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{
 con <- dbpf_con()
-fds   <- dbpf_fields(con, tables = "")
 fds_o <- dbpf_fields(tables = "observations")
 
 }

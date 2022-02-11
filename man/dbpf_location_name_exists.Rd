@@ -18,13 +18,13 @@ dbpf_location_name_exists(con, location_name)
 Checks if device exists based on its serial number
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
 }
 \examples{
 con <- dbpf_con()
-fds <- dbpf_location_name_exists()
+fds <- dbpf_location_name_exists(con, "Storage")
 dbDisconnect(con)
 
 }

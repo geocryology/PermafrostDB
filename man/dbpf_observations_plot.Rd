@@ -35,6 +35,7 @@ to no aggregation (period = 'raw').}
 \value{
 Data frame with locations in rows and columns loc_name, height,
         max, min, avg, cnt
+dbpf_observations_plot
 }
 \description{
 Opens interactive plot in browser in order to check and explore

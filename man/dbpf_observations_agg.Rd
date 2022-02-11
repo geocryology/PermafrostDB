@@ -36,8 +36,8 @@ to one hour (period = 1).}
 
 \item{verbose}{Provide terminal output of the query string? (defaults to FALSE)}
 
-\item{fetch}{Whether to return results incrementally using dbSendQuery 
-& dbFetch(), otherwise downloads them all at once using dbGetQuery(). 
+\item{fetch}{Whether to return results incrementally using dbSendQuery
+& dbFetch(), otherwise downloads them all at once using dbGetQuery().
 Defaults to FALSE.}
 
 \item{n}{if fetch == TRUE, then specifies the number of rows to download in
@@ -52,28 +52,28 @@ Provides mean min max and count for a certain period and one
              or several locations.
 }
 \details{
-These simple functions return all data as data frames. When 
-         making a query many times, optimise the SQL statement to only 
+These simple functions return all data as data frames. When
+         making a query many times, optimise the SQL statement to only
          request the data you actually need.
          Details of aggregation: The aggregation is based on a new column
-         calculated based on the number of seconds elapsed since 
+         calculated based on the number of seconds elapsed since
          1970-01-01 00:00:00 UTC (referred to as 'epoch'). The rounding
-         [FLOOR(epoch/period/3600) * period * 3600] thereby references all  
-         values of a period to the time when this period begins. For 
-         example, a daily average (period = 24) will include all values 
-         between 2016-11-01 00:00:00 and 2016-11-02 23:59:59 under the 
+         [FLOOR(epoch/period/3600) * period * 3600] thereby references all
+         values of a period to the time when this period begins. For
+         example, a daily average (period = 24) will include all values
+         between 2016-11-01 00:00:00 and 2016-11-02 23:59:59 under the
          timestamp 2016-11-01 00:00:00.
 
 The unit_of_measurement variable is used to distinguish between
-different measurement types.  The default (C) will return observations that 
+different measurement types.  The default (C) will return observations that
 measure temperature in degrees celsius.  To obtain observations of relative
 humidity, use "%RH".
 
-When performing large queries (millions of rows), it is recommended to set 
+When performing large queries (millions of rows), it is recommended to set
 fetch = TRUE. Otherwise R can run into trouble.
 }
 \examples{
-con <- dbpf_con() 
+con <- dbpf_con()
 dbpf_observations_agg(con, "NGO-RC-163_ST01", period = 24)
 dbDisconnect(con)
 

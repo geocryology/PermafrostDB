@@ -9,12 +9,11 @@ dbpf_export_csv_NWT(
   location_name,
   project_name,
   file_name,
-  freq = "daily",
-  split = T
+  freq = "daily"
 )
 }
 \arguments{
-\item{con}{Database connection object, as returned by dbpf_con}
+\item{con}{Database connection object, as returned by dbpf_con()}
 
 \item{location_name}{Character, name of site for which data is to be desired.
 Used to query the database.}

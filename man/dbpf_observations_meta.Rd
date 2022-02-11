@@ -20,10 +20,10 @@ dbpf_observations_meta(
 \item{location_name}{Character string or list of several with the location
 name(s) to be queried for.}
 
-\item{height_top}{Uppermost height [m] (positive above surface, negative when 
+\item{height_top}{Uppermost height [m] (positive above surface, negative when
 below surface) of sensor to return in this query.}
 
-\item{height_bot}{Lowermost height [m] (positive above surface, negative when 
+\item{height_bot}{Lowermost height [m] (positive above surface, negative when
 below surface) of sensor to return in this query.}
 
 \item{time_b}{Begin time for the interval to be analysed. Use the format
@@ -33,9 +33,6 @@ below surface) of sensor to return in this query.}
 "1950-01-01 00:00:00+00"}
 
 \item{verbose}{Provide terminal output of the query string? (defaults to FALSE)}
-
-\item{unit_of_measurement}{Unit of measurments, defaults to "C". Used to
-identify the observation time - see Details.}
 }
 \value{
 List of all locations in DB
@@ -47,12 +44,12 @@ Get raw observations per location, height and time slice.
 Fast way to access raw observation data without aggregation.
 
 The unit_of_measurement variable is used to distinguish between
-different measurement types.  The default (C) will return observations that 
+different measurement types.  The default (C) will return observations that
 measure temperature in degrees celsius.  To obtain observations of relative
 humidity, use "%RH".
 }
 \examples{
-con <- dbpf_con() 
+con <- dbpf_con()
 obs <- dbpf_observations_meta(con, "NGO-DD-1004_ST02")
 dbDisconnect(con)
 
