@@ -7,7 +7,7 @@ R package that provides convenience functions for interacting with a permafrost 
 This requires that you have git installed on your computer.
 
 ```bash
-git pull https://github.com/geocryology/PermafrostDB
+git clone https://github.com/geocryology/PermafrostDB
 cd PermafrostDB
 Rscript -e "devtools::install()"
 ```
