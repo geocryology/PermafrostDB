@@ -1,4 +1,3 @@
-options(warn=-1)
 # =============================================================================
 #'
 #' @title Reformat GP5W file
@@ -63,6 +62,7 @@ dbpf_GP5W_file_formatter <- function(con, inPath) {
   }
 
   files <- list.files(inPath)
+  print(files)
 
   # Open dir
   for (fileName in files){
