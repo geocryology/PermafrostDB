@@ -136,11 +136,12 @@ dbpf_export_csv_generic <- function(con, location_name, output_directory,
     if (!is.null(depth_header_suffix)){
       names(out)[-1] <- gsub('$', depth_header_suffix, names(out)[-1])
     }
-
-
-    # adjust time format
-    out[,1] <- strftime(strptime(out[,1], "%Y-%m-%d %T"), format=date_format)
-
+    
+    if (freq == 'hourly'){
+      # adjust time format
+      out[,1] <- strftime(strptime(out[,1], "%Y-%m-%d %T"), format=date_format)
+    }
+    
     # write output
     if (!missing(output_directory)){
       outfile <- file.path(output_directory, paste(fname, ".csv", sep=''))
