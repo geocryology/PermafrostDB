@@ -14,8 +14,6 @@
 #'
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
-library("tools")
-
 dbpf_FG2toGP5W <- function(inPath){
   direc <- FALSE
   file <- FALSE
@@ -26,16 +24,17 @@ dbpf_FG2toGP5W <- function(inPath){
     print(paste0("Location '", inPath, "' does not exist."))
     return(0)
   }
+
   newDir <- paste(dirname(inPath),"/convertedFG2",sep='')
-  
+
   ############ DIRECTORY #################
 
   if (direc == TRUE){
     inPath <- rewritedir(inPath)
     inFiles <- list.files(inPath)
+    print(paste0("Files successfully converted and moved to '", newDir, "' include:",sep=''))
     for (file in inFiles){
       file <- paste(inPath,file,sep='')
-      print(fileType(file))
       if (fileType(file) == "FG2"){
         convertFG2(file)
        }
@@ -59,6 +58,7 @@ convertFG2 <- function(filePath){
   # Takes FG2 file path and converts to GP5W
   con <- file(filePath, open='r')
   lines <- readLines(con)
+
   direc <- paste(dirname(filePath),"convertedFG2", sep='/')
 
   # Checking to see if /convertedFG2 exists in cur dir
@@ -67,6 +67,8 @@ convertFG2 <- function(filePath){
   # Creating new file
   newFile <- (basename(filePath))
   newDir <- paste0(dirname(filePath), "_GP5WFormatted")
+  print(newFile)
+  print(newDir)
   sink(paste(direc, newFile, sep='/'))
 
   headerCount <- TRUE # To avoid multiple headers
