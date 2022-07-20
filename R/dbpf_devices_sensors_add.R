@@ -93,22 +93,16 @@ dbpf_devices_sensors_add <- function(con, dev_sen, mode = "test") {
 
         # If both old and new loggers exist
         if (dev_sen$old[r] + dev_sen$new[r] == 2) {
+
             # Get all sensors attatched to old_dev_id
-            q <- paste0("SELECT timestamp FROM devices_sensors WHERE ",
-                        "device_id = '", old_dev_id$id, "' GROUP BY ",
-                        "devices_sensors.id ORDER BY timestamp DESC LIMIT (1)")
-            time <- dbGetQuery(con, q)
-            q <- paste0("SELECT * FROM devices_sensors WHERE device_id = '",
-                        old_dev_id$id, "' AND timestamp = '", time$timestamp,
-                        "'")
-            sen_ids <- dbGetQuery(con, q)
+            sen_ids <- dbpf_device_sensors(con, dev_sen$oldSerial[r])
 
             for (s in 1:nrow(sen_ids)){
                 a <- dbpf_sensor_exists(con, sen_ids$sensor_id[s])
                 if (a != 1){
                     print(paste0(sen_ids$sensor_id[s], " DOES NOT EXIST."))
                 }
-            }            
+            }
             for (s in 1:nrow(sen_ids)) {
                 query <- paste0("INSERT INTO devices_sensors",
                 "(timestamp, device_id, sensor_id, notes) VALUES ('",
@@ -145,3 +139,7 @@ dbpf_sensor_exists <- function(con, sensor_id) {
 
     return(exists$count)
 }
+
+dev_sen <- read.csv("../dev_sen.csv")
+dev_sen$time <- as.POSIXct(dev_sen$time)
+dbpf_devices_sensors_add(con, dev_sen, mode = "test")
