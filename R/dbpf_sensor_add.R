@@ -42,56 +42,62 @@
 #' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
-
+ 
 dbpf_sensor_add <- function(con, device_id, label, type_of_measurement,
                             unit_of_measurement, accuracy, precision,
                             height_in_metres = 0, serial_number = "",
-                            mode = 'test') {
+                            mode = "test") {
 
-    # === RUN TESTS
+    # === RUN TESTS ===
     # initial string
     teststring <- "Test result"
     passed <- FALSE
 
     # check if device id exists
-    query <- paste0("SELECT COUNT(id) FROM devices WHERE id = '", device_id ,"'")
+    query <- paste0("SELECT COUNT(id) FROM devices WHERE id = '",
+            device_id, "'")
     res <- dbGetQuery(con, query)$count
     if (res == 0) {
-    	teststring <- paste(teststring, "device id not found", sep = ": ")
+        teststring <- paste(teststring, "device id not found", sep = ": ")
     }
 
     #check type_of_measurement
     ok <- (type_of_measurement == "numeric") + (type_of_measurement == "text")
     if (ok == 0) {
-    	teststring <- paste(teststring, "type_of_measurement must be 'text' or 'numeric'", sep = ": ")
-    }
-
-    # check how many devices with this label exist
-    query <- paste0("SELECT COUNT(id) FROM sensors WHERE label = '", label ,"'")
-    res <- dbGetQuery(con, query)$count
-    if (res > 0) {
-    	teststring <- paste(teststring, "sensor(s) with equal label found", sep = ": ")
+        teststring <- paste(teststring, "type_of_measurement must be 'text' ",
+                            "or 'numeric'", sep = ": ")
     }
 
     if (teststring == "Test result") {
-    	teststring <- "Test result: OK"
-    	passed <- TRUE
+        teststring <- "Test result: OK"
+        passed <- TRUE
     }
 
-    # === INSERT
-    if ((mode == 'insert') * (passed == TRUE)) {
-    	query <- paste0("INSERT INTO sensors (device_id, label, type_of_measurement,
+    # === INSERT ===
+    if ((mode == "insert") * (passed == TRUE)) {
+        query <- paste0("INSERT INTO sensors (label, type_of_measurement, ",
+                            "unit_of_measurement, accuracy, precision, ",
+                            "height_in_metres, serial_number) VALUES ('",
+                            paste(label, type_of_measurement,
                             unit_of_measurement, accuracy, precision,
-                            height_in_metres, serial_number) VALUES ('", paste(device_id,
-                            label, type_of_measurement,
-                            unit_of_measurement, accuracy, precision,
-                            height_in_metres, serial_number, sep="', '"), "') RETURNING id")
-    	try(ins <- dbGetQuery(con, query), silent = TRUE)
-    	if (exists("ins")) {
-    		teststring <- paste0(teststring, " ==> Row inserted. Resulting sensor id: ", ins)
-    	}
-    }
+                            height_in_metres, serial_number, sep = "', '"),
+                            "') RETURNING id")
 
-    #return result
+        try(ins <- dbGetQuery(con, query), silent = TRUE)
+        if (exists("ins")) {
+            teststring <- paste0(teststring, " ==> Sensor added. Resulting ",
+            "sensor id: ", ins)
+        }
+        query <- paste0("INSERT INTO devices_sensors (timestamp,
+                            device_id, sensor_id) VALUES ('",
+                            paste(lubridate::now(), device_id, ins,
+                            sep = "', '"), "') RETURNING id")
+
+        try(ins <- dbGetQuery(con, query), silent = TRUE)
+        if (exists("ins")) {
+            teststring <- paste0(teststring, " ==> dev_sen table updated.",
+            "Resulting id: ", ins, "\n")
+        }
+    }
     return(teststring)
 }
