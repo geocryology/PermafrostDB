@@ -177,8 +177,3 @@ dbpf_remove_sensors <- function(con, mode, time, dev_id, serial_number) {
         return(c("PASSED", "Row inserted into DB"))
     }
 }
-
-
-dev_sen <- read.csv("../dev_sen.csv")
-dev_sen$time <- as.POSIXct(dev_sen$time)
-dbpf_devices_sensors_add(con, dev_sen, mode = "insert")
