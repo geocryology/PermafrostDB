@@ -46,18 +46,18 @@
 
 dbpf_devices_sensors_add <- function(con, dev_sen, mode = "test") {
 
-    #test mode
+    # Test mode
     test_mo <- (mode == "test") + (mode == "insert")
     if (test_mo != 1) {
         stop(paste("Parameter 'mode' must be either",
                     "'test' or 'insert'."))
     }
 
-    #test information provided
+    # Test information provided
     dev_sen <- subset(dev_sen, select = c("oldSerial", "newSerial",
                             "comment", "sitename", "time"))
 
-    #fix/test column data type, add check columns
+    # Fix/test column data type, add check columns
     dev_sen$oldSerial <- as.character(dev_sen$oldSerial)
     dev_sen$newSerial <- as.character(dev_sen$newSerial)
     dev_sen$sitename     <- as.character(dev_sen$sitename)
@@ -67,19 +67,21 @@ dbpf_devices_sensors_add <- function(con, dev_sen, mode = "test") {
         stop("Column 'time' must be in POSIXct")
     }
 
+    # Create feedback dataframe
     dev_sen$old <- FALSE
     dev_sen$new <- FALSE
     dev_sen$result <- FALSE
     dev_sen$message <- FALSE
 
-    # make time string for postgresql "2015-06-14 15:24:00+00"
+    # Make time string for postgresql "2015-06-14 15:24:00+00"
     dev_sen$time <- substr(format(dev_sen$time,
                                 format = "%Y-%m-%d %H:%M:%S%z"), 1, 22)
+    dev_sen <- dev_sen[order(as.Date(dev_sen$time, format="%d/%m/%Y")), ]
 
-    #check for duplicates (in dev_sen table)
+    # Check for duplicates (in dev_sen table)
     dev_sen <- unique(dev_sen)
 
-    #loop over rows in table
+    # Loop over rows in table
     for (r in 1:nrow(dev_sen)) {
         # Do all devices exist?
         dev_sen$old[r] <- (dbpf_device_exists(con, dev_sen$oldSerial[r]) == 1)
@@ -91,18 +93,33 @@ dbpf_devices_sensors_add <- function(con, dev_sen, mode = "test") {
         new_dev_id <- dbGetQuery(con, paste0("SELECT id FROM devices ",
         "WHERE serial_number ='", dev_sen$newSerial[r], "'"))
 
+        # Removing sensors from loggers put into storage
+        if (dev_sen$newSerial[r] == "strip") {
+            res <- dbpf_remove_sensors(con,
+                                        mode,
+                                        dev_sen$time[r],
+                                        old_dev_id,
+                                        dev_sen$oldSerial[r])
+            dev_sen$result[r] <- res[1]
+            dev_sen$message[r] <- res[2]
+            next
+        }
+
         # If both old and new loggers exist
         if (dev_sen$old[r] + dev_sen$new[r] == 2) {
 
-            # Get all sensors attatched to old_dev_id
+            # Get all "#1:oC"-type sensors attatched to old_dev_id
             sen_ids <- dbpf_device_sensors(con, dev_sen$oldSerial[r])
+            sen_ids <- sen_ids[grep("\\#\\d\\:oC",sen_ids$label), ]
 
+            # Ensuring all sensors exist in database
             for (s in 1:nrow(sen_ids)){
                 a <- dbpf_sensor_exists(con, sen_ids$sensor_id[s])
                 if (a != 1){
                     print(paste0(sen_ids$sensor_id[s], " DOES NOT EXIST."))
                 }
             }
+
             for (s in 1:nrow(sen_ids)) {
                 query <- paste0("INSERT INTO devices_sensors",
                 "(timestamp, device_id, sensor_id, notes) VALUES ('",
@@ -140,6 +157,28 @@ dbpf_sensor_exists <- function(con, sensor_id) {
     return(exists$count)
 }
 
+dbpf_remove_sensors <- function(con, mode, time, dev_id, serial_number) {
+    if (mode == "test"){
+        n <- nrow(dbpf_device_sensors(con, serial_number))
+        return(c("PASSED", paste0("Logger has ", n, " sensors to strip")))
+    } else {
+        # "no_sensors" sen_id
+        sen_id <- "e1f17e20-6ebc-4f9a-8e4a-47995e73ace9"
+        comment <- "No sensors on device."
+        query <- paste0("INSERT INTO devices_sensors (timestamp, ",
+                    "device_id, sensor_id, notes) VALUES ('", time,
+                    "', '", dev_id, "', '", sen_id, "', '", comment, "');")
+        try({
+            res <- dbSendQuery(con, query)
+            }, silent = TRUE)
+        try({
+            dbClearResult(res)
+            }, silent = TRUE)
+        return(c("PASSED", "Row inserted into DB"))
+    }
+}
+
+
 dev_sen <- read.csv("../dev_sen.csv")
 dev_sen$time <- as.POSIXct(dev_sen$time)
-dbpf_devices_sensors_add(con, dev_sen, mode = "test")
+dbpf_devices_sensors_add(con, dev_sen, mode = "insert")
