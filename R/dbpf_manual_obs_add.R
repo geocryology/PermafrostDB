@@ -112,7 +112,7 @@ dbpf_manual_obs_add <- function(con, sensor_label, location_name, time_UTC,
         if (is.na(text_value)) {text_value <- "" }
 
         dev_id <- dbGetQuery(con, paste0("SELECT device_id FROM ",
-					"devices_sensors WHERE sensor_id = '", sen_id, "'"))
+					"devices_sensors WHERE sensor_id = '", sen$id, "'"))
 
         #make data frame with data
         val <- data.frame(accuracy = as.numeric(sen$accuracy),
