@@ -32,6 +32,11 @@ dbpf_device_sensors <- function(con, serial_number) {
                 " WHERE device_id = '", dev_id, "' GROUP BY ",
                 "devices_sensors.id ORDER BY timestamp DESC LIMIT (1)"))
 
+    if (nrow(time) < 1){
+        print(paste0("Device '", serial_number, "' has no sensors."))
+        return(0)
+    }
+
     # Find all sensors that were updated for this device at that time
     sen_ids <- dbGetQuery(con, paste0("SELECT sensor_id FROM devices_sensors ",
                 "WHERE device_id = '", dev_id, "' AND timestamp = '",
