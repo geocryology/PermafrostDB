@@ -14,11 +14,11 @@
 #'
 #' @export
 #' @examples
-#'
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_device_sensors(con, "E509DA")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
 

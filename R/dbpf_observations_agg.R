@@ -56,10 +56,11 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_observations_agg(con, "NGO-RC-163_ST01", period = 24)
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

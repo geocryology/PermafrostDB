@@ -27,10 +27,11 @@ Filters observations by those that have 'human observation' as the
 device, and then only returns those corresponding to the selected location
 }
 \examples{
+\dontrun{
 dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"))
 dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"),
-  sensor_label = c('veg_species_1', 'LAI'))
-
+sensor_label = c('veg_species_1', 'LAI'))
+}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

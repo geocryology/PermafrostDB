@@ -45,8 +45,9 @@ Opens interactive plot in browser in order to check and explore
 Allows to set aggregation parameters.
 }
 \examples{
+\dontrun{
 dbpf_observations_plot(con, "YK16-SO06_01")
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

@@ -17,9 +17,10 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' fds_o <- dbpf_fields(tables = "observations")
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 dbpf_fields <- function(con, tables = "") {

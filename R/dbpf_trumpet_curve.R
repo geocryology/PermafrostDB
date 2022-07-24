@@ -25,6 +25,7 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_trumpet_curve(con, "NGO-DD-1009") # get all GST automatically
 #'
@@ -37,7 +38,7 @@
 #'
 #' # use air temperature
 #' dbpf_trumpet_curve(con, "NGO-DD-1009", air_names=c("AIRT1LOW", "AIRT1TOP"))
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

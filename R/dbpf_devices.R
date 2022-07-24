@@ -14,8 +14,9 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' fds <- dbpf_devices()
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

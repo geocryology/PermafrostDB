@@ -27,7 +27,9 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 location_cols <- dbpf_table_columns('locations')
+}
 }
 \author{
 Nick Brown <nick.brown@carleton.ca>

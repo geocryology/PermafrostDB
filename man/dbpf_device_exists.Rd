@@ -23,10 +23,11 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 fds <- dbpf_devices()
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

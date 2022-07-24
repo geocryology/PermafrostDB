@@ -47,10 +47,11 @@ Get raw observations per location, height and time slice.
 Fast way to access raw observation data without aggregation.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 obs <- dbpf_observations_raw(con, "NGO-DD-1004_ST02")
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

@@ -18,9 +18,10 @@ table with all the information for the locations locations within a plot
 Insert the name of a plot and the function returns the locations within a plot
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 locations <- dbpf_loggers_in_plot(con,"NGO-DD-1004_PLOT")
-
+}
 }
 \author{
 Thomas Knecht

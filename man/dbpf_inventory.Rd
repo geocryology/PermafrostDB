@@ -20,9 +20,10 @@ Return data frame with a summary of observations in DB
 Return data frame with a summary of observations in DB
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 dbpf_inventory(con) # get all GST automatically
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

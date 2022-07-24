@@ -37,6 +37,7 @@ Plots a trumpet curve for one location and optionally includes
          near surface temperature and air temperature in this.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 dbpf_trumpet_curve(con, "NGO-DD-1009") # get all GST automatically
 
@@ -49,7 +50,7 @@ dbpf_trumpet_curve(con, "NGO-DD-1009", gst_names="NGO-DD-1009_ST01")
 
 # use air temperature
 dbpf_trumpet_curve(con, "NGO-DD-1009", air_names=c("AIRT1LOW", "AIRT1TOP"))
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

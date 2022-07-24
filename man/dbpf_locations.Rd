@@ -24,9 +24,10 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 loc <- dbpf_locations(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

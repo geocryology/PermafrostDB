@@ -24,9 +24,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_location_report(con, "NGO-DD-1004_ST04", distance=10)
-#'
+#' }
 #' @author Thomas Knecht <t.knecht@@hotmail.com>
 # =============================================================================
 
