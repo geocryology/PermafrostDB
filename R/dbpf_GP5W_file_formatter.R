@@ -38,6 +38,7 @@ options(warn=-1)
 #'              inFile Desktop/Yk2021_test/testdir/testfile.csv
 #'              outFile Desktop/Yk2021_test/testdir_clean/testfile.csv
 #'
+#' @export
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 #' @importFrom utils write.table
 # =============================================================================
