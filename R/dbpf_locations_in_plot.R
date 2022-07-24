@@ -13,9 +13,10 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' locations <- dbpf_loggers_in_plot(con,"NGO-DD-1004_PLOT")
-#'
+#' }
 #' @author Thomas Knecht
 # =============================================================================
 

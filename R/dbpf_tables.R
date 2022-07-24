@@ -14,8 +14,9 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' tab <- dbpf_tables()
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

@@ -21,10 +21,11 @@ Given a device serial number, this function return a data frame
              showing the locations where this device has been.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 dbpf_device_locations(con, "E509DA")
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

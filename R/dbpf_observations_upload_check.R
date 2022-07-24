@@ -16,6 +16,7 @@
 #'
 #' @return An output log indicating whether .csv is fit for upload to sensorDb
 #'
+#' @export
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
 

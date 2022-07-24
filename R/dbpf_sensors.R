@@ -16,10 +16,11 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' sen <- dbpf_sensors(con)
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

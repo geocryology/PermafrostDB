@@ -6,7 +6,6 @@
 \usage{
 dbpf_sensor_add(
   con,
-  device_id,
   label,
   type_of_measurement,
   unit_of_measurement,
@@ -19,8 +18,6 @@ dbpf_sensor_add(
 }
 \arguments{
 \item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
-
-\item{device_id}{Charcter string of device that this is linked to.}
 
 \item{label}{Name for the new sensor.}
 
@@ -36,23 +33,25 @@ dbpf_sensor_add(
 
 \item{serial_number}{Serial number, usuall left empty}
 
-\item{mode}{= Can be 'test' (default, read-only) or 'insert' (will insert into DB)}
+\item{mode}{= Can be 'test' (default, read-only) or
+'insert' (will insert into DB)}
 }
 \value{
 Test results as well as sensor id if data was inserted.
 }
 \description{
-Adds a new sensor to DB and tests for existence of device_id
-             and possible duplicate sensor lable.
+Adds a new sensor to DB and tests for possible duplicate
+             sensor lable.
 }
 \details{
 Run in test mode first. If you have no DB login to write data, run
-         in test mode with your login and then pass to someone who does.
+         in test mode with your login and then pass to someone who does. Note
+         a sensor_id must be linked to a device_id using devices_sensors_add.
 }
 \examples{
 \dontrun{
 con <- dbpf_con()
-dbpf_sensor_add(con, "5265f740-8e09-4d41-b5b6-2136f5d35ea3",
+dbpf_sensor_add(con,
                 "vegetation_height_max", type_of_measurement = "numeric",
                 unit_of_measurement = "m", accuracy = 0.5, precision=0.01,
                 height_in_metres = 0, serial_number = "", mode = 'test')

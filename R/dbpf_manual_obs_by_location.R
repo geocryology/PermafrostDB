@@ -22,10 +22,11 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"))
 #' dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"),
-#'   sensor_label = c('veg_species_1', 'LAI'))
-#'
+#' sensor_label = c('veg_species_1', 'LAI'))
+#' }
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
 dbpf_manual_obs_by_location <- function(con, location, sensor_label,

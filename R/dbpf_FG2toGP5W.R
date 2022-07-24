@@ -11,7 +11,7 @@
 #' @return Log of which files were converted
 #'
 #' @details Function takes a file path, scans for FG2 files to be converted.
-#'
+#' @export
 #' @author Hannah Macdonell <hannah.macdonell@@carleton.ca>
 # =============================================================================
 dbpf_FG2toGP5W <- function(inPath){

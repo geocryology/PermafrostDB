@@ -18,10 +18,11 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con  <- dbpf_con()
 #' data <- dbpf_manual_obs_subplot_xlsx(con, file_xlsx)
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 dbpf_manual_obs_subplot_xlsx <- function(con, file_xlsx, mode = "test", dbformat = FALSE) {

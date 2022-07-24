@@ -12,19 +12,20 @@ dbpf_device_sensors(con, serial_number)
 \item{serial_number}{Serial number of device to query}
 }
 \value{
-data fame with fields: label, height_in_metres, type_of_measurement,
-        unit_of_measurement, accuracy, precision
+data fame with fields: sensor_id label, height_in_metres,
+        type_of_measurement, unit_of_measurement, accuracy, precision
 }
 \description{
 Given a device serial number, this function return a data frame
              showing the locations where this device has been.
 }
 \examples{
+\dontrun{
 con <- dbpf_con()
 dbpf_device_sensors(con, "E509DA")
 dbDisconnect(con)
-
+}
 }
 \author{
-Stephan Gruber <stephan.gruber@carleton.ca>
+Hannah Macdonell <hannah.macdonell@carleton.ca>
 }

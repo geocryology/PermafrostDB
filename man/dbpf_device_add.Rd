@@ -31,9 +31,11 @@ dbpf_device_add(
 
 \item{manufacturer_device_name}{Device type as used by manufacturer.}
 
-\item{acquired_on}{Date when device was purchased (format: "1950-01-01 00:00:00+00")}
+\item{acquired_on}{Date when device was purchased
+(format: "1950-01-01 00:00:00+00")}
 
-\item{mode}{= Can be 'test' (default, read-only) or 'insert' (will insert into DB)}
+\item{mode}{= Can be 'test' (default, read-only) or
+'insert' (will insert into DB)}
 }
 \value{
 Test results as well as device id if data was inserted.
@@ -49,12 +51,15 @@ Run in test mode first. If you have no DB login to write data, run
 \examples{
 \dontrun{
 con <- dbpf_con()
-dbpf_device_add(con, "MyDev", "Test", serial_number = "Test", access_code = "",
-                manufacturer = "generic device", manufacturer_device_name = "",
-                acquired_on = "1950-01-01 00:00:00+00", mode = 'test')
+dbpf_device_add(con, "MyDev", "Test", serial_number = "Test",
+                 access_code = "", manufacturer = "generic device",
+                 manufacturer_device_name = "",
+                 acquired_on = "1950-01-01 00:00:00+00", mode = 'test')
 dbDisconnect(con)
 }
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>
+
+Hannah Macdonell <hannah.macdonell@carleton.ca>
 }

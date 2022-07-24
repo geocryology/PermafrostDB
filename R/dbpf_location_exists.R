@@ -16,10 +16,11 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' con <- dbpf_con()
 #' fds <- dbpf_location_name_exists(con, "Storage")
 #' dbDisconnect(con)
-#'
+#' }
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 

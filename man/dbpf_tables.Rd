@@ -21,8 +21,9 @@ These simple functions return all data as data frames. When
          request the data you actually need.
 }
 \examples{
+\dontrun{
 tab <- dbpf_tables()
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>

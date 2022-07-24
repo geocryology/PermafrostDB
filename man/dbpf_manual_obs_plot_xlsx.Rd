@@ -27,10 +27,11 @@ Data is checked for existence (or duplication) of sensor and
          plot location doesn't exist in the database.
 }
 \examples{
+\dontrun{
 con  <- dbpf_con()
 dbpf_manual_obs_plot_xlsx(con, file_xlsx)
 dbDisconnect(con)
-
+}
 }
 \author{
 Stephan Gruber <stephan.gruber@carleton.ca>
