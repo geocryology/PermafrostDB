@@ -77,10 +77,5 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
             }
     	}
     }
-
-
-    #	print(data)
-
-    #save
     openxlsx::write.xlsx(x = data, file = file_xlsx, sheetName = "Data", row.names = FALSE)
 }
