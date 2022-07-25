@@ -112,8 +112,7 @@ time_cleaner <- function(con, first_line, data) {
     # Have to create temp column 'temp_time' to do this.
     data$temp_time <- as.POSIXct(gsub("\\.", "-", data$Time),
                                 format="%d-%m-%Y %H:%M:%OS")
-    data <- data[data[["temp_time"]] > most_recent_obs_df[1, 1], ]
-    print(most_recent_obs_df[1, 1])
+    data <- data[data[["temp_time"]] > most_recent_obs_df$max, ]
     data <- data[, -grep("temp_time", colnames(data))]
     # Fixing 'No' column
     if (length(data$No) < 1) {
