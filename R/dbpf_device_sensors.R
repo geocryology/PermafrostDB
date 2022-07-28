@@ -28,12 +28,11 @@ dbpf_device_sensors <- function(con, serial_number) {
                 "WHERE serial_number ='", serial_number, "'"))
 
     # Get most recent sensor log timestamp
-    time <- dbGetQuery(con, paste0("SELECT timestamp FROM devices_sensors",
-                " WHERE device_id = '", dev_id, "' GROUP BY ",
-                "devices_sensors.id ORDER BY timestamp DESC LIMIT (1)"))
+    time <- dbGetQuery(con, paste0('SELECT "timestamp" FROM devices_sensors',
+                " WHERE device_id = '", dev_id, "'",
+                ' ORDER BY "timestamp"::date desc LIMIT 1'))
 
-    if (nrow(time) < 1){
-        print(paste0("Device '", serial_number, "' has no sensors."))
+    if (nrow(time) < 1) {
         return(0)
     }
 
@@ -57,3 +56,4 @@ dbpf_device_sensors <- function(con, serial_number) {
     names(sen_df)[1] <- "sensor_id"
     return(sen_df)
 }
+
