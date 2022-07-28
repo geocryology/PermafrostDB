@@ -11,9 +11,9 @@ dbpf_devices_sensors_add(con, dev_sen, mode = "test")
 specific user name and password need to be supplied.}
 
 \item{dev_sen}{Data frame with these columns (type):
-oldSerial (character)
-newSerial (character)
-comment (character)
+oldSerial: logger being removed from thermistor chain
+newSerial: logger being newly attatched to thermistor chain
+comment
 time (POSIXct, UTC)}
 
 \item{mode}{Can be 'test' (default) or

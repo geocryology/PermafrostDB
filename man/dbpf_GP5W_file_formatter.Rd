@@ -4,12 +4,12 @@
 \alias{dbpf_GP5W_file_formatter}
 \title{Reformat GP5W file}
 \usage{
-dbpf_GP5W_file_formatter(con, inPath)
+dbpf_GP5W_file_formatter(con, in_path)
 }
 \arguments{
 \item{con}{connection to SensorDB}
 
-\item{inPath}{character, path to csv directory}
+\item{in_path}{character, path to csv directory}
 }
 \value{
 Creates directory with new cleaned files.
@@ -21,29 +21,26 @@ Removes some things from GP5W files
 This function is very use-specific. It should only ever be
              applied to the following file structure:
              ------------
-             Logger: #E50B38 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)
+             Logger: #E50B38 'PT1000TEMP' - USP_EXP2 - (CGI) (...)
              Delta Time: 666 secs
              No,Time,#1:oC,#HK-Bat:V,#HK-Temp:oC
              (Parameter changed ('E50A4C_20150609132643'))
              1,20.06.2016 16:57:55,26.2559,3.616,32.69
              ...
              --- OR ---
-             Logger: #E50B38 'PT1000TEMP' - USP_EXP2 - (CGI) Expander for GP5W - (V2.7, Jan 12 2016)
+             Logger: #E50B38 'PT1000TEMP' - USP_EXP2 - (CGI) (...)
              Delta Time: 666 secs
              No,Time,#1:oC,#2:oC,#3:oC,#HK-Bat:V,#HK-Temp:oC
              (Parameter changed ('E50A4C_20150609132643'))
              1,20.06.2016 16:57:55,26.2559,26.6283,26.8267,3.616,32.69
              ...
 
-             It will also (unfortunately) be slow as heck when working with new loggers with no
-             observations yet in the DB. Sorry <3
-
              Function takes a file path, scans for csv files to be converted.
              Fun variables:
-             inPath Desktop/Yk2021_test/testdir/
-             newDir Desktop/Yk2021_test/testdir_clean/
-             inFile Desktop/Yk2021_test/testdir/testfile.csv
-             outFile Desktop/Yk2021_test/testdir_clean/testfile.csv
+             in_path Desktop/Yk2021_test/testdir/
+             new_dir Desktop/Yk2021_test/testdir_clean/
+             in_file Desktop/Yk2021_test/testdir/testfile.csv
+             out_file Desktop/Yk2021_test/testdir_clean/testfile.csv
 }
 \author{
 Hannah Macdonell <hannah.macdonell@carleton.ca>
