@@ -26,7 +26,7 @@ human_observation_id <- function(con){
 }
 
 no_sensor_id <- function(con) {
-  dbGetQuery(con, "SELECT id FROM sensors WHERE label = 'no_sensor'")
+  dbGetQuery(con, "SELECT id FROM sensors WHERE label = 'no_sensors'")
 }
 
 
