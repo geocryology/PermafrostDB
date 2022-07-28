@@ -72,8 +72,9 @@ dbpf_GP5W_file_formatter <- function(con, in_path) {
     data <- data[!grepl("Parameter", data$No), ]
     data <- data[!grepl("Delta Time", data$No), ]
     data <- data[!grepl("Firmware Reset", data$No), ]
+    print(head(data))
     data <- time_cleaner(con, first_line, data)
-    if (data == FALSE) next
+    if (nrow(data) == 0) next
 
     write(first_line, file = out_file)
     write.table(data, file = out_file,
@@ -112,6 +113,7 @@ time_cleaner <- function(con, first_line, data) {
     # Have to create temp column 'temp_time' to do this.
     data$temp_time <- as.POSIXct(gsub("\\.", "-", data$Time),
                                 format="%d-%m-%Y %H:%M:%OS")
+    print(most_recent_obs_df$max)
     data <- data[data[["temp_time"]] > most_recent_obs_df$max, ]
     data <- data[, -grep("temp_time", colnames(data))]
     # Fixing 'No' column
