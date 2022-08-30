@@ -34,7 +34,7 @@ dbpf_export_csv_NWT <- function(con,
   # Download data
   data <- dbpf_export_csv_generic(con, freq = freq,
                                   location_name=location_name,
-                                  date_format = "%d/%m/%Y %H:%M",
+                                  date_format = "%Y-%m-%d %H:%M:%S",
                                   date_header = "(DD/MM/YYYY HH:MM)")
 
   if (is.null(data)){
@@ -49,7 +49,7 @@ dbpf_export_csv_NWT <- function(con,
     out <- lapply(data, format_NWT,location_name = location_name,
                   project_name = project_name)
   }else{
-    out <- format_NWT(data=data, location_name = location_name,
+    out <- format_NWT(con=con, data=data, location_name = location_name,
                       project_name = project_name)
   }
 
@@ -62,11 +62,11 @@ dbpf_export_csv_NWT <- function(con,
                   full.names=T))
       for (table in out){
         write.table(x = table, file = file_name_increment(file_name), sep=',',
-                    quote=F, na='', row.names=F, col.names=F)
+                    quote=F, na='', row.names=F, col.names=T)
       }
     }else{
       write.table(x = out, file = file_name, sep=',',
-                  quote=F, na='', row.names=F, col.names=F)
+                  quote=F, na='', row.names=F, col.names=T)
     }
 
   }else{
@@ -102,28 +102,24 @@ format_NWT <- function(con, data, location_name, project_name){
     "SELECT name, ST_X(coordinates) as lon, ST_Y(coordinates) as lat
     FROM locations
     WHERE name = '", location_name, "'"))
-
-  # Construct header metadata table
-  top <- as.data.frame(matrix(data = character(), nrow = 7, ncol = ncol(data)),
-                       stringsAsFactors=FALSE)
-  top[1, 1] <- "Project Name:"
-  top[2, 1] <- "Site ID:"
-  top[3, 1] <- "Latitude:"
-  top[4, 1] <- "Longitude:"
-  top[6, 1] <- "Date Time (UTC)"
-
-  top[1, 2] <- project_name
-  top[2, 2] <- location_name
-  top[3, 2] <- sprintf("%.4f",coords$lat)
-  top[4, 2] <- sprintf("%.4f",coords$lon)
-
-  top[6, 2:ncol(data)] <- "Measurement Depth (m)"
-  top[7, ] <- names(data)
-
+  
+  # Create df
+  out <- data.frame(project_number=project_name,
+                    project_name=project_name,
+                    site_id=location_name,
+                    latitude=coords$lat,
+                    longitude=coords$lon,
+                    `date_YYYY-MM-DD`=substr(data[,1], 0, 10),
+                    `time_HH:MM:SS`=substr(data[,1], 12, 19))
+  
+  names(out)[6:7] = c("date_YYYY-MM-DD", "time_HH:MM:SS")
+  
   # Append numeric data (as character)
   data[is.na(data)] <- -999
-  names(data) <- names(top)
-  out <- rbind(top, as.matrix(data))
+  names(data) <- gsub("^(-?[0-9\\\\.]*)$", "\\1_m", names(data))
+  
+  out <- cbind(out, data[, -1])
+  names(out)[-seq(7)] = names(data)[-1]
 
   return(out)
 }
