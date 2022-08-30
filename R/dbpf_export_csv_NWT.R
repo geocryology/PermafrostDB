@@ -28,9 +28,13 @@ dbpf_export_csv_NWT <- function(con,
                                 location_name,
                                 project_name,
                                 file_name,
+                                project_number,
                                 freq='daily'
                                 ){
-
+  if (missing(project_number)){
+    project_number <- project_name
+  }
+  
   # Download data
   data <- dbpf_export_csv_generic(con, freq = freq,
                                   location_name=location_name,
@@ -47,10 +51,10 @@ dbpf_export_csv_NWT <- function(con,
   if (all(names(data)[-1] %in% c('0','0.1')) & ncol(data)==3){ # if data are mostly disjoint
     data <- list(D1=data[,c(1,3)], D2=data[,c(1,2)])
     out <- lapply(data, format_NWT,location_name = location_name,
-                  project_name = project_name)
+                  project_name = project_name, project_number=project_number)
   }else{
     out <- format_NWT(con=con, data=data, location_name = location_name,
-                      project_name = project_name)
+                      project_name = project_name, project_number=project_number)
   }
 
   # Output or return final result
@@ -96,7 +100,7 @@ dbpf_export_csv_NWT <- function(con,
 #' @export
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
-format_NWT <- function(con, data, location_name, project_name){
+format_NWT <- function(con, data, location_name, project_name, project_number){
   # Get necessary metadata
   coords <- dbGetQuery(con, paste0(
     "SELECT name, ST_X(coordinates) as lon, ST_Y(coordinates) as lat
@@ -104,7 +108,7 @@ format_NWT <- function(con, data, location_name, project_name){
     WHERE name = '", location_name, "'"))
   
   # Create df
-  out <- data.frame(project_number=project_name,
+  out <- data.frame(project_number=project_number,
                     project_name=project_name,
                     site_id=location_name,
                     latitude=coords$lat,
