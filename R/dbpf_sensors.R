@@ -27,7 +27,12 @@
 dbpf_sensors <- function(con, manual=TRUE) {
 
     if (manual) {
-    	query <- "SELECT * FROM sensors WHERE device_id = '5265f740-8e09-4d41-b5b6-2136f5d35ea3'"
+    	query <- paste0(
+    	           "SELECT sensors.* 
+    	            FROM sensors
+    	                 INNER JOIN devices_sensors ON sensors.id = devices_sensors.sensor_id
+    	                 INNER JOIN devices ON devices.id = devices_sensors.device_id
+    	           WHERE device_id = '",human_observation_id(con),"'")
     } else {
     	query <- "SELECT * FROM sensors"
     }
