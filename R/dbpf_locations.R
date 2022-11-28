@@ -10,6 +10,8 @@
 #' 
 #' @param con Database connection object, as returned by \code{\link{dbpf_con}}
 #' 
+#' @param pattern (optional) A regular expression used to filter returned values by name
+#' 
 #' @param type Identifies the geometry type for which locations are returned.
 #'             The default is 'point', otherwise set type='polygon'. [character]
 #'
@@ -24,7 +26,7 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_locations <- function(con, type='point') {
+dbpf_locations <- function(con, pattern, type='point') {
 
   if (missing(con)){
       con <- dbpf_con()
@@ -44,5 +46,10 @@ dbpf_locations <- function(con, type='point') {
     }
 
     locations <- dbGetQuery(con, query)
+    
+    if (!missing(pattern)){
+      locations <- locations[grepl(pattern, locations$name), ]
+    }
+    
     return(locations)
 }
