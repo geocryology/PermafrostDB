@@ -41,7 +41,7 @@ dbpf_device_sensors <- function(con, serial_number) {
                 "WHERE device_id = '", dev_id, "' AND timestamp = '",
                 time$timestamp, "'"))
 
-    sen_df <- setNames(data.frame(matrix(ncol = 6, nrow = 0)),
+    sen_df <- stats::setNames(data.frame(matrix(ncol = 6, nrow = 0)),
             c("id", "label", "height_in_metres", "type_of_measurement",
             "unit_of_measurement", "accuracy"))
 

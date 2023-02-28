@@ -72,7 +72,7 @@ dbpf_GP5W_file_formatter <- function(con, in_path) {
     data <- data[!grepl("Parameter", data$No), ]
     data <- data[!grepl("Delta Time", data$No), ]
     data <- data[!grepl("Firmware Reset", data$No), ]
-    print(head(data))
+    print(utils::head(data))
     data <- time_cleaner(con, first_line, data)
     if (nrow(data) == 0) next
 

@@ -1,7 +1,7 @@
 
 maintenance_required_id <- function(con){
   #TODO:: memoize this
-  dbGetQuery(con, "
+  DBI::dbGetQuery(con, "
              SELECT id
                FROM sensors
               WHERE label='maintenance_required'")
@@ -10,7 +10,7 @@ maintenance_required_id <- function(con){
 
 maintenance_completed_id <- function(con){
   #TODO:: memoize this
-  dbGetQuery(con, "
+  DBI::dbGetQuery(con, "
              SELECT id
                FROM sensors
               WHERE label='maintenance_completed'")
@@ -19,14 +19,14 @@ maintenance_completed_id <- function(con){
 
 human_observation_id <- function(con){
   #TODO:: memoize this
-  dbGetQuery(con, "
+  DBI::dbGetQuery(con, "
              SELECT id
                FROM devices
               WHERE device_type='human observation'")
 }
 
 no_sensor_id <- function(con) {
-  dbGetQuery(con, "SELECT id FROM sensors WHERE label = 'no_sensors'")
+  DBI::dbGetQuery(con, "SELECT id FROM sensors WHERE label = 'no_sensors'")
 }
 
 
