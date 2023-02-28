@@ -75,7 +75,7 @@ dbpf_con <- function(user, passwd, host, port="5432", database="observations")
     error = function(e) {
       message(e)
       config.error()
-      return
+      return()
     })
   }
 
@@ -145,7 +145,7 @@ dbpf_tunnel <- function(ssh_user, ssh_host, ssh_keyfile,
     error = function(e) {
       message(e)
       config.error()
-      return
+      return()
     })
   }
 

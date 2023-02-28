@@ -66,8 +66,8 @@ dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
 
     # check if observations are already in observations_dois
     qdoi <- paste0("SELECT COUNT (DISTINCT observations.id) FROM observations INNER JOIN ",
-                  "observations_dois ON observations.id = observations_dois.observation_id ",
-                  "WHERE observations_dois.doi_id = (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AND ", nwc)
+                  "observations_sets ON observations.id = observations_sets.observation_id ",
+                  "WHERE observations_sets.set_id = (SELECT id FROM sets WHERE label = 'Exposed Temperature Sensor') AND ", nwc)
     ndoi <- dbGetQuery(con, qdoi)$count
     if (ndoi > 0) {stop("One or more of these observations are already in DOI")}
 
@@ -80,8 +80,8 @@ dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
     # add changes observations to table observations_dois
     #doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
     #oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
-    qry <- paste0("INSERT INTO observations_dois (observation_id, doi_id) ",
-                  "SELECT id AS observation_id, (SELECT id FROM dois WHERE doi = 'Exposed Temperature Sensor') AS doi_id FROM observations WHERE ", nwc, ";")
+    qry <- paste0("INSERT INTO observations_sets (observation_id, set_id) ",
+                  "SELECT id AS observation_id, (SELECT id FROM sets WHERE label = 'Exposed Temperature Sensor') AS set_id FROM observations WHERE ", nwc, ";")
     # == update observations_dois
   	ncd <- dbExecute(con, qry)
 

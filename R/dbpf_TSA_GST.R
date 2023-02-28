@@ -86,10 +86,10 @@ dbpf_TSA_GST <- function(con, out.path, inventory, time_b="1950-01-01 00:00:00+0
   options(stringsAsFactors = FALSE)
 
   #retrieve location names and store it as vector
-  if(class(inventory)=="character"){loc_names <- inventory}
-  else if(class(inventory)=="data.frame"){loc_names <- inventory$name}
-  else if(class(inventory)=="list"){loc_names <- inventory}
-  else if(class(inventory)=="vector"){loc_names <- inventory}
+  if(inherits(inventory, "character")){loc_names <- inventory}
+  else if(inherits(inventory, "data.frame")){loc_names <- inventory$name}
+  else if(inherits(inventory,"list")){loc_names <- inventory}
+  else if(inherits(inventory, "vector")){loc_names <- inventory}
 
   #function that does everything for one location
   data.list <- lapply(loc_names, FUN= function(X) ForOneLocation(X, con, out.path, time_b,time_e,
