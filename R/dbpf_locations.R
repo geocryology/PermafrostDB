@@ -48,7 +48,7 @@ dbpf_locations <- function(con, pattern, type='point') {
     locations <- dbGetQuery(con, query)
     
     if (!missing(pattern)){
-      locations <- locations[grepl(pattern, locations$name), ]
+      locations <- locations[grepl(pattern, locations$name, perl=TRUE), ]
     }
     
     return(locations)

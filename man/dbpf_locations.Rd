@@ -4,10 +4,12 @@
 \alias{dbpf_locations}
 \title{Return table of locations, either points or polygons.}
 \usage{
-dbpf_locations(con, type = "point")
+dbpf_locations(con, pattern, type = "point")
 }
 \arguments{
 \item{con}{Database connection object, as returned by \code{\link{dbpf_con}}}
+
+\item{pattern}{(optional) A regular expression used to filter returned values by name}
 
 \item{type}{Identifies the geometry type for which locations are returned.
 The default is 'point', otherwise set type='polygon'. [character]}
