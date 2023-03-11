@@ -6,15 +6,15 @@
 #'              terrain surface. As we suspect that animals (foxes) yanked
 #'              loggers out of the ground, we call this de-foxing.
 #'
-#' @details The observations identified (1) are added to a set (DOI) that
+#' @details The observations identified (1) are added to a set that
 #'          identifies them as bulk-defoxed and (2) have their height set to
 #'          0 m as the sensors are exposed on the ground surface. A check on
 #'          device ID is performed: Only one device ID can be present at that
 #'          location during the interval de-foxed. The installation of a new
 #'          sensor would have ocurred at the correct depth. If a sensor chain
 #'          is present at the location, all sensors are assumed to be pulled
-#'          out. The DOI used is called "Exposed Temperature Sensor". A further
-#'          check is performed on table observations_dois to detect if some of
+#'          out. The set used is called "Exposed Temperature Sensor". A further
+#'          check is performed on table observations_sets to detect if some of
 #'          the observations have already been treated.
 #'
 #' @param con Database connection object, as returned by dbpf_con()
@@ -64,12 +64,12 @@ dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
     	stop("No device/data found, de-foxing interrupted")
     }
 
-    # check if observations are already in observations_dois
-    qdoi <- paste0("SELECT COUNT (DISTINCT observations.id) FROM observations INNER JOIN ",
+    # check if observations are already in observations_sets
+    qset <- paste0("SELECT COUNT (DISTINCT observations.id) FROM observations INNER JOIN ",
                   "observations_sets ON observations.id = observations_sets.observation_id ",
                   "WHERE observations_sets.set_id = (SELECT id FROM sets WHERE label = 'Exposed Temperature Sensor') AND ", nwc)
-    ndoi <- dbGetQuery(con, qdoi)$count
-    if (ndoi > 0) {stop("One or more of these observations are already in DOI")}
+    nset <- dbGetQuery(con, qset)$count
+    if (nset > 0) {stop("One or more of these observations are already in set")}
 
     #feedback
     print(paste("==>", stat$sen_count, "sensors,", stat$obs_count, "observations."))
@@ -77,8 +77,8 @@ dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
     #--- START TRANSACTION ----
     dbBegin(con)
 
-    # add changes observations to table observations_dois
-    #doi_id <- dbGetQuery(con, "(SELECT id FROM DOIS WHERE doi = 'Exposed Temperature Sensor')")
+    # add changes observations to table observations_sets
+    #set_id <- dbGetQuery(con, "(SELECT id FROM setS WHERE label = 'Exposed Temperature Sensor')")
     #oid <- paste0("(SELECT id FROM observations WHERE ", nwc, ")")
     qry <- paste0("INSERT INTO observations_sets (observation_id, set_id) ",
                   "SELECT id AS observation_id, (SELECT id FROM sets WHERE label = 'Exposed Temperature Sensor') AS set_id FROM observations WHERE ", nwc, ";")
