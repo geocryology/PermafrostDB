@@ -33,7 +33,7 @@
 #'
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' con <- dbpf_con()
 #' dbpf_defox_bulk(con,'NGO-DD-1004_ST02', "2016-01-01 00:00:00+00","2016-01-10 23:59:00+00")
 #' dbDisconnect(con)
@@ -93,7 +93,7 @@ dbpf_defox_bulk <- function(con, location_name, time_b, time_e,
   	# Make another safety check: the numer of dois found now mjust equal the
   	# number of observations that had to be changed. If this is not true, the
   	# transaction will be rolled back.
-  	check <- stat$obs_count - dbGetQuery(con, qdoi)$count
+  	check <- stat$obs_count - dbGetQuery(con, qset)$count
   	if (check == 0) {
   		dbCommit(con)
   		message("OK, defoxed.")

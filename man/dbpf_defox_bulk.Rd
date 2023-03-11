@@ -26,19 +26,19 @@ Treatment of subsurface logger that have been exposed at the
              loggers out of the ground, we call this de-foxing.
 }
 \details{
-The observations identified (1) are added to a set (DOI) that
+The observations identified (1) are added to a set that
          identifies them as bulk-defoxed and (2) have their height set to
          0 m as the sensors are exposed on the ground surface. A check on
          device ID is performed: Only one device ID can be present at that
          location during the interval de-foxed. The installation of a new
          sensor would have ocurred at the correct depth. If a sensor chain
          is present at the location, all sensors are assumed to be pulled
-         out. The DOI used is called "Exposed Temperature Sensor". A further
-         check is performed on table observations_dois to detect if some of
+         out. The set used is called "Exposed Temperature Sensor". A further
+         check is performed on table observations_sets to detect if some of
          the observations have already been treated.
 }
 \examples{
-\donttest{
+\dontrun{
 con <- dbpf_con()
 dbpf_defox_bulk(con,'NGO-DD-1004_ST02', "2016-01-01 00:00:00+00","2016-01-10 23:59:00+00")
 dbDisconnect(con)

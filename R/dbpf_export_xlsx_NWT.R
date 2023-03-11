@@ -42,7 +42,7 @@ dbpf_export_xlsx_NWT <- function(con, location_name,
     return(NULL)
   }
 
-  if (class(NWT_dat)=="list"){
+  if (methods::is(NWT_dat, "list")){
     file.remove(
       list.files(dirname(file_name),
                  pattern=gsub("\\.csv$","_?[0-9]*.xlsx",basename(file_name)),

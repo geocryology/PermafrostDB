@@ -23,6 +23,8 @@ Used to query the database.}
 
 \item{file_name}{Character, path to a csv file to be written}
 
+\item{project_number}{Character, used in file header metadata}
+
 \item{freq}{Character, one of ('daily', 'hourly'). Interval at which data is
 to be aggregated from the database.}
 }

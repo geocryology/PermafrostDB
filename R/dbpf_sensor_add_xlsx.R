@@ -62,10 +62,11 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
     	if (data$sensor_id[r] != "") {
     		data$import_comment[r] <- "Skipped: already has id"
     	} else {
-    		res <- dbpf_sensor_add(con, data$device_id[r], data$label[r],
-    		                       data$type_of_measurement[r],
+    		res <- dbpf_sensor_add(con, data$label[r],
+    		                           data$type_of_measurement[r],
                                    data$unit_of_measurement[r],
-                                   data$accuracy[r], data$precision[r],
+                                   data$accuracy[r], 
+    		                           data$precision[r],
                                    data$height_in_metres[r],
                                    data$serial_number[r],
                                    mode = mode)

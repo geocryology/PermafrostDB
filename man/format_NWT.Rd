@@ -15,6 +15,8 @@ format_NWT(con, data, location_name, project_name, project_number)
 Used to query the database.}
 
 \item{project_name}{Character, used in file header metadata}
+
+\item{project_number}{Character, used in file header metadata}
 }
 \description{
 adds header information to a csv to conform with NTGS data

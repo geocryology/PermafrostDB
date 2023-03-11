@@ -1,11 +1,12 @@
 #' @title export borehole netcdf for ERDDAP
-#' @param con
-#' @param location character llocation name
+#' @param con database connection object provided by dbpf_con()
+#' @param location character location name
 #' @param file_name path to file (must not already exist)
 #' @param sensors character vector of sensor labels to export
 #' @param global_attrs global attributes to add to netcdf file
-#' @importFrom ncdf4 nc_open ncdim_def
+#' @importFrom ncdf4 nc_open ncdim_def nc_sync ncvar_add
 #' @importFrom dplyr filter
+#' @export
 dbpf_export_nc_borehole_erddap <- function(con, location, file_name, sensors, global_attrs){
   # dbpf_export_nc_borehole_erddap(con, "NGO-DD-1010", "C:/tmp/1010.nc")
   if (file.exists(file_name)){
@@ -139,21 +140,21 @@ dbpf_export_nc_borehole_erddap <- function(con, location, file_name, sensors, gl
       if (var_db_name %in% surface_data$label){
         attname <- "organic_matter_thickness"
         ncatt_put(nc, 0, attname, (surface_data %>%
-                    filter(label==var_db_name))$numeric_data)
+                    filter(surface_data$label==var_db_name))$numeric_data)
       }
 
       var_db_name <- "slope_angle"
       if (var_db_name %in% surface_data$label){
         attname <- "ground_slope_angle"
         ncatt_put(nc, 0, attname, (surface_data %>%
-                    filter(label==var_db_name))$numeric_data)
+                    filter(surface_data$label==var_db_name))$numeric_data)
       }
 
       var_db_name <- "slope_aspect"
       if (var_db_name %in% surface_data$label){
         attname <- "ground_slope_direction"
         ncatt_put(nc, 0, attname, (surface_data %>%
-                    filter(label==var_db_name))$numeric_data)
+                    filter(surface_data$label==var_db_name))$numeric_data)
       }
 
     
@@ -267,7 +268,7 @@ make_profile_base <- function(file, global_attrs) {
 }
 
 
-
+#' @title From-To Union
 #' @description Take the spatial union of multiple sets of depth intervals
 #' @param from numeric vector of depths (positive down) corresponding to top of interval
 #' @param to numeric vector of depths (positive down) corresponding to bottom of interval
@@ -287,6 +288,7 @@ intersect_profiles <- function(from, to){
 }
 
 
+#' @title Regrid profile data
 #' @param df dataframe with data and disjoint from-to intervals
 #' @param from_col name of column with top of interval depth
 #' @param to_col name of column with bottom of interval depth
@@ -307,11 +309,11 @@ regrid_profile <- function(df, from_col, to_col, new_from, new_to){
   return(result)
 }
 
-#' @param df data frame with disjoint from-to intervals
+#' @title Regrid dataframe 
+#' @param df a 'tidy' data frame with disjoint from-to intervals
 #' @param from_col see regrid_profile
 #' @param to_col see regrid_profile
 #' @param fromto length-2 depth interval over which to regrid data in df
-#' @details 
 regrid_interval <- function(df, from_col, to_col, fromto){
   
   if (length(unique(fromto)) == 1){

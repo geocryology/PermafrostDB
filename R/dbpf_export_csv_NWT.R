@@ -13,7 +13,7 @@
 #' Used to query the database.
 #'
 #' @param project_name Character, used in file header metadata
-#'
+#' @param project_number Character, used in file header metadata
 #' @param file_name Character, path to a csv file to be written
 #'
 #' @param freq Character, one of ('daily', 'hourly'). Interval at which data is
@@ -59,7 +59,7 @@ dbpf_export_csv_NWT <- function(con,
 
   # Output or return final result
   if (!missing(file_name)){
-    if (class(out)=="list"){
+    if (methods::is(out, "list")){
       file.remove(
         list.files(dirname(file_name),
                   pattern=gsub("\\.csv$","_?[0-9]*.csv",basename(file_name)),
@@ -96,7 +96,7 @@ dbpf_export_csv_NWT <- function(con,
 #' Used to query the database.
 #'
 #' @param project_name Character, used in file header metadata
-#'
+#' @param project_number Character, used in file header metadata
 #' @export
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
