@@ -4,20 +4,16 @@
 \alias{dbpf_manual_obs_by_location}
 \title{Manual observations at location}
 \usage{
-dbpf_manual_obs_by_location(con, location, sensor_label, point_only = F)
+dbpf_manual_obs_by_location(con, location, sensor_label)
 }
 \arguments{
 \item{con}{Database connection object, as returned by dbpf_con()}
 
-\item{location}{A vector of either location names (character) or a bounding
-box (numeric) of the form (xmin, xmax, ymin, ymax)}
+\item{location}{A character vector of location names}
 
 \item{sensor_label}{(optional) character, one or more names corresponding to
 sensor labels such as 'veg_species_1' or 'LAI' to return.
  If omitted, all sensor types will be returned.}
-
-\item{point_only}{logical, whether to include only measurements that are. If
-False, also returns observations that apply to any plots that the}
 }
 \description{
 Downloads manual observations from the database
@@ -28,8 +24,9 @@ device, and then only returns those corresponding to the selected location
 }
 \examples{
 \dontrun{
-dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"))
-dbpf_manual_obs_by_location(location_name = c("NGO-GU-1014_ST01"),
+con <- dbpf_con()
+dbpf_manual_obs_by_location(con, location = c("NGO-GU-1014_ST01"))
+dbpf_manual_obs_by_location(con, location = c("NGO-GU-1014_ST01"),
 sensor_label = c('veg_species_1', 'LAI'))
 }
 }
