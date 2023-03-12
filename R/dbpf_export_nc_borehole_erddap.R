@@ -159,7 +159,8 @@ dbpf_export_nc_borehole_erddap <- function(con, location, file_name, sensors, gl
 
     
     
-  }, finally={nc_close(nc)})
+  }, error = function(e) {print(e)},
+     finally={nc_close(nc)})
   
   
 }
