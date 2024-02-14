@@ -21,7 +21,7 @@ install_github("geocryology/PermafrostDB", ref="main")
 ```
 
 ## Usage
-Functions in the `PermafrostDB` library are documented with docstrings. You can access the documentation for a function by running `help(function_name)` in R. Below are some examples of the most commonly used functions, and notes for .
+Functions in the `PermafrostDB` library are documented with docstrings. You can access the documentation for a function by running `help(function_name)` in R. Below are some examples of the most commonly used functions.
 
 ### Connecting to the database
 Most functions in `PermafrostDB` require a database connection object. This is created using the `dbpf_con()` function. You need to provide a username and password, as well as the database host, name, and port number (The credentials below are examples - contact your 'database person' to get the correct credentials for you.):
