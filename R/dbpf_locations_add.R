@@ -70,8 +70,8 @@ dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
     input$inserted <- FALSE
 
     #test for na and for entries other than t/f in record_observations
-    test_ro <- nrow(input) - sum(input$record_observation == 't') -
-               sum(input$record_observation == 'f')
+    test_ro <- nrow(input) - sum(input$record_observations == 't') -
+               sum(input$record_observations == 'f')
     if (test_ro != 0) stop("Entries for record_observations need to be 't' or 'f'!")
 
     #loop over locations and test
