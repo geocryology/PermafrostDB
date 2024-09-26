@@ -26,7 +26,7 @@
 #'
 #' @author Nick Brown <nick.brown@@carleton.ca>
 # =============================================================================
-dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
+dbpf_manual_obs_add_xlsx <- function(con, file_xlsx, mode = 'test') {
   if (grepl("~", file_xlsx) == TRUE) {
     stop("Use full path (without '~') for file_xlsx.")
   }
@@ -42,9 +42,31 @@ dbpf_sensor_add_xlsx <- function(con, file_xlsx, mode = 'test') {
   data$height_min_metres <- as.numeric(data$height_min_metres)
   data$height_max_metres <- as.numeric(data$height_max_metres)
   
-  # data integrity
-  
+  dbpf_manual_obs_add_table(con=con, data=data, mode=mode)
+}
 
+
+dbpf_manual_obs_add_csv <- function(con, file_csv, mode = 'test') {
+  if (grepl("~", file_csv) == TRUE) {
+    stop("Use full path (without '~') for file_csv.")
+  }
+  
+  # open file and check
+  data <- read.csv(file_csv, header=T)  # read first sheet
+  
+  data$sensor_label <- as.character(data$sensor_label)
+  data$location_name <- as.character(data$location_name)
+  data$time_UTC <- as.POSIXct(data$time_UTC)
+  data$numeric_value <- as.numeric(data$numeric_value)
+  data$text_value <- as.character(data$text_value)
+  data$height_min_metres <- as.numeric(data$height_min_metres)
+  data$height_max_metres <- as.numeric(data$height_max_metres)
+  
+  dbpf_manual_obs_add_table(con=con, data=data, mode=mode)
+}
+
+
+dbpf_manual_obs_add_table <- function(con, data, mode = 'test') {
   # loop over rows
   for (r in 1:nrow(data)) {
     # only use rows without sensor_id
