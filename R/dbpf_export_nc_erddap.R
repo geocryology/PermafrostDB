@@ -57,19 +57,20 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
 
   for (site in location_name){
     site_dat <- db_dat[db_dat$loc_name == site, ]
-
+    site_dat$time <- strftime(site_dat$time)  # so 00:00 isn't truncated later
+    
     if (length(file_name) == length(location_name)){
       file_name_i <- file_name[which(location_name == site)]
     } else {
       stop("location_name and file_name must have same length")
     }
-
+    
     # get depth indices
     depths <- by(site_dat$height, site_dat$loc_name, unique, simplify=T)
     indx <- sapply(depths, length) # how many z levels for each station
     depths <- as.data.frame(do.call(rbind,lapply(depths, `length<-`, max(indx))))
     vals_depths <- as.matrix(t(depths))
-
+    
     #convert depth value to level number
     Z <- by(site_dat$height, site_dat$loc_name, function(x) as.numeric(as.factor(x)))
     site_dat$height <- as.numeric(unlist(Z))
@@ -81,7 +82,7 @@ dbpf_export_nc_erddap <- function(con, location_name, file_name, freq='daily'){
 
     refdate <- as.POSIXct("1970-01-01 00:00:00", fmt="%Y-%m-%D %T", tz='UTC')
 
-    vals_time <- as.POSIXct(dimnames(m)[[2]], fmt="%Y-%m-%D %T", tz='UTC')
+    vals_time <- as.POSIXct(dimnames(m)[[2]], fmt="%Y-%m-%d %H:%M:%S", tz='UTC')
     if (tolower(freq) == 'daily'){
       vals_time <- vals_time - refdate
       time_units <- "days since 1970-01-01 00:00:00"
