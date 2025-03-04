@@ -43,7 +43,7 @@
 #' @author Stephan Gruber <stephan.gruber@@carleton.ca>
 # =============================================================================
 
-dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
+dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1, verbose=T) {
 
     #test mode
     test_mo <- (mode == "test") + (mode == "insert")
@@ -80,13 +80,19 @@ dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
 
     	#check for existing name
     	query <- paste0("SELECT * FROM locations WHERE name = '" , loc$name, "'")
-    	if (nrow(dbGetQuery(con, query)) == 0) input$duplicate_name[r] <- FALSE
+    	if (nrow(DBI::dbGetQuery(con, query)) == 0) input$duplicate_name[r] <- FALSE
 
     	#check for nearby coordinate
-    	query <- paste0("SELECT * FROM locations WHERE " ,
+    	query <- paste0("SELECT locations.*,  ST_GeometryType(locations.coordinates) FROM locations WHERE " ,
          "ST_DWithin(ST_SetSRID(ST_MakePoint(", loc$lon, ", ", loc$lat,"), 4326)::geography,",
-         "locations.coordinates::geography, ", format(tolerance), ")")
-    	if (nrow(dbGetQuery(con, query)) == 0) input$duplicate_site[r] <- FALSE
+         "locations.coordinates::geography, ", format(tolerance), ")
+                        AND ST_GeometryType(locations.coordinates) = 'ST_Point'")
+        
+    	if (nrow(DBI::dbGetQuery(con, query)) == 0){
+            input$duplicate_site[r] <- FALSE
+            if (verbose){
+                }
+            }
 
     	#test feedback and insert or message
     	if ((input$duplicate_site[r] + input$duplicate_name[r]) == 0) {
@@ -98,7 +104,7 @@ dbpf_locations_add <- function(con, locations, mode="test", tolerance=0.1) {
     			     "), 4326), ", loc$elevation_in_metres, ", '",
     			     loc$comment, "', '", loc$record_observations, "')")
      	 	if (mode == "insert") {
-     	 		dbExecute(con, query)
+     	 		DBI::dbExecute(con, query)
      	 		input$inserted[r] <- TRUE
      	 	}
     	} else {
